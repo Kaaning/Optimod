@@ -1,3 +1,0 @@
-﻿J'ai écrit des lignes.
-Quelqu'un d'autre aussi.
-Je modifie ça depuis la branche test.
