@@ -1,2 +1,3 @@
 Ce fichier est le premier.
-Premi�re modif.
+Première modif.
+Deuxième modif.
