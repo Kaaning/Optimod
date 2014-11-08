@@ -25,6 +25,10 @@ public class Jour {
 		demandes.supprimerLivraison(noeud);
 	}
 	
+	public void ajouterLivraison(PlageHoraire plage, int id, int idClient, int idNoeud, int nextNoeud){
+		plage.ajouterLivraison(id, idClient, idNoeud);
+	}
+	
 	public boolean calculerItineraire(){
 		return true;
 	}
