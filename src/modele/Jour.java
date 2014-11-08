@@ -11,22 +11,27 @@ import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
 
 public class Jour {
 	
+	private DemandesDeLivraison demandes;
+	
 	public void creerZoneGeographique(String nomFichier){
 		
 	}
 	
-	public void chargerLivraison(String nomFichier){
-		
+	public void chargerLivraison(String nomFichier) throws ParseException{
+		demandes = new DemandesDeLivraison(nomFichier);
+	}
+	
+	public void supprimerLivraison(int noeud){
+		demandes.supprimerLivraison(noeud);
 	}
 	
 	public boolean calculerItineraire(){
 		return true;
 	}
 	
-	public static void main(String[] args) throws ParseException{
-		
-		DemandesDeLivraison l = new DemandesDeLivraison("fic/livraison10x10-2.xml");
-		
+	public DemandesDeLivraison getDemandes() {
+		return demandes;
 	}
+	
 	
 }

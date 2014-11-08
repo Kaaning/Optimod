@@ -67,8 +67,25 @@ public class DemandesDeLivraison {
 		
 		
 	}
+
+	public void supprimerLivraison(int adresse){
+		Iterator<PlageHoraire> i = plages.iterator();
+		
+		while(i.hasNext()){
+			PlageHoraire currentPlage = i.next();
+			Iterator<Livraison> j = currentPlage.getLivraisons().iterator();
+			
+			while (j.hasNext()){
+				Livraison currentLivraison = j.next();
+				if (currentLivraison.getNoeud()==adresse){
+					j.remove();
+				}
+			}
+			
+		}
+	}
 	
-	public static Element getRacine(String nomFic){
+	private static Element getRacine(String nomFic){
 		
 		org.jdom2.Document document = new Document();
 		//On crée une instance de SAXBuilder
@@ -86,5 +103,23 @@ public class DemandesDeLivraison {
 	    return document.getRootElement();
 	}
 	
-
+	public List<PlageHoraire> getPlages(){
+		return plages;
+	}
+	
+	public int getEntrepot(){
+		return entrepot;
+	}
+	
+	public void display(){
+		for(int i =0; i < plages.size() ; i++){
+			System.out.println("Plage : " + plages.get(i).getHeureDebut() + "  "+ plages.get(i).getHeureFin());
+			for(int j =0 ; j < plages.get(i).getLivraisons().size() ; j++){
+				System.out.println("Livraisons : " + plages.get(i).getLivraisons().get(j).getNoeud());
+			}
+			
+		}
+		
+	}
+	
 }

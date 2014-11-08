@@ -8,6 +8,8 @@ public class PlageHoraire {
 	
 	private Date heureDebut;
 	private Date heureFin;
+	
+
 	private List<Livraison> livraisons;
 	
 	public PlageHoraire(Date heureDebut, Date heureFin) {
@@ -23,6 +25,17 @@ public class PlageHoraire {
 
 	}
 	
+	public List<Livraison> getLivraisons(){
+		return livraisons;
+	}
+	
+	public Date getHeureDebut() {
+		return heureDebut;
+	}
+
+	public Date getHeureFin() {
+		return heureFin;
+	}
 	
 	
 
