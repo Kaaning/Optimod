@@ -5,18 +5,18 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import modele.Tronçon;
+import modele.Troncon;
 
-public class VueTronçon {
+public class VueTroncon {
 
 	private Color couleur = new Color(53,53,53);
-	public Tronçon tronçon;
+	public Troncon troncon;
 	double echelle;
 
 	
-	public VueTronçon(Tronçon tronçon, double echelle){
+	public VueTroncon(Troncon troncon, double echelle){
 		super();
-		this.tronçon = tronçon;
+		this.troncon = troncon;
 		this.echelle=echelle;
 	}
 	
@@ -24,12 +24,12 @@ public class VueTronçon {
 		int xPlan=0;
 		int xVue=0;
 		if(noeud.equals("source")){
-			xPlan = tronçon.getSource().getX();
+			xPlan = troncon.getSource().getX();
 			xVue = (int)(xPlan*echelle);
 //			System.out.println(xPlan+" -> "+xVue+" a "+rayonAjuste);
 		}
 		else if(noeud.equals("cible")){
-			xPlan = tronçon.getCible().getX();
+			xPlan = troncon.getCible().getX();
 			xVue = (int)(xPlan*echelle);
 		}
 		return xVue;
@@ -39,22 +39,22 @@ public class VueTronçon {
 		int yPlan=0;
 		int yVue=0;
 		if(noeud.equals("source")){
-			yPlan = tronçon.getSource().getY();
+			yPlan = troncon.getSource().getY();
 			yVue = (int)(yPlan*echelle);
 		}
 		else if(noeud.equals("cible")){
-			yPlan = tronçon.getCible().getY();
+			yPlan = troncon.getCible().getY();
 			yVue = (int)(yPlan*echelle);
 		}
 		return yVue;
 	}
 //	
 //	public int getXPlan(){
-//		return tronçon.getX();
+//		return troncon.getX();
 //	}
 //	
 //	public int getYPlan(){
-//		return tronçon.getY();
+//		return troncon.getY();
 //	}
 	
 	public Color getCouleur(){
@@ -73,7 +73,7 @@ public class VueTronçon {
 		g.setColor(couleur);
 		((Graphics2D) g).setStroke(new BasicStroke(2));
 		g.drawLine(origine[0]+deplacement[0]+getXVue("source"), origine[1]+deplacement[1]+getYVue("source"), origine[0]+deplacement[0]+getXVue("cible"), origine[1]+deplacement[1]+getYVue("cible"));
-//		System.out.println("Tronçon situé en "+getXVue("source")+","+getYVue("source"));
+//		System.out.println("Troncon situé en "+getXVue("source")+","+getYVue("source"));
 	}
 	
 	public void changerEchelle(double echelle){

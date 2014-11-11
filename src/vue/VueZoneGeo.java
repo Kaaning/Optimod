@@ -12,14 +12,14 @@ import java.util.Iterator;
 import javax.swing.JPanel;
 
 import modele.Noeud;
-import modele.Tronçon;
+import modele.Troncon;
 import modele.ZoneGeographique;
 
 public class VueZoneGeo extends JPanel{
 	
 	private ZoneGeographique zoneGeo;
 	private ArrayList<VueNoeud> vueNoeuds;
-	private ArrayList<VueTronçon> vueTronçons;
+	private ArrayList<VueTroncon> vueTroncons;
 	private Color couleurArrierePlan = Color.gray;
 	private int largeur;
 	private int hauteur;
@@ -38,12 +38,12 @@ public class VueZoneGeo extends JPanel{
         this.echelle=echelle;
         rayonAjuste = (int)(rayon/2*echelle);
         vueNoeuds = new ArrayList<VueNoeud>();
-        vueTronçons = new ArrayList<VueTronçon>();
+        vueTroncons = new ArrayList<VueTroncon>();
         
         setSize(largeur,hauteur);
 		setLocation(x,y);
 		setLayout(null);
-		creerVueTronçons();
+		creerVueTroncons();
 		creerVueNoeuds();
 		
 		/* ----- Gestion du zoom via la molette ----- */
@@ -94,15 +94,15 @@ public class VueZoneGeo extends JPanel{
         });
 		/*----- Test -----*/
 //		add(vt);
-//		vt.setLocation(vt.tronçon.source.getX(),vt.tronçon.source.getY());
+//		vt.setLocation(vt.troncon.source.getX(),vt.troncon.source.getY());
 		
      }
 	
-	public void creerVueTronçons(){
-		ArrayList<Tronçon> tronçons = zoneGeo.getTronçons();
-		for(Tronçon tronçon : tronçons){
-			VueTronçon vn = new VueTronçon(tronçon, echelle);
-			vueTronçons.add(vn);
+	public void creerVueTroncons(){
+		ArrayList<Troncon> troncons = zoneGeo.getTroncons();
+		for(Troncon troncon : troncons){
+			VueTroncon vn = new VueTroncon(troncon, echelle);
+			vueTroncons.add(vn);
 		}
 	}
 	
@@ -124,8 +124,8 @@ public class VueZoneGeo extends JPanel{
         // methode appelee a chaque fois que le dessin doit etre redessine
         super.paint(g);
         setBackground(couleurArrierePlan);
-        // Dessin des tronçons
-        for (VueTronçon vt : vueTronçons){
+        // Dessin des troncons
+        for (VueTroncon vt : vueTroncons){
         	vt.dessiner(g, origine, deplacement);
         }
         // Dessin des noeuds
@@ -140,7 +140,7 @@ public class VueZoneGeo extends JPanel{
         	vn.setLocation(origine[0]+deplacement[0]+vn.getXVue(), origine[1]+deplacement[1]+vn.getYVue());
         	//        	vn.setLocation(origine[0]+vn.getXVue()-rayonAjuste+deplacement[0], origine[1]+vn.getYVue()-rayonAjuste+deplacement[1]);
         }
-        for(VueTronçon vt : vueTronçons){
+        for(VueTroncon vt : vueTroncons){
         	vt.changerEchelle(echelle);
         }
 	}
