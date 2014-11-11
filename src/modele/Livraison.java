@@ -19,6 +19,22 @@ public class Livraison {
 		noeud = idNoeud;
 		etat="en attente";
 	}
+
+	public int getId() {
+		return id;
+	}
+
+	public int getNoeud() {
+		return noeud;
+	}
+
+	public int getClient() {
+		return client;
+	}
+
+	public String getEtat() {
+		return etat;
+	}
 	
 	
 }
