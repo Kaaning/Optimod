@@ -21,7 +21,7 @@ public class DemandesDeLivraison {
 		
 		plages = new ArrayList<PlageHoraire>();
 		
-		try{
+		//try{
 		Element JourneeType = getRacine(nomFic);
 		
 		//récupération de l'adresse de l'entrepot
@@ -60,9 +60,9 @@ public class DemandesDeLivraison {
 	        }
 	        
 	      }
-		}
-		catch(Exception e){
-		}
+		//}
+		//catch(Exception e){
+		//}
 		
 		
 		
@@ -96,7 +96,9 @@ public class DemandesDeLivraison {
 	       //Le parsing est terminé ;)
 	       document = sxb.build(new File(nomFic));
 	    }
-	    catch(Exception e){}
+	    catch(Exception e){
+	    	document = null;
+	    }
 	
 	    //On initialise un nouvel élément racine avec l'élément racine du document.
 	    

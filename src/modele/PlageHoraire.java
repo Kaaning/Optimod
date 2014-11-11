@@ -18,13 +18,11 @@ public class PlageHoraire {
 		this.heureFin = heureFin;
 	}
 
-	public void ajouterLivraison(int id, int client, int adresse){
-		
+	public void ajouterLivraison(int id, int client, int adresse){	
 		Livraison livraison = new Livraison(id, client, adresse);
 		livraisons.add(livraison);
-
 	}
-	
+
 	public List<Livraison> getLivraisons(){
 		return livraisons;
 	}
