@@ -15,23 +15,23 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
 /**
- * Classe de Gestion des Zones Géographiques
+ * Classe de Gestion des Zones GÃ©ographiques
  * @author MohamedRiadh
  *
  */
 
 public class ZoneGeographique {
 	private List<Noeud> noeuds = new ArrayList<Noeud>(); 
-	private List<Tronçon> Tronçons = new ArrayList<Tronçon>();
+	private List<TronÃ§on> TronÃ§ons = new ArrayList<TronÃ§on>();
 	private int Xmin;
 	private int Xmax;
 	private int Ymin;
 	private int Ymax;
 	
 	/**
-	 * Constructeur avec paramètres de l'Objet ZoneGeographique
-	 * @param nomFic String chemin relatif du fichier xml du plan à charger
-	 * @throws remonte des Exceptions reliées à l'ouverture d'un fichier et l'utlisiation de JDOM pour parser le fichier XML
+	 * Constructeur avec paramÃ¨tres de l'Objet ZoneGeographique
+	 * @param nomFic String chemin relatif du fichier xml du plan Ã  charger
+	 * @throws remonte des Exceptions reliÃ©es Ã  l'ouverture d'un fichier et l'utlisiation de JDOM pour parser le fichier XML
 	 */
 	public ZoneGeographique(String nomFic) throws JDOMException, IOException {
 		lirePlanXML(nomFic);
@@ -43,7 +43,7 @@ public class ZoneGeographique {
 	
 	/**
 	 * Accesseur de l'Attribut noeuds
-	 * @return List<Noeud> Liste des Objets Noeuds contenus dans le plan à charger
+	 * @return List<Noeud> Liste des Objets Noeuds contenus dans le plan Ã  charger
 	 *
 	 */
 	public List<Noeud> getNoeuds() {
@@ -51,17 +51,17 @@ public class ZoneGeographique {
 	}
 	
 	/**
-	 * Accesseur de l'Attribut tronçons
-	 * @return List<Tronçon> Liste des Objets Tronçon contenus dans le plan à charger
+	 * Accesseur de l'Attribut tronÃ§ons
+	 * @return List<TronÃ§on> Liste des Objets TronÃ§on contenus dans le plan Ã  charger
 	 *
 	 */
-	public List<Tronçon> getTronçons() {
-		return this.Tronçons;
+	public List<TronÃ§on> getTronÃ§ons() {
+		return this.TronÃ§ons;
 	}
 	
 	/**
 	 * Accesseur de l'Attribut Xmin
-	 * @return int la valeur de l'absisse du noeud la plus petite du plan à charger
+	 * @return int la valeur de l'absisse du noeud la plus petite du plan Ã  charger
 	 *
 	 */
 	public int getXMin() {
@@ -70,7 +70,7 @@ public class ZoneGeographique {
 	
 	/**
 	 * Accesseur de l'Attribut Xmax
-	 * @return int la valeur de l'absisse du noeud la plus grande du plan à charger
+	 * @return int la valeur de l'absisse du noeud la plus grande du plan Ã  charger
 	 *
 	 */
 	public int getXMax() {
@@ -79,7 +79,7 @@ public class ZoneGeographique {
 	
 	/**
 	 * Accesseur de l'Attribut Ymin
-	 * @return int la valeur de l'ordonnée du noeud la plus petite du plan à charger
+	 * @return int la valeur de l'ordonnÃ©e du noeud la plus petite du plan Ã  charger
 	 *
 	 */
 	public int getYMin() {
@@ -88,7 +88,7 @@ public class ZoneGeographique {
 	
 	/**
 	 * Accesseur de l'Attribut Ymax
-	 * @return int la valeur de l'ordonnée du noeud la plus grande du plan à charger
+	 * @return int la valeur de l'ordonnÃ©e du noeud la plus grande du plan Ã  charger
 	 *
 	 */
 	public int getYMax() {
@@ -96,8 +96,8 @@ public class ZoneGeographique {
 	}
 	
 	/**
-	 * Ajoute un Objet Noeud à l'Attribut noeuds (qui représente la liste des noeuds du plan à charger)
-	 * @param noeud Objet Noeud à rajouer à la liste 
+	 * Ajoute un Objet Noeud Ã  l'Attribut noeuds (qui reprÃ©sente la liste des noeuds du plan Ã  charger)
+	 * @param noeud Objet Noeud Ã  rajouer Ã  la liste 
 	 *
 	 */
 	public void ajouterNoeud(Noeud noeud) {
@@ -105,18 +105,18 @@ public class ZoneGeographique {
 	}
 	
 	/**
-	 * Ajoute un Objet Tronçon à l'Attribut tronçons (qui représente la liste des tronçons du plan à charger)
-	 * @param tronçon Objet Tronçon à rajouer à la liste 
+	 * Ajoute un Objet TronÃ§on Ã  l'Attribut tronÃ§ons (qui reprÃ©sente la liste des tronÃ§ons du plan Ã  charger)
+	 * @param tronÃ§on Objet TronÃ§on Ã  rajouer Ã  la liste 
 	 *
 	 */
-	public void ajouterTronçon(Tronçon Tronçon) {
-		this.Tronçons.add(Tronçon);
+	public void ajouterTronÃ§on(TronÃ§on TronÃ§on) {
+		this.TronÃ§ons.add(TronÃ§on);
 	}
 	
 	/**
-	 * Recherche et retourne un Objet Noeud dans la liste des noeuds du plan à charger selon son Identifiant (Attribut Id de l'Objet Noeud)
-	 * @param id int la valeur de l'Identifiant de l'Objet Noeud à rechercher
-	 * @return Noeud dont l'Identifiant est égal au paramètre id passé en paramètre 
+	 * Recherche et retourne un Objet Noeud dans la liste des noeuds du plan Ã  charger selon son Identifiant (Attribut Id de l'Objet Noeud)
+	 * @param id int la valeur de l'Identifiant de l'Objet Noeud Ã  rechercher
+	 * @return Noeud dont l'Identifiant est Ã©gal au paramÃ¨tre id passÃ© en paramÃ¨tre 
 	 *
 	 */
 	public Noeud findNoeudById(int id) {
@@ -129,10 +129,10 @@ public class ZoneGeographique {
 	}
 	
 	/**
-	 * Méthode privée appelée dans le constructeur
-	 * lit le fichier XML dans le chemin est passé en paramètre, utilise la librairie JDOM pour parser le fichier XML
-	 * remplit les listes noeuds et tronçons
-	 * @param nomFic String chemin relatif du fichier xml du plan à charger 
+	 * MÃ©thode privÃ©e appelÃ©e dans le constructeur
+	 * lit le fichier XML dans le chemin est passÃ© en paramÃ¨tre, utilise la librairie JDOM pour parser le fichier XML
+	 * remplit les listes noeuds et tronÃ§ons
+	 * @param nomFic String chemin relatif du fichier xml du plan Ã  charger 
 	 *
 	 */
 	private void lirePlanXML(String nomFic){
@@ -162,26 +162,26 @@ public class ZoneGeographique {
 	    }
 	    
 	    for (int cpt=0; cpt<listeNoeuds.size(); cpt++) {
-	    	List<Element> listeTronçons = new ArrayList<Element>();
-	    	listeTronçons = listeNoeuds.get(cpt).getChildren("LeTronconSortant");
-	    	Iterator<Element> it = listeTronçons.iterator();
+	    	List<Element> listeTronÃ§ons = new ArrayList<Element>();
+	    	listeTronÃ§ons = listeNoeuds.get(cpt).getChildren("LeTronconSortant");
+	    	Iterator<Element> it = listeTronÃ§ons.iterator();
 		    while(it.hasNext())
 			{
-		       Element tronçonCourant = (Element)it.next();
-	    	   Tronçon tronçon = new Tronçon(tronçonCourant.getAttributeValue("nomRue"), Double.parseDouble(tronçonCourant.getAttributeValue("vitesse").replace(',', '.')) ,Double.parseDouble(tronçonCourant.getAttributeValue("longueur").replace(',', '.')));
-	    	   tronçon.setCible(this.findNoeudById(Integer.parseInt(tronçonCourant.getAttributeValue("idNoeudDestination"))));
-	    	   tronçon.setSource(this.findNoeudById(Integer.parseInt(listeNoeuds.get(cpt).getAttributeValue("id"))));
-	    	   this.findNoeudById(Integer.parseInt(listeNoeuds.get(cpt).getAttributeValue("id"))).ajouterTronçonSortant(tronçon);
-	    	   this.findNoeudById(Integer.parseInt(tronçonCourant.getAttributeValue("idNoeudDestination"))).ajouterTronçonEntrants(tronçon);
-	    	   ajouterTronçon(tronçon);
+		       Element tronÃ§onCourant = (Element)it.next();
+	    	   TronÃ§on tronÃ§on = new TronÃ§on(tronÃ§onCourant.getAttributeValue("nomRue"), Double.parseDouble(tronÃ§onCourant.getAttributeValue("vitesse").replace(',', '.')) ,Double.parseDouble(tronÃ§onCourant.getAttributeValue("longueur").replace(',', '.')));
+	    	   tronÃ§on.setCible(this.findNoeudById(Integer.parseInt(tronÃ§onCourant.getAttributeValue("idNoeudDestination"))));
+	    	   tronÃ§on.setSource(this.findNoeudById(Integer.parseInt(listeNoeuds.get(cpt).getAttributeValue("id"))));
+	    	   this.findNoeudById(Integer.parseInt(listeNoeuds.get(cpt).getAttributeValue("id"))).ajouterTronÃ§onSortant(tronÃ§on);
+	    	   this.findNoeudById(Integer.parseInt(tronÃ§onCourant.getAttributeValue("idNoeudDestination"))).ajouterTronÃ§onEntrants(tronÃ§on);
+	    	   ajouterTronÃ§on(tronÃ§on);
 		    }	
 	    }
 	}
 	
 	/**
-	 * Méthode privée appelée dans le constructeur
-	 * recherche la plus grande absisse des noeuds du plan à charger
-	 * @return int la valeur de la plus grande absisse des noeuds à charger 
+	 * MÃ©thode privÃ©e appelÃ©e dans le constructeur
+	 * recherche la plus grande absisse des noeuds du plan Ã  charger
+	 * @return int la valeur de la plus grande absisse des noeuds Ã  charger 
 	 *
 	 */
 	private int findXMax() {
@@ -195,9 +195,9 @@ public class ZoneGeographique {
 	}
 	
 	/**
-	 * Méthode privée appelée dans le constructeur
-	 * recherche la plus grande ordonnée des noeuds du plan à charger
-	 * @return int la valeur de la plus grande ordonnée des noeuds à charger 
+	 * MÃ©thode privÃ©e appelÃ©e dans le constructeur
+	 * recherche la plus grande ordonnÃ©e des noeuds du plan Ã  charger
+	 * @return int la valeur de la plus grande ordonnÃ©e des noeuds Ã  charger 
 	 *
 	 */
 	private int findYMax() {
@@ -211,9 +211,9 @@ public class ZoneGeographique {
 	}
 	
 	/**
-	 * Méthode privée appelée dans le constructeur
-	 * recherche la plus petite absisse des noeuds du plan à charger
-	 * @return int la valeur de la plus petite absisse des noeuds à charger 
+	 * MÃ©thode privÃ©e appelÃ©e dans le constructeur
+	 * recherche la plus petite absisse des noeuds du plan Ã  charger
+	 * @return int la valeur de la plus petite absisse des noeuds Ã  charger 
 	 *
 	 */
 	private int findXMin() {
@@ -227,9 +227,9 @@ public class ZoneGeographique {
 	}
 	
 	/**
-	 * Méthode privée appelée dans le constructeur
-	 * recherche la plus petite ordonnée des noeuds du plan à charger
-	 * @return int la valeur de la plus petite ordonnée des noeuds à charger 
+	 * MÃ©thode privÃ©e appelÃ©e dans le constructeur
+	 * recherche la plus petite ordonnÃ©e des noeuds du plan Ã  charger
+	 * @return int la valeur de la plus petite ordonnÃ©e des noeuds Ã  charger 
 	 *
 	 */
 	private int findYMin() {
@@ -240,5 +240,15 @@ public class ZoneGeographique {
 			}
 		}
 		return temp;		
+	}
+	
+	public boolean verifierNoeud(int id){
+		for(Noeud n : noeuds){
+			if(n.getId()==id){
+				n.setVisite(true);
+				return true;
+			}
+		}
+		return false;
 	}
 }
