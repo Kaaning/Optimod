@@ -11,7 +11,6 @@ public class VueTronçon {
 
 	private Color couleur = new Color(53,53,53);
 	public Tronçon tronçon;
-	int rayon=8;
 	double echelle;
 
 	
@@ -25,12 +24,12 @@ public class VueTronçon {
 		int xPlan=0;
 		int xVue=0;
 		if(noeud.equals("source")){
-			xPlan = tronçon.source.getX();
+			xPlan = tronçon.getSource().getX();
 			xVue = (int)(xPlan*echelle);
 //			System.out.println(xPlan+" -> "+xVue+" a "+rayonAjuste);
 		}
 		else if(noeud.equals("cible")){
-			xPlan = tronçon.cible.getX();
+			xPlan = tronçon.getCible().getX();
 			xVue = (int)(xPlan*echelle);
 		}
 		return xVue;
@@ -40,11 +39,11 @@ public class VueTronçon {
 		int yPlan=0;
 		int yVue=0;
 		if(noeud.equals("source")){
-			yPlan = tronçon.source.getY();
+			yPlan = tronçon.getSource().getY();
 			yVue = (int)(yPlan*echelle);
 		}
 		else if(noeud.equals("cible")){
-			yPlan = tronçon.cible.getY();
+			yPlan = tronçon.getCible().getY();
 			yVue = (int)(yPlan*echelle);
 		}
 		return yVue;

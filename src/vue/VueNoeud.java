@@ -18,7 +18,7 @@ public class VueNoeud extends JComponent implements MouseListener{
 
 	private Color couleur;
 	public Noeud noeud;
-	private int rayon = 16;
+	private int rayon = 12;
 	private double echelle;
 	private int rayonAjuste;
 	private int centrage;

@@ -23,7 +23,7 @@ public class VueZoneGeo extends JPanel{
 	private Color couleurArrierePlan = Color.gray;
 	private int largeur;
 	private int hauteur;
-	private int rayon=16;
+	private int rayon=12;
 	private double echelle;
 	private int rayonAjuste;
 	private int[] origine = {0,0};

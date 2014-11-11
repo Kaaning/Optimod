@@ -6,9 +6,12 @@ import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
+
+import org.jdom2.JDOMException;
 
 import modele.ZoneGeographique;
 
@@ -18,6 +21,7 @@ public class Fenetre extends JFrame{
 	private double echelle = 500.0/800.0;
  
     public static void main(String[] args) {
+    	System.setProperty("java.util.Arrays.useLegacyMergeSort", "true"); //empeche une exception indépendante de nous
         new Fenetre(900,700);
     }
  
@@ -33,7 +37,15 @@ public class Fenetre extends JFrame{
         
 //        creeMenus();
 //        creeBoutons(largeur,hauteur);
-        plan =  new VueZoneGeo(0,0,500,500, echelle, new ZoneGeographique());
+        try {
+			plan =  new VueZoneGeo(0,0,500,500, echelle, new ZoneGeographique("res/plan20x20.xml"));
+		} catch (JDOMException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         
         getContentPane().add(plan);
 //        plan.repaint();
