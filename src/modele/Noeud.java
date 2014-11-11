@@ -15,18 +15,9 @@ public class Noeud {
 	private int id;
 	private int x;
 	private int y;
-<<<<<<< HEAD
-	private List<TronÃ§on> tronÃ§onsSortans = new ArrayList<TronÃ§on>();
-	private List<TronÃ§on> tronÃ§onsEntrants = new ArrayList<TronÃ§on>();
+	private List<Troncon> tronconsSortans = new ArrayList<Troncon>();
+	private List<Troncon> tronconsEntrants = new ArrayList<Troncon>();
 	private boolean visite=false;
-=======
-	private List<Tronçon> tronçonsSortans = new ArrayList<Tronçon>();
-	private List<Tronçon> tronçonsEntrants = new ArrayList<Tronçon>();
-<<<<<<< HEAD
-	private boolean visite=false;
-=======
->>>>>>> master
->>>>>>> William-TestAffichage
 	
 	/**
 	 * Constructeur sans paramÃ¨tres de l'Objet Noeud
@@ -102,31 +93,12 @@ public class Noeud {
 	}
 	
 	/**
-<<<<<<< HEAD
-	 * Accesseur de l'Attribut Y reprÃ©santant l'ordonnÃ©e du Noeud dans le plan
-=======
-<<<<<<< HEAD
-	 * Accesseur de l'Attribut Y représentant l'ordonnée du Noeud dans le plan
-=======
-	 * Accesseur de l'Attribut Y représantant l'ordonnée du Noeud dans le plan
->>>>>>> master
->>>>>>> William-TestAffichage
+	* Accesseur de l'Attribut Y représantant l'ordonnée du Noeud dans le plan
 	 * @return int la valeur de l'Attribut Y
 	 *
 	 */
 	public int getY() {
 		return y;
-<<<<<<< HEAD
-	}
-	
-	public boolean getVisite(){
-		return visite;
-	}
-	
-	public void setVisite(boolean visite){
-		this.visite=visite;
-=======
->>>>>>> master
 	}
 	
 	public boolean getVisite(){

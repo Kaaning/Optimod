@@ -8,22 +8,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-<<<<<<< HEAD
-
-
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
-=======
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
 
->>>>>>> master
 /**
  * Classe de Gestion des Zones G√©ographiques
  * @author MohamedRiadh
@@ -31,17 +21,8 @@ import org.jdom2.input.SAXBuilder;
  */
 
 public class ZoneGeographique {
-<<<<<<< HEAD
-	private ArrayList<Noeud> noeuds = new ArrayList<Noeud>(); 
-	private ArrayList<TronÁon> tronÁons = new ArrayList<TronÁon>();
-=======
 	private List<Noeud> noeuds = new ArrayList<Noeud>(); 
-<<<<<<< HEAD
-	private List<Tron√ßon> Tron√ßons = new ArrayList<Tron√ßon>();
-=======
-	private List<TronÁon> TronÁons = new ArrayList<TronÁon>();
->>>>>>> master
->>>>>>> William-TestAffichage
+	private List<Troncon> troncons = new ArrayList<Troncon>();
 	private int Xmin;
 	private int Xmax;
 	private int Ymin;
@@ -65,11 +46,8 @@ public class ZoneGeographique {
 	 * @return List<Noeud> Liste des Objets Noeuds contenus dans le plan √† charger
 	 *
 	 */
-<<<<<<< HEAD
-	public ArrayList<Noeud> getNoeuds() {
-=======
+
 	public List<Noeud> getNoeuds() {
->>>>>>> master
 		return this.noeuds;
 	}
 	
@@ -78,18 +56,8 @@ public class ZoneGeographique {
 	 * @return List<Tron√ßon> Liste des Objets Tron√ßon contenus dans le plan √† charger
 	 *
 	 */
-<<<<<<< HEAD
-	public List<Tron√ßon> getTron√ßons() {
-		return this.Tron√ßons;
-=======
-<<<<<<< HEAD
-	public ArrayList<TronÁon> getTronÁons() {
-		return this.tronÁons;
-=======
-	public List<TronÁon> getTronÁons() {
-		return this.TronÁons;
->>>>>>> master
->>>>>>> William-TestAffichage
+	public ArrayList<Troncon> getTroncons() {
+		return this.troncons;
 	}
 	
 	/**
@@ -142,17 +110,9 @@ public class ZoneGeographique {
 	 * @param tron√ßon Objet Tron√ßon √† rajouer √† la liste 
 	 *
 	 */
-<<<<<<< HEAD
-	public void ajouterTron√ßon(Tron√ßon Tron√ßon) {
-		this.Tron√ßons.add(Tron√ßon);
-=======
-	public void ajouterTronÁon(TronÁon TronÁon) {
-<<<<<<< HEAD
-		this.tronÁons.add(TronÁon);
-=======
-		this.TronÁons.add(TronÁon);
->>>>>>> master
->>>>>>> William-TestAffichage
+
+	public void ajouterTroncon(Troncon Troncon) {
+		this.troncons.add(Troncon);
 	}
 	
 	/**
@@ -283,10 +243,6 @@ public class ZoneGeographique {
 		}
 		return temp;		
 	}
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> William-TestAffichage
 	
 	public boolean verifierNoeud(int id){
 		for(Noeud n : noeuds){
@@ -297,10 +253,4 @@ public class ZoneGeographique {
 		}
 		return false;
 	}
-<<<<<<< HEAD
-=======
-	
-=======
->>>>>>> master
->>>>>>> William-TestAffichage
 }
