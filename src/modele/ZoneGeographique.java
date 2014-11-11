@@ -36,9 +36,9 @@ public class ZoneGeographique {
 	public ZoneGeographique(String nomFic) throws JDOMException, IOException {
 		lirePlanXML(nomFic);
 		this.Xmax = findXMax();
-	    this.Ymax = findYMax();
-	    this.Xmin = findXMin();
-	    this.Ymin = findYMin();
+	    	this.Ymax = findYMax();
+		this.Xmin = findXMin();
+	    	this.Ymin = findYMin();
 	}
 	
 	/**
@@ -46,7 +46,6 @@ public class ZoneGeographique {
 	 * @return List<Noeud> Liste des Objets Noeuds contenus dans le plan à charger
 	 *
 	 */
-
 	public List<Noeud> getNoeuds() {
 		return this.noeuds;
 	}
@@ -110,7 +109,6 @@ public class ZoneGeographique {
 	 * @param troncon Objet Troncon à rajouer à la liste 
 	 *
 	 */
-
 	public void ajouterTroncon(Troncon Troncon) {
 		this.troncons.add(Troncon);
 	}
@@ -170,7 +168,7 @@ public class ZoneGeographique {
 		    while(it.hasNext())
 			{
 		       Element tronconCourant = (Element)it.next();
-	    	   Troncon troncon = new Troncon(tronconCourant.getAttributeValue("nomRue"), Double.parseDouble(tronconCourant.getAttributeValue("vitesse").replace(',', '.')) ,Double.parseDouble(tronconCourant.getAttributeValue("longueur").replace(',', '.')));
+	    	   Troncon troncon = new Troncon(tronconCourant.getAttributeValue("nomRue"), Double.parseDouble(tronconCourant.getAttributeValue("longueur").replace(',', '.'))/Double.parseDouble(tronconCourant.getAttributeValue("vitesse").replace(',', '.')));
 	    	   troncon.setCible(this.findNoeudById(Integer.parseInt(tronconCourant.getAttributeValue("idNoeudDestination"))));
 	    	   troncon.setSource(this.findNoeudById(Integer.parseInt(listeNoeuds.get(cpt).getAttributeValue("id"))));
 	    	   this.findNoeudById(Integer.parseInt(listeNoeuds.get(cpt).getAttributeValue("id"))).ajouterTronconSortant(troncon);
