@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+<<<<<<< HEAD
 
 
 import org.jdom2.Document;
@@ -16,6 +17,13 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
+=======
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
+
+>>>>>>> master
 /**
  * Classe de Gestion des Zones Géographiques
  * @author MohamedRiadh
@@ -23,8 +31,13 @@ import org.jdom2.input.SAXBuilder;
  */
 
 public class ZoneGeographique {
+<<<<<<< HEAD
 	private ArrayList<Noeud> noeuds = new ArrayList<Noeud>(); 
 	private ArrayList<Tronçon> tronçons = new ArrayList<Tronçon>();
+=======
+	private List<Noeud> noeuds = new ArrayList<Noeud>(); 
+	private List<Tronçon> Tronçons = new ArrayList<Tronçon>();
+>>>>>>> master
 	private int Xmin;
 	private int Xmax;
 	private int Ymin;
@@ -48,7 +61,11 @@ public class ZoneGeographique {
 	 * @return List<Noeud> Liste des Objets Noeuds contenus dans le plan à charger
 	 *
 	 */
+<<<<<<< HEAD
 	public ArrayList<Noeud> getNoeuds() {
+=======
+	public List<Noeud> getNoeuds() {
+>>>>>>> master
 		return this.noeuds;
 	}
 	
@@ -57,8 +74,13 @@ public class ZoneGeographique {
 	 * @return List<Tronçon> Liste des Objets Tronçon contenus dans le plan à charger
 	 *
 	 */
+<<<<<<< HEAD
 	public ArrayList<Tronçon> getTronçons() {
 		return this.tronçons;
+=======
+	public List<Tronçon> getTronçons() {
+		return this.Tronçons;
+>>>>>>> master
 	}
 	
 	/**
@@ -112,7 +134,11 @@ public class ZoneGeographique {
 	 *
 	 */
 	public void ajouterTronçon(Tronçon Tronçon) {
+<<<<<<< HEAD
 		this.tronçons.add(Tronçon);
+=======
+		this.Tronçons.add(Tronçon);
+>>>>>>> master
 	}
 	
 	/**
@@ -243,6 +269,7 @@ public class ZoneGeographique {
 		}
 		return temp;		
 	}
+<<<<<<< HEAD
 	
 	public boolean verifierNoeud(int id){
 		for(Noeud n : noeuds){
@@ -254,4 +281,6 @@ public class ZoneGeographique {
 		return false;
 	}
 	
+=======
+>>>>>>> master
 }
