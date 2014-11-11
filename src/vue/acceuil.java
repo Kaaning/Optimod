@@ -152,7 +152,7 @@ public class acceuil{
 		list.setVisibleRowCount(-1);
 		JScrollPane listScroller = new JScrollPane(list);
 		listScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		listScroller.setPreferredSize(new Dimension(500, 500));
+		listScroller.setPreferredSize(new Dimension(250, 500));
 
 		
 		pList.add(listScroller);

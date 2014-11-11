@@ -19,7 +19,7 @@ public class Jour {
 	}
 	
 	public void chargerLivraison(String nomFichier) throws ParseException{
-		demandes = new DemandesDeLivraison(nomFichier);
+		demandes = new DemandesDeLivraison(nomFichier, this);
 	}
 	
 	public void supprimerLivraison(int noeud){
