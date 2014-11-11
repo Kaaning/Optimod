@@ -15,6 +15,8 @@ import org.jdom2.JDOMException;
 
 import modele.ZoneGeographique;
 
+
+/*SERT UNIQUEMENT DE TEST POUR LE GRAPHE, NE PAS UTILISER*/
 public class Fenetre extends JFrame{
 
 	private VueZoneGeo plan;
@@ -38,7 +40,8 @@ public class Fenetre extends JFrame{
 //        creeMenus();
 //        creeBoutons(largeur,hauteur);
         try {
-			plan =  new VueZoneGeo(0,0,500,500, echelle, new ZoneGeographique("res/plan20x20.xml"));
+        	ZoneGeographique zg = new ZoneGeographique("res/plan20x20.xml");
+			plan =  new VueZoneGeo(0,0,500,500, echelle, zg);
 		} catch (JDOMException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

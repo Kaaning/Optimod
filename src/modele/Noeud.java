@@ -17,6 +17,7 @@ public class Noeud {
 	private int y;
 	private List<Tronçon> tronçonsSortans = new ArrayList<Tronçon>();
 	private List<Tronçon> tronçonsEntrants = new ArrayList<Tronçon>();
+	private boolean visite=false;
 	
 	/**
 	 * Constructeur sans paramètres de l'Objet Noeud
@@ -92,11 +93,19 @@ public class Noeud {
 	}
 	
 	/**
-	 * Accesseur de l'Attribut Y représantant l'ordonnée du Noeud dans le plan
+	 * Accesseur de l'Attribut Y représentant l'ordonnée du Noeud dans le plan
 	 * @return int la valeur de l'Attribut Y
 	 *
 	 */
 	public int getY() {
 		return y;
+	}
+	
+	public boolean getVisite(){
+		return visite;
+	}
+	
+	public void setVisite(boolean visite){
+		this.visite=visite;
 	}
 }

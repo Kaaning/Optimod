@@ -26,9 +26,6 @@ public class VueNoeud extends JComponent implements MouseListener{
 	private Color fond = new Color(53,53,53);
 	private Color surbrillance = new Color(93,93,93);
 	
-	
-
-	
 	public VueNoeud(Noeud noeud, double echelle){
 		super();
 		this.noeud = noeud;
@@ -82,7 +79,7 @@ public class VueNoeud extends JComponent implements MouseListener{
         Graphics2D antiAlias = (Graphics2D)g;
         antiAlias.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-		g.setColor(couleur);
+		g.setColor(getCouleur());
         g.fillOval(0, 0, rayonAjuste, rayonAjuste);
 	}
 
@@ -142,6 +139,18 @@ public class VueNoeud extends JComponent implements MouseListener{
         rayonAjuste = (int)(rayon*echelle);
         size = new Dimension(rayonAjuste,rayonAjuste);
         setSize(size.width, size.height);
+	}
+	
+	public void changerCouleur(){
+		if(noeud.getVisite()){
+			fond = new Color(202,202,0);
+			surbrillance = new Color(255,255,23);
+		}
+		else{
+			fond = new Color(53,53,53);
+			surbrillance = new Color(93,93,93);
+		}
+		couleur = fond;
 	}
 	
 }

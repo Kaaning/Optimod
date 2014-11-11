@@ -243,4 +243,15 @@ public class ZoneGeographique {
 		}
 		return temp;		
 	}
+	
+	public boolean verifierNoeud(int id){
+		for(Noeud n : noeuds){
+			if(n.getId()==id){
+				n.setVisite(true);
+				return true;
+			}
+		}
+		return false;
+	}
+	
 }
