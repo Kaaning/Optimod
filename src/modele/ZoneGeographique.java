@@ -186,9 +186,9 @@ public class ZoneGeographique {
 	 */
 	private int findXMax() {
 		int temp = this.noeuds.get(0).getX();
-		for (int i=1; i<this.noeuds.size(); i++) {
-			if (this.noeuds.get(i).getX() > temp) {
-				temp = this.noeuds.get(i).getX();
+		for (Noeud n : noeuds) {
+			if (n.getX() > temp) {
+				temp = n.getX();
 			}
 		}
 		return temp;
@@ -202,9 +202,9 @@ public class ZoneGeographique {
 	 */
 	private int findYMax() {
 		int temp = this.noeuds.get(0).getY();
-		for (int i=1; i<this.noeuds.size(); i++) {
-			if (this.noeuds.get(i).getY() > temp) {
-				temp = this.noeuds.get(i).getY();
+		for (Noeud n : noeuds) {
+			if (n.getY() > temp) {
+				temp = n.getY();
 			}
 		}
 		return temp;		
@@ -218,9 +218,9 @@ public class ZoneGeographique {
 	 */
 	private int findXMin() {
 		int temp = this.noeuds.get(0).getX();
-		for (int i=1; i<this.noeuds.size(); i++) {
-			if (this.noeuds.get(i).getX() < temp) {
-				temp = this.noeuds.get(i).getX();
+		for (Noeud n : noeuds) {
+			if (n.getX() < temp) {
+				temp = n.getX();
 			}
 		}
 		return temp;	
@@ -234,17 +234,23 @@ public class ZoneGeographique {
 	 */
 	private int findYMin() {
 		int temp = this.noeuds.get(0).getY();
-		for (int i=1; i<this.noeuds.size(); i++) {
-			if (this.noeuds.get(i).getY() < temp) {
-				temp = this.noeuds.get(i).getY();
+		for (Noeud n : noeuds) {
+			if (n.getY() < temp) {
+				temp = n.getY();
 			}
 		}
 		return temp;		
 	}
 	
-	public boolean verifierNoeud(int id){
-		for(Noeud n : noeuds){
-			if(n.getId()==id){
+	/**
+	 * Méthode qui vérifie si le noeud dont l'Id est passé en paramètre a été visité dans la tournée ou pas
+	 * @param id int Id du noeud à vérifier
+	 * @return boolean true si le noeud passé en paramètre a été visité false sinon 
+	 *
+	 */
+	public boolean verifierNoeud(int id) {
+		for (Noeud n : noeuds) {
+			if (n.getId()==id) {
 				n.setVisite(true);
 				return true;
 			}
