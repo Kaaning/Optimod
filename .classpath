@@ -2,18 +2,12 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-<<<<<<< HEAD
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/optimod"/>
-=======
-<<<<<<< HEAD
 	<classpathentry kind="lib" path="lib/jdom-2.0.5/jdom-2.0.5-contrib.jar"/>
 	<classpathentry kind="lib" path="lib/jdom-2.0.5/jdom-2.0.5-javadoc.jar"/>
 	<classpathentry kind="lib" path="lib/jdom-2.0.5/jdom-2.0.5-junit.jar"/>
 	<classpathentry kind="lib" path="lib/jdom-2.0.5/jdom-2.0.5-sources.jar"/>
 	<classpathentry kind="lib" path="lib/jdom-2.0.5/jdom-2.0.5.jar"/>
-=======
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/xml"/>
->>>>>>> master
->>>>>>> master
 	<classpathentry kind="output" path="bin"/>
 </classpath>

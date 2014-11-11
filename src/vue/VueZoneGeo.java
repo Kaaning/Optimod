@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -99,7 +100,7 @@ public class VueZoneGeo extends JPanel{
      }
 	
 	public void creerVueTroncons(){
-		ArrayList<Troncon> troncons = zoneGeo.getTroncons();
+		List<Troncon> troncons = zoneGeo.getTroncons();
 		for(Troncon troncon : troncons){
 			VueTroncon vn = new VueTroncon(troncon, echelle);
 			vueTroncons.add(vn);
@@ -107,7 +108,7 @@ public class VueZoneGeo extends JPanel{
 	}
 	
 	public void creerVueNoeuds(){
-		ArrayList<Noeud> noeuds = zoneGeo.getNoeuds();
+		List<Noeud> noeuds = zoneGeo.getNoeuds();
 		for(Noeud noeud : noeuds){
 			VueNoeud vn = new VueNoeud(noeud, echelle);
 			vueNoeuds.add(vn);

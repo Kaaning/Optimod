@@ -38,39 +38,39 @@ public class Noeud {
 	}
 	
 	/**
-	 * Ajoute un objet tronçon à la liste des tronçons sortants du Noeud 
-	 * @param tronçon L'Objet Tronçon à rajouter 
+	 * Ajoute un objet troncon à la liste des troncons sortants du Noeud 
+	 * @param troncon L'Objet Troncon à rajouter 
 	 *
 	 */
-	public void ajouterTronçonSortant(Tronçon tronçon) {
-		this.tronçonsSortans.add(tronçon);
+	public void ajouterTronconSortant(Troncon troncon) {
+		this.tronconsSortans.add(troncon);
 	}
 	
 	/**
-	 * Ajoute un objet tronçon à la liste des tronçons entrants du Noeud
-	 * @param tronçon L'Objet Tronçon à rajouter
+	 * Ajoute un objet troncon à la liste des troncons entrants du Noeud
+	 * @param troncon L'Objet Troncon à rajouter
 	 *
 	 */
-	public void ajouterTronçonEntrants(Tronçon tronçon) {
-		this.tronçonsEntrants.add(tronçon);
+	public void ajouterTronconEntrants(Troncon troncon) {
+		this.tronconsEntrants.add(troncon);
 	}
 	
 	/**
-	 * Accesseur de l'Attribut tronçonsEntrants
-	 * @return List<Tronçon> Liste des Objets Tronçons entrants de Noeud
+	 * Accesseur de l'Attribut tronconsEntrants
+	 * @return List<Troncon> Liste des Objets Troncons entrants de Noeud
 	 *
 	 */
-	public List<Tronçon> getTronçonsEntrants() {
-		return this.tronçonsEntrants;
+	public List<Troncon> getTronconsEntrants() {
+		return this.tronconsEntrants;
 	}
 	
 	/**
-	 * Accesseur de l'Attribut tronçonsSortants
-	 * @return List<Tronçon> Liste des Objets Tronçons sortants de Noeud
+	 * Accesseur de l'Attribut tronconsSortants
+	 * @return List<Troncon> Liste des Objets Troncons sortants de Noeud
 	 *
 	 */
-	public List<Tronçon> getTronçonsSortants() {
-		return this.tronçonsSortans;
+	public List<Troncon> getTronconsSortants() {
+		return this.tronconsSortans;
 	}
 	
 	

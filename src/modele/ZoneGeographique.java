@@ -52,11 +52,11 @@ public class ZoneGeographique {
 	}
 	
 	/**
-	 * Accesseur de l'Attribut tronçons
-	 * @return List<Tronçon> Liste des Objets Tronçon contenus dans le plan à charger
+	 * Accesseur de l'Attribut troncons
+	 * @return List<Troncon> Liste des Objets Troncon contenus dans le plan à charger
 	 *
 	 */
-	public ArrayList<Troncon> getTroncons() {
+	public List<Troncon> getTroncons() {
 		return this.troncons;
 	}
 	
@@ -106,8 +106,8 @@ public class ZoneGeographique {
 	}
 	
 	/**
-	 * Ajoute un Objet Tronçon à l'Attribut tronçons (qui représente la liste des tronçons du plan à charger)
-	 * @param tronçon Objet Tronçon à rajouer à la liste 
+	 * Ajoute un Objet Troncon à l'Attribut troncons (qui représente la liste des troncons du plan à charger)
+	 * @param troncon Objet Troncon à rajouer à la liste 
 	 *
 	 */
 
@@ -133,7 +133,7 @@ public class ZoneGeographique {
 	/**
 	 * Méthode privée appelée dans le constructeur
 	 * lit le fichier XML dans le chemin est passé en paramètre, utilise la librairie JDOM pour parser le fichier XML
-	 * remplit les listes noeuds et tronçons
+	 * remplit les listes noeuds et troncons
 	 * @param nomFic String chemin relatif du fichier xml du plan à charger 
 	 *
 	 */
@@ -164,18 +164,18 @@ public class ZoneGeographique {
 	    }
 	    
 	    for (int cpt=0; cpt<listeNoeuds.size(); cpt++) {
-	    	List<Element> listeTronçons = new ArrayList<Element>();
-	    	listeTronçons = listeNoeuds.get(cpt).getChildren("LeTronconSortant");
-	    	Iterator<Element> it = listeTronçons.iterator();
+	    	List<Element> listeTroncons = new ArrayList<Element>();
+	    	listeTroncons = listeNoeuds.get(cpt).getChildren("LeTronconSortant");
+	    	Iterator<Element> it = listeTroncons.iterator();
 		    while(it.hasNext())
 			{
-		       Element tronçonCourant = (Element)it.next();
-	    	   Tronçon tronçon = new Tronçon(tronçonCourant.getAttributeValue("nomRue"), Double.parseDouble(tronçonCourant.getAttributeValue("vitesse").replace(',', '.')) ,Double.parseDouble(tronçonCourant.getAttributeValue("longueur").replace(',', '.')));
-	    	   tronçon.setCible(this.findNoeudById(Integer.parseInt(tronçonCourant.getAttributeValue("idNoeudDestination"))));
-	    	   tronçon.setSource(this.findNoeudById(Integer.parseInt(listeNoeuds.get(cpt).getAttributeValue("id"))));
-	    	   this.findNoeudById(Integer.parseInt(listeNoeuds.get(cpt).getAttributeValue("id"))).ajouterTronçonSortant(tronçon);
-	    	   this.findNoeudById(Integer.parseInt(tronçonCourant.getAttributeValue("idNoeudDestination"))).ajouterTronçonEntrants(tronçon);
-	    	   ajouterTronçon(tronçon);
+		       Element tronconCourant = (Element)it.next();
+	    	   Troncon troncon = new Troncon(tronconCourant.getAttributeValue("nomRue"), Double.parseDouble(tronconCourant.getAttributeValue("vitesse").replace(',', '.')) ,Double.parseDouble(tronconCourant.getAttributeValue("longueur").replace(',', '.')));
+	    	   troncon.setCible(this.findNoeudById(Integer.parseInt(tronconCourant.getAttributeValue("idNoeudDestination"))));
+	    	   troncon.setSource(this.findNoeudById(Integer.parseInt(listeNoeuds.get(cpt).getAttributeValue("id"))));
+	    	   this.findNoeudById(Integer.parseInt(listeNoeuds.get(cpt).getAttributeValue("id"))).ajouterTronconSortant(troncon);
+	    	   this.findNoeudById(Integer.parseInt(tronconCourant.getAttributeValue("idNoeudDestination"))).ajouterTronconEntrants(troncon);
+	    	   ajouterTroncon(troncon);
 		    }	
 	    }
 	}
