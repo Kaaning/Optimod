@@ -1,7 +1,11 @@
 package vue;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -16,18 +20,23 @@ public class VueZoneGeo extends JPanel{
 	private ZoneGeographique zoneGeo;
 	private ArrayList<VueNoeud> vueNoeuds;
 	private ArrayList<VueTronçon> vueTronçons;
-	private Color couleurArrierePlan;
+	private Color couleurArrierePlan = Color.gray;
 	private int largeur;
 	private int hauteur;
-	private int rayon;
+	private int rayon=16;
+	private double echelle;
+	private int rayonAjuste;
+	private int[] origine = {0,0};
+	private int[] clic = {0,0};
+	private int[] deplacement = {0,0};
 	
-	public VueZoneGeo (int x, int y, int largeur, int hauteur, Color arrierePlan, ZoneGeographique zoneGeo) {
+	public VueZoneGeo (int x, int y, int largeur, int hauteur, double echelle, ZoneGeographique zoneGeo) {
     	// Creation d'un panneau pour dessiner les boules
         this.largeur = largeur;
         this.hauteur = hauteur;
-        this.rayon=8;
-        this.couleurArrierePlan = arrierePlan;
         this.zoneGeo = zoneGeo;
+        this.echelle=echelle;
+        rayonAjuste = (int)(rayon/2*echelle);
         vueNoeuds = new ArrayList<VueNoeud>();
         vueTronçons = new ArrayList<VueTronçon>();
         
@@ -36,6 +45,53 @@ public class VueZoneGeo extends JPanel{
 		setLayout(null);
 		creerVueTronçons();
 		creerVueNoeuds();
+		
+		/* ----- Gestion du zoom via la molette ----- */
+		addMouseWheelListener(new MouseAdapter() {
+        	public void mouseWheelMoved(MouseWheelEvent e) {
+        		double sens = e.getPreciseWheelRotation();
+        		double echelle = getEchelle();
+        		if(sens==1.0 && echelle>0.630){
+                	echelle-=0.1;
+                }
+                else if(sens==-1.0){
+                	echelle+=0.1;
+                }
+                else if(echelle<0.630){
+        			origine[0]=0;
+        			origine[1]=0;
+        			deplacement[0]=0;
+        			deplacement[1]=0;
+        		}
+                System.out.println(echelle);
+                changerEchelle(echelle);
+                repaint();
+        	  }
+		});
+		/* ----- Gestion du déplacement via clic&glisse ----- */
+		addMouseListener(new MouseAdapter(){
+			public void mousePressed(MouseEvent e){
+				int[] coord = {e.getX(), e.getY()};
+				clic = coord;
+				System.out.println("Cliqué en "+clic[0]+","+clic[1]);
+			}
+			public void mouseReleased(MouseEvent e){
+				int[] coord = {origine[0]+deplacement[0], origine[1]+deplacement[1]};
+				deplacement[0]=0;
+				deplacement[1]=0;
+				origine = coord;
+				System.out.println("Origine en "+origine[0]+","+origine[1]);
+			}
+		});
+		addMouseMotionListener(new MouseAdapter(){
+        	public void mouseDragged(MouseEvent e){
+        		double echelle = getEchelle();
+//        		int[] coord = {(int)((e.getX()-clic[0])/echelle), (int)((e.getY()-clic[1])/echelle)};
+        		int[] coord = {e.getX()-clic[0], e.getY()-clic[1]};
+        		deplacement = coord;
+        		deplacerPlan();
+        	}
+        });
 		/*----- Test -----*/
 //		add(vt);
 //		vt.setLocation(vt.tronçon.source.getX(),vt.tronçon.source.getY());
@@ -45,7 +101,7 @@ public class VueZoneGeo extends JPanel{
 	public void creerVueTronçons(){
 		ArrayList<Tronçon> tronçons = zoneGeo.getTronçons();
 		for(Tronçon tronçon : tronçons){
-			VueTronçon vn = new VueTronçon(tronçon);
+			VueTronçon vn = new VueTronçon(tronçon, echelle);
 			vueTronçons.add(vn);
 		}
 	}
@@ -53,10 +109,12 @@ public class VueZoneGeo extends JPanel{
 	public void creerVueNoeuds(){
 		ArrayList<Noeud> noeuds = zoneGeo.getNoeuds();
 		for(Noeud noeud : noeuds){
-			VueNoeud vn = new VueNoeud(noeud);
+			VueNoeud vn = new VueNoeud(noeud, echelle);
 			vueNoeuds.add(vn);
 			add(vn);
-			vn.setLocation(vn.getXVue()-rayon, vn.getYVue()-rayon);
+			vn.setLocation(origine[0]+deplacement[0]+vn.getXVue(), origine[1]+deplacement[1]+vn.getYVue());
+//			vn.setLocation(origine[0]+vn.getXVue()-rayonAjuste+deplacement[0], origine[1]+vn.getYVue()-rayonAjuste+deplacement[1]);
+//			//System.out.println("Noeud situé en "+(vn.getXVue())+","+(vn.getYVue()));
 		}
 		repaint();
 	}
@@ -68,11 +126,37 @@ public class VueZoneGeo extends JPanel{
         setBackground(couleurArrierePlan);
         // Dessin des tronçons
         for (VueTronçon vt : vueTronçons){
-        	vt.dessiner(g);
+        	vt.dessiner(g, origine, deplacement);
         }
         // Dessin des noeuds
         super.paintChildren(g);
     }
+	
+	public void changerEchelle(double echelle){
+		this.echelle=echelle;
+        rayonAjuste = (int)(rayon/2*echelle);
+        for(VueNoeud vn : vueNoeuds){
+        	vn.changerEchelle(echelle);
+        	vn.setLocation(origine[0]+deplacement[0]+vn.getXVue(), origine[1]+deplacement[1]+vn.getYVue());
+        	//        	vn.setLocation(origine[0]+vn.getXVue()-rayonAjuste+deplacement[0], origine[1]+vn.getYVue()-rayonAjuste+deplacement[1]);
+        }
+        for(VueTronçon vt : vueTronçons){
+        	vt.changerEchelle(echelle);
+        }
+	}
+	
+	public void deplacerPlan(){
+		
+		for(VueNoeud vn : vueNoeuds){
+//			vn.setDeplacement(deplacement);
+			vn.setLocation(origine[0]+deplacement[0]+vn.getXVue(), origine[1]+deplacement[1]+vn.getYVue());
+			//        	vn.setLocation(origine[0]+vn.getXVue()-rayonAjuste+deplacement[0], origine[1]+vn.getYVue()-rayonAjuste+deplacement[1]);
+        }
+	}
+	
+	public double getEchelle(){
+		return echelle;
+	}
 	
 
 	

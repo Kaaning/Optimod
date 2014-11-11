@@ -5,14 +5,17 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 
 import modele.ZoneGeographique;
 
 public class Fenetre extends JFrame{
 
 	private VueZoneGeo plan;
+	private double echelle = 500.0/800.0;
  
     public static void main(String[] args) {
         new Fenetre(900,700);
@@ -30,12 +33,8 @@ public class Fenetre extends JFrame{
         
 //        creeMenus();
 //        creeBoutons(largeur,hauteur);
-        plan =  new VueZoneGeo(0,0,500,500, Color.gray, new ZoneGeographique());
-        plan.addMouseListener(new MouseAdapter(){
-            public void mouseClicked(MouseEvent e){
-                System.out.println("Souris cliquee en x="+e.getX()+" y="+e.getY());
-            }
-        });
+        plan =  new VueZoneGeo(0,0,500,500, echelle, new ZoneGeographique());
+        
         getContentPane().add(plan);
 //        plan.repaint();
         setVisible(true);

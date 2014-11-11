@@ -19,17 +19,24 @@ public class VueNoeud extends JComponent implements MouseListener{
 	private Color couleur;
 	public Noeud noeud;
 	private int rayon = 16;
-	private Dimension size = new Dimension(rayon,rayon);
+	private double echelle;
+	private int rayonAjuste;
+	private int centrage;
+	private Dimension size;
 	private Color fond = new Color(53,53,53);
 	private Color surbrillance = new Color(93,93,93);
-	private double echelle = 500.0/800.0;
+	
 	
 
 	
-	public VueNoeud(Noeud noeud){
+	public VueNoeud(Noeud noeud, double echelle){
 		super();
 		this.noeud = noeud;
 		this.couleur = fond;
+		this.echelle=echelle;
+		rayonAjuste = (int)(rayon*echelle);
+		centrage=rayon/2;
+		size = new Dimension(rayonAjuste,rayonAjuste);
 		enableInputMethods(true);   
 		addMouseListener(this);
 		setSize(size.width, size.height);
@@ -39,16 +46,15 @@ public class VueNoeud extends JComponent implements MouseListener{
 	public int getXVue(){
 		//Convertit le x plan en x vue
 		int xPlan = noeud.getX();
-		double d =(double)xPlan*(double)echelle;
-		int xVue = (int) (xPlan*echelle);
-		System.out.print(xPlan+" -> "+xVue);
+		int xVue = (int)((xPlan-centrage)*echelle);
+//		System.out.print(xPlan+" -> "+xVue+" a "+rayonAjuste);
 		return xVue;
 	}
 	
 	public int getYVue(){
 		int yPlan = noeud.getY();
-		int yVue = (int) (yPlan*echelle);
-		System.out.println("     "+yPlan+" -> "+yVue);
+		int yVue = (int)((yPlan-centrage)*echelle);
+//		System.out.println("     "+yPlan+" -> "+yVue);
 		return yVue;
 	}
 	
@@ -77,7 +83,7 @@ public class VueNoeud extends JComponent implements MouseListener{
         antiAlias.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		g.setColor(couleur);
-        g.fillOval(0, 0, (int)(rayon*echelle), (int)(rayon*echelle));
+        g.fillOval(0, 0, rayonAjuste, rayonAjuste);
 	}
 
 	@Override
@@ -130,5 +136,12 @@ public class VueNoeud extends JComponent implements MouseListener{
     {
         return getPreferredSize();
     }
+	
+	public void changerEchelle(double echelle){
+		this.echelle=echelle;
+        rayonAjuste = (int)(rayon*echelle);
+        size = new Dimension(rayonAjuste,rayonAjuste);
+        setSize(size.width, size.height);
+	}
 	
 }
