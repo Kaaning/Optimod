@@ -16,9 +16,10 @@ public class DemandesDeLivraison {
 	
 	private int entrepot;
 	private List<PlageHoraire> plages; 
+	private Jour jour;
 	
-	public DemandesDeLivraison(String nomFic) throws ParseException{
-		
+	public DemandesDeLivraison(String nomFic, Jour jour) throws ParseException{
+		this.jour = jour;
 		plages = new ArrayList<PlageHoraire>();
 		
 		//try{
@@ -118,10 +119,18 @@ public class DemandesDeLivraison {
 			System.out.println("Plage : " + plages.get(i).getHeureDebut() + "  "+ plages.get(i).getHeureFin());
 			for(int j =0 ; j < plages.get(i).getLivraisons().size() ; j++){
 				System.out.println("Livraisons : " + plages.get(i).getLivraisons().get(j).getNoeud());
-			}
-			
+			}	
 		}
-		
 	}
-	
+
+	public List<Livraison> getLivraison(){
+		List<Livraison> livraisons = new ArrayList<Livraison>();
+		for (int i = 0 ; i < plages.size() ; i++){
+			for (int j = 0 ; j<plages.get(i).getLivraisons().size() ; j++){
+				livraisons.add(plages.get(i).getLivraisons().get(j));
+			}
+		}
+		return livraisons;
+	}
+
 }
