@@ -15,20 +15,21 @@ public class Noeud {
 	private int id;
 	private int x;
 	private int y;
-	private List<Tronçon> tronçonsSortans = new ArrayList<Tronçon>();
-	private List<Tronçon> tronçonsEntrants = new ArrayList<Tronçon>();
+	private List<TronÃ§on> tronÃ§onsSortans = new ArrayList<TronÃ§on>();
+	private List<TronÃ§on> tronÃ§onsEntrants = new ArrayList<TronÃ§on>();
+	private boolean visite=false;
 	
 	/**
-	 * Constructeur sans paramètres de l'Objet Noeud
+	 * Constructeur sans paramÃ¨tres de l'Objet Noeud
 	 */
 	public Noeud() {
 	}
 	
 	/**
-	 * Constructeur avec paramètres de l'Objet Noeud
-	 * @param unId l'ID du Noeud à construire et ses coordonnées X et Y dans le plan
+	 * Constructeur avec paramÃ¨tres de l'Objet Noeud
+	 * @param unId l'ID du Noeud Ã  construire et ses coordonnÃ©es X et Y dans le plan
 	 * @param unX l'absisse X du Noeud dans le plan
-	 * @param unY l'oordonnée Y du Noeud dans le plan
+	 * @param unY l'oordonnÃ©e Y du Noeud dans le plan
 	 */
 	public Noeud(int unId, int unX, int unY) {
 		id = unId;
@@ -37,44 +38,44 @@ public class Noeud {
 	}
 	
 	/**
-	 * Ajoute un objet tronçon à la liste des tronçons sortants du Noeud 
-	 * @param tronçon L'Objet Tronçon à rajouter 
+	 * Ajoute un objet tronÃ§on Ã  la liste des tronÃ§ons sortants du Noeud 
+	 * @param tronÃ§on L'Objet TronÃ§on Ã  rajouter 
 	 *
 	 */
-	public void ajouterTronçonSortant(Tronçon tronçon) {
-		this.tronçonsSortans.add(tronçon);
+	public void ajouterTronÃ§onSortant(TronÃ§on tronÃ§on) {
+		this.tronÃ§onsSortans.add(tronÃ§on);
 	}
 	
 	/**
-	 * Ajoute un objet tronçon à la liste des tronçons entrants du Noeud
-	 * @param tronçon L'Objet Tronçon à rajouter
+	 * Ajoute un objet tronÃ§on Ã  la liste des tronÃ§ons entrants du Noeud
+	 * @param tronÃ§on L'Objet TronÃ§on Ã  rajouter
 	 *
 	 */
-	public void ajouterTronçonEntrants(Tronçon tronçon) {
-		this.tronçonsEntrants.add(tronçon);
+	public void ajouterTronÃ§onEntrants(TronÃ§on tronÃ§on) {
+		this.tronÃ§onsEntrants.add(tronÃ§on);
 	}
 	
 	/**
-	 * Accesseur de l'Attribut tronçonsEntrants
-	 * @return List<Tronçon> Liste des Objets Tronçons entrants de Noeud
+	 * Accesseur de l'Attribut tronÃ§onsEntrants
+	 * @return List<TronÃ§on> Liste des Objets TronÃ§ons entrants de Noeud
 	 *
 	 */
-	public List<Tronçon> getTronçonsEntrants() {
-		return this.tronçonsEntrants;
+	public List<TronÃ§on> getTronÃ§onsEntrants() {
+		return this.tronÃ§onsEntrants;
 	}
 	
 	/**
-	 * Accesseur de l'Attribut tronçonsSortants
-	 * @return List<Tronçon> Liste des Objets Tronçons sortants de Noeud
+	 * Accesseur de l'Attribut tronÃ§onsSortants
+	 * @return List<TronÃ§on> Liste des Objets TronÃ§ons sortants de Noeud
 	 *
 	 */
-	public List<Tronçon> getTronçonsSortants() {
-		return this.tronçonsSortans;
+	public List<TronÃ§on> getTronÃ§onsSortants() {
+		return this.tronÃ§onsSortans;
 	}
 	
 	
 	/**
-	 * Accesseur de l'Attribut Id représantant l'Identifiant du Noeud
+	 * Accesseur de l'Attribut Id reprÃ©santant l'Identifiant du Noeud
 	 * @return int la valeur de l'Attribut Id
 	 *
 	 */
@@ -83,7 +84,7 @@ public class Noeud {
 	}
 	
 	/**
-	 * Accesseur de l'Attribut X représantant l'absisse du Noeud dans le plan
+	 * Accesseur de l'Attribut X reprÃ©santant l'absisse du Noeud dans le plan
 	 * @return int la valeur de l'Attribut X
 	 *
 	 */
@@ -92,11 +93,19 @@ public class Noeud {
 	}
 	
 	/**
-	 * Accesseur de l'Attribut Y représantant l'ordonnée du Noeud dans le plan
+	 * Accesseur de l'Attribut Y reprÃ©santant l'ordonnÃ©e du Noeud dans le plan
 	 * @return int la valeur de l'Attribut Y
 	 *
 	 */
 	public int getY() {
 		return y;
+	}
+	
+	public boolean getVisite(){
+		return visite;
+	}
+	
+	public void setVisite(boolean visite){
+		this.visite=visite;
 	}
 }
