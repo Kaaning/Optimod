@@ -24,32 +24,16 @@ public class Livraison {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public int getNoeud() {
 		return noeud;
-	}
-
-	public void setNoeud(int noeud) {
-		this.noeud = noeud;
 	}
 
 	public int getClient() {
 		return client;
 	}
 
-	public void setClient(int client) {
-		this.client = client;
-	}
-
 	public String getEtat() {
 		return etat;
-	}
-
-	public void setEtat(String etat) {
-		this.etat = etat;
 	}
 	
 	
