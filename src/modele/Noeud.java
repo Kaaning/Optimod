@@ -20,16 +20,16 @@ public class Noeud {
 	private boolean visite=false;
 	
 	/**
-	 * Constructeur sans paramètres de l'Objet Noeud
+	 * Constructeur sans paramÃ¨tres de l'Objet Noeud
 	 */
 	public Noeud() {
 	}
 	
 	/**
-	 * Constructeur avec paramètres de l'Objet Noeud
-	 * @param unId l'ID du Noeud à construire et ses coordonnées X et Y dans le plan
+	 * Constructeur avec paramÃ¨tres de l'Objet Noeud
+	 * @param unId l'ID du Noeud Ã  construire et ses coordonnÃ©es X et Y dans le plan
 	 * @param unX l'absisse X du Noeud dans le plan
-	 * @param unY l'oordonnée Y du Noeud dans le plan
+	 * @param unY l'oordonnÃ©e Y du Noeud dans le plan
 	 */
 	public Noeud(int unId, int unX, int unY) {
 		id = unId;
@@ -38,8 +38,8 @@ public class Noeud {
 	}
 	
 	/**
-	 * Ajoute un objet troncon à la liste des troncons sortants du Noeud 
-	 * @param troncon L'Objet Troncon à rajouter 
+	 * Ajoute un objet troncon Ã  la liste des troncons sortants du Noeud 
+	 * @param troncon L'Objet Troncon Ã  rajouter 
 	 *
 	 */
 	public void ajouterTronconSortant(Troncon troncon) {
@@ -47,8 +47,8 @@ public class Noeud {
 	}
 	
 	/**
-	 * Ajoute un objet troncon à la liste des troncons entrants du Noeud
-	 * @param troncon L'Objet Troncon à rajouter
+	 * Ajoute un objet troncon Ã  la liste des troncons entrants du Noeud
+	 * @param troncon L'Objet Troncon Ã  rajouter
 	 *
 	 */
 	public void ajouterTronconEntrants(Troncon troncon) {
@@ -75,7 +75,7 @@ public class Noeud {
 	
 	
 	/**
-	 * Accesseur de l'Attribut Id représantant l'Identifiant du Noeud
+	 * Accesseur de l'Attribut Id reprÃ©santant l'Identifiant du Noeud
 	 * @return int la valeur de l'Attribut Id
 	 *
 	 */
@@ -84,7 +84,7 @@ public class Noeud {
 	}
 	
 	/**
-	 * Accesseur de l'Attribut X représantant l'absisse du Noeud dans le plan
+	 * Accesseur de l'Attribut X reprÃ©santant l'absisse du Noeud dans le plan
 	 * @return int la valeur de l'Attribut X
 	 *
 	 */
@@ -93,7 +93,7 @@ public class Noeud {
 	}
 	
 	/**
-	* Accesseur de l'Attribut Y repr�santant l'ordonn�e du Noeud dans le plan
+	* Accesseur de l'Attribut Y représantant l'ordonnée du Noeud dans le plan
 	 * @return int la valeur de l'Attribut Y
 	 *
 	 */
@@ -101,10 +101,20 @@ public class Noeud {
 		return y;
 	}
 	
+	/**
+	* Accesseur de l'Attribut visite du Noeud dans le plan, qui définit si le noeud a été visité dans la tournée ou pas.
+	 * @return bool true si le noeud a été visité false sinon
+	 *
+	 */
 	public boolean getVisite(){
 		return visite;
 	}
 	
+	/**
+	* Mutateur de l'Attribut visite du Noeud dans le plan, qui définit si le noeud a été visité dans la tournée ou pas.
+	 * @param bool visite valeur du boolean à mettre dans l'Attribut visite de l'Objet Noeud
+	 *
+	 */
 	public void setVisite(boolean visite){
 		this.visite=visite;
 	}
