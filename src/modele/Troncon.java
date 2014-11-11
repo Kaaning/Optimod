@@ -11,21 +11,18 @@ package modele;
 
 public class Troncon {
 	private String nomRue;
-	private double vitesse;
-	private double longueur;
+	private double cout;
 	private Noeud cible = new Noeud();
 	private Noeud source = new Noeud();
 	
 	/**
-	 * Constructeur avec paramËtres de l'Objet Troncon
-	 * @param uneRue le nom de la rue que modÈlise l'Objet Troncon
-	 * @param vitesse indique la vitesse moyenne enregistrÈ sur le Troncon
-	 * @param longueur indique la longueur du Troncon
+	 * Constructeur avec param√®tres de l'Objet Troncon
+	 * @param uneRue le nom de la rue que mod√©lise l'Objet Troncon
+	 * @param cout indique le temps n√©cessaire pour parcourir le troncon
 	 */
-	public Troncon(String uneRue, double uneVitesse, double uneLongueur) {
+	public Troncon(String uneRue, double unCout) {
 		nomRue = uneRue;
-		vitesse = uneVitesse;
-		longueur = uneLongueur;
+		cout = unCout;
 	}
 	
 	/**
@@ -37,26 +34,17 @@ public class Troncon {
 		return this.nomRue;
 	}
 	
-	/**
-	 * Accesseur de l'Attribut vitesse de l'Objet Troncon
-	 * @return double la valeur de l'Attribut vitesse de l'Objet Troncon
+/**
+	 * Accesseur de l'Attribut cout de l'Objet Troncon
+	 * @return double la valeur de l'Attribut cout de l'Objet Troncon qui repr√©sente le temps n√©cessaire pour parcourir le troncon
 	 *
 	 */
-	public double getVitesse() {
-		return this.vitesse;
+	public double getCout() {
+		return this.cout;
 	}
 	
 	/**
-	 * Accesseur de l'Attribut longueur de l'Objet Troncon
-	 * @return double la valeur de l'Attribut longueur de l'Objet Troncon
-	 *
-	 */
-	public double getLongueur() {
-		return this.longueur;
-	}
-	
-	/**
-	 * Accesseur de l'Attribut cible qui reprÈsente le Noeud cible (destination) du Troncon 
+	 * Accesseur de l'Attribut cible qui repr√©sente le Noeud cible (destination) du Troncon 
 	 * @return Noeud l'Attribut cible de l'Objet Troncon 
 	 *
 	 */
@@ -65,7 +53,7 @@ public class Troncon {
 	}
 	
 	/**
-	 * Accesseur de l'Attribut source qui reprÈsente le Noeud source (dÈpart) du Troncon 
+	 * Accesseur de l'Attribut source qui repr√©sente le Noeud source (d√©part) du Troncon 
 	 * @return Noeud l'Attribut source de l'Objet Troncon
 	 *
 	 */
@@ -74,8 +62,8 @@ public class Troncon {
 	}
 	
 	/**
-	 * Mutateur de l'Attribut cible qui reprÈsente le Noeud cible (destination) du Troncon
-	 * @param uneCible Objet Noeud ‡ mettre en tant qu'Attribut cible de l'Objet Troncon 
+	 * Mutateur de l'Attribut cible qui repr√©sente le Noeud cible (destination) du Troncon
+	 * @param uneCible Objet Noeud √† mettre en tant qu'Attribut cible de l'Objet Troncon 
 	 *
 	 */
 	public void setCible(Noeud uneCible) {
@@ -83,8 +71,8 @@ public class Troncon {
 	}
 	
 	/**
-	 * Mutateur de l'Attribut source qui reprÈsente le Noeud source (dÈpart) du Troncon
-	 * @param uneSource Objet Noeud ‡ mettre en tant qu'Attribut source de l'Objet Troncon
+	 * Mutateur de l'Attribut source qui repr√©sente le Noeud source (d√©part) du Troncon
+	 * @param uneSource Objet Noeud √† mettre en tant qu'Attribut source de l'Objet Troncon
 	 *
 	 */
 	public void setSource(Noeud uneSource) {
