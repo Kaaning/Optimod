@@ -21,20 +21,16 @@ public class Fenetre extends JFrame{
 
 	private VueZoneGeo plan;
 	private double echelle = 500.0/800.0;
- 
-    public static void main(String[] args) {
-    	System.setProperty("java.util.Arrays.useLegacyMergeSort", "true"); //empeche une exception indépendante de nous
-        new Fenetre(900,700);
-    }
+
  
     public Fenetre(int largeur, int hauteur) {
         // Creation d'un cadre contenant un menu, deux boutons,
         // un ecouteur de souris et une zone de dessin
         super("Optimod");
         setSize(largeur,hauteur);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Destruction à la fermeture
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Destruction Ã  la fermeture
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        setLocation(dim.width/2 -getWidth()/2, dim.height/2-getHeight()/2-10); //Centrage de la fenêtre
+        setLocation(dim.width/2 -getWidth()/2, dim.height/2-getHeight()/2-10); //Centrage de la fenÃªtre
         setLayout(null);
         
 //        creeMenus();
