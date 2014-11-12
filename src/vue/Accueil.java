@@ -35,7 +35,7 @@ import org.jdom2.JDOMException;
 import modele.*;
 
 public class Accueil{
-	private DemandesDeLivraison ddl;
+	private Tournee ddl;
 	private ZoneGeographique plan;
 	
 	private JFrame cadre;
@@ -60,7 +60,7 @@ public class Accueil{
 	private DefaultListModel<String> listModel = new DefaultListModel<String>();
 	
 	
-	public Accueil(Jour j){
+	public Accueil(){
 		cadre = new JFrame();
 		cadre.setLayout(null);
 		cadre.setSize(largeur, hauteur);
@@ -87,14 +87,14 @@ public class Accueil{
 		                    
 		                }
 		                try {
-							j.chargerLivraison(chemin);
+							plan.chargerLivraison(chemin);
 						} catch (ParseException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 	                    
 		                Vector<String> livraisons = new Vector<String>();
-		                ddl = j.getDemandes();
+		                ddl = plan.getDemandes();
 	            		for(int i = 0 ; i<ddl.getPlages().size();i++){
 	            			PlageHoraire ph = ddl.getPlages().get(i); 
 	            			for(int j = 0 ; j<ph.getLivraisons().size() ; j++){
@@ -111,7 +111,6 @@ public class Accueil{
 			
 			public void actionPerformed(ActionEvent arg0) {
 				String chemin="";
-				ZoneGeographique zg;
 				JFileChooser fc = new JFileChooser();
 				int retval = fc.showOpenDialog(null);
 			                if (retval == JFileChooser.APPROVE_OPTION) {
@@ -119,9 +118,8 @@ public class Accueil{
 			                    chemin = chemin.replace("\\", "/");			                    
 			                }
 			                try {
-								j.creerZoneGeographique(chemin);
-								plan = j.getPlan();
-								geo =  new VueZoneGeo(0,0,500,500, 500.0/800.0, j.getPlan());
+								plan = new ZoneGeographique(chemin);
+								geo =  new VueZoneGeo(0,0,500,500, 500.0/800.0, plan);
 								pPlan.add(geo);
 							} catch (JDOMException e) {
 								// TODO Auto-generated catch block

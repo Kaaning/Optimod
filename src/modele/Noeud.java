@@ -17,7 +17,7 @@ public class Noeud {
 	private int y;
 	private List<Troncon> tronconsSortants = new ArrayList<Troncon>();
 	private List<Troncon> tronconsEntrants = new ArrayList<Troncon>();
-	private boolean visite=false;
+	private int etat=-1;
 	
 	/**
 	 * Constructeur sans paramÃ¨tres de l'Objet Noeud
@@ -60,7 +60,7 @@ public class Noeud {
 	 * @return List<Troncon> Liste des Objets Troncons entrants de Noeud
 	 *
 	 */
-	public List<Troncon> getTronconsEntrants() {
+	public List<Troncon> getTronconsEntrant() {
 		return this.tronconsEntrants;
 	}
 	
@@ -69,7 +69,7 @@ public class Noeud {
 	 * @return List<Troncon> Liste des Objets Troncons sortants de Noeud
 	 *
 	 */
-	public List<Troncon> getTronconsSortants() {
+	public List<Troncon> getTronconsSortant() {
 		return this.tronconsSortants;
 	}
 	
@@ -106,8 +106,8 @@ public class Noeud {
 	 * @return bool true si le noeud a été visité false sinon
 	 *
 	 */
-	public boolean getVisite(){
-		return visite;
+	public int getEtat(){
+		return etat;
 	}
 	
 	/**
@@ -115,7 +115,8 @@ public class Noeud {
 	 * @param bool visite valeur du boolean à mettre dans l'Attribut visite de l'Objet Noeud
 	 *
 	 */
-	public void setVisite(boolean visite){
-		this.visite=visite;
+	public void setEtat(int etat){
+		this.etat=etat;
 	}
+
 }
