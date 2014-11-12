@@ -141,8 +141,12 @@ public class VueNoeud extends JComponent implements MouseListener{
         setSize(size.width, size.height);
 	}
 	
-	public void changerCouleur(){
-		if(noeud.getVisite()){
+	public void changerCouleur(int entrepot){
+		if(noeud.getId()==entrepot){
+			fond = new Color(72,72,255);
+			surbrillance = new Color(119,119,255);
+		}
+		else if(noeud.getEtat()==0){
 			fond = new Color(202,202,0);
 			surbrillance = new Color(255,255,23);
 		}
@@ -152,5 +156,4 @@ public class VueNoeud extends JComponent implements MouseListener{
 		}
 		couleur = fond;
 	}
-	
 }
