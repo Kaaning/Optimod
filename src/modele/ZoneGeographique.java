@@ -273,10 +273,4 @@ public class ZoneGeographique {
 		return false;
 	}
 	
-	public static void main(String[] args) throws ParseException, JDOMException, IOException{
-		//j.creerZoneGeographique("fic/plan10x10.xml");
-		//j.chargerLivraison("fic/livraison20x20-2.xml");
-		Accueil a = new Accueil();
-		
-	}
 }
