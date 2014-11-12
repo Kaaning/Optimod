@@ -20,7 +20,7 @@ class Vertex implements Comparable<Vertex>
 	// Node corresponding to the vertex
     public final Noeud node;
     
-    // Vertex's ID, may be different from the node's one
+    // Vertex's ID, that may (certainly) be different from his node's one
 	//public final int vId;
 	
     // All the outgoing edges from the vertex
@@ -97,11 +97,15 @@ class Edge implements Comparable<Edge>
 
 public class Dijkstra implements Graph {
 	
+	double[][] cost;
+	ZoneGeographique zone;
+	Tournee tour;
 	List<Vertex> vertices;
-	Vertex source;
-	Vertex target;
 	
-	public Dijkstra (List<Noeud> nodes, Tournee tour) {
+	public Dijkstra (ZoneGeographique zone, Tournee tour) {
+		
+		this.zone = zone;
+		this.tour = tour;
 		
 		vertices = new Vector<Vertex>();
 		
@@ -109,21 +113,55 @@ public class Dijkstra implements Graph {
 		
 		//vertices.add(new Vertex(zone.findNoeudById(tour.getEntrepot())));
 		
-		for (int i = 0; i < nodes.size(); i++) {
-			Vertex v = new Vertex (nodes.get(i));
+		for (int i = 0; i < this.zone.getNoeuds().size(); i++) {
+			Vertex v = new Vertex (this.zone.getNoeuds().get(i));
 			vertices.add(v);
 		}
 		
 		for (Vertex v : vertices) {
 			for (Troncon t : v.node.getTronconsSortant()) {
-				Edge e = new Edge (getVertexById(t.getCible().getId()), t);
+				Edge e = new Edge (getVertexByNodeId(t.getCible().getId()), t);
 				v.adjacencies.add(e);// (vTemp != null ? new Edge(vTemp, v.node.getTronconsSortants().get(j)) : null) );
 			}
 		}
 		
+		cost = new double[this.getNbVertices()][this.getNbVertices()];
+		
+		for(int a = 0; a < this.getNbVertices(); a++) {
+    		this.computePaths(vertices.get(a));
+    		for(int i = 0; i < this.getNbVertices(); i++) {
+    			if (i == a) {
+    				cost[a][i] = 0.0;
+    			} else {
+    				double weight = 0.0;
+	    			List<Vertex> path = getShortestPath(this.vertices.get(i));
+	    			if(a > i) {
+	    				System.out.println("A = " + a + ", I = " + i + ", Path is : " + path + " of length " + path.size());
+	    			}
+	    			if(path == null || path.size() == 1) {
+    					weight = getMaxArcCost()+1;
+    				} else {
+		    			for(int j = 0; j < path.size()-1; j++) {
+		    				//Vertex prev = path.get(j).previous;
+		    				Vertex sommet = path.get(j);
+		    				Vertex next = path.get(j+1);
+		    				int index = -2;
+		    				for(Edge e : sommet.adjacencies) {
+		    					if(e.target == next)
+		    						index = sommet.adjacencies.indexOf(e);
+		    				}
+		    				weight += sommet.adjacencies.get(index).arc.getCout();
+		    			}
+	    			}
+	    			this.cost[a][i] = weight;
+    			}
+    			System.out.println("=====================");
+    		}
+    	}
+		
 	}
 	
-	public Vertex getVertexById(int id) {
+	public Vertex getVertexByNodeId(int id) {
 		for(Vertex v : vertices){
 			if(id == v.node.getId())
 				return v;
@@ -171,17 +209,15 @@ public class Dijkstra implements Graph {
     }
     
     //
-    public List<Vertex> getShortestPath( Vertex source, Vertex target)
+    public List<Vertex> getShortestPath(Vertex target)
     {
-    	this.computePaths(source);
-    	
     	List<Vertex> path = new ArrayList<Vertex>();
     	
-    	// Trace
+    	/* Trace
     	System.out.println("Hello world");
     	System.out.println(target);
     	System.out.println(target.previous);
-    	// Fin trace
+    	// Fin trace */
     	
         for (Vertex vertex = target; vertex != null; vertex = vertex.previous) {
             path.add(vertex);
@@ -193,18 +229,24 @@ public class Dijkstra implements Graph {
             }
         }
         
-        //
+        /*
         System.out.println ("Bye bye world");
-        //
+        */
         
         Collections.reverse(path);
-        path.add(path.get(0));
         
         return path;
     }
     
+    public double getTotalCost(List<Vertex> path) {
+    	double res = 0;
+    	//TODO : Insert code of constructor Dijkstra
+    	return res;
+    }
+    
     public List<Etape> obtainEtapes() {
-    	return Dijkstra.verticesToEtapes(this.getShortestPath(this.source, this.target));
+    	
+    	return null; //return Dijkstra.verticesToEtapes(this.getShortestPath(this.target));
     }
     
     private static List<Etape> verticesToEtapes(List<Vertex> path) {
@@ -251,13 +293,12 @@ public class Dijkstra implements Graph {
     	n1.ajouterTronconSortant(t12);
     	n2.ajouterTronconEntrant(t12);*/
     	
-    	ZoneGeographique zone = new ZoneGeographique("fic\\plan10x10.xml");
-    	List<Noeud> noeuds = zone.getNoeuds();
-    	Tournee t = new Tournee("fic\\livraison10x10-1.xml", zone);
+    	ZoneGeographique z = new ZoneGeographique("fic\\plan10x10-test.xml");
+    	Tournee t = new Tournee("fic\\livraison10x10-test.xml", z);
     	
-    	Dijkstra dj = new Dijkstra(noeuds, t);
+    	Dijkstra dj = new Dijkstra(z, t);
     	
-    	System.out.println("Sommet s_0 : " + dj.getVertexById(t.getEntrepot()));
+    	System.out.println("Sommet s_0 : " + dj.getVertexByNodeId(t.getEntrepot()));
     	
     	System.out.println("Nodes list :");
     	//System.out.println(zone.getNoeuds().toString());
@@ -272,14 +313,14 @@ public class Dijkstra implements Graph {
     	}
     	
     	// Asking for the minimal path from vertex 0 to vertex 2 :
-    	dj.source = dj.vertices.get(t.getEntrepot());
-    	dj.target = dj.vertices.get(0);
+    	Vertex source = dj.getVertexByNodeId(t.getEntrepot());
+    	Vertex target = dj.getVertexByNodeId(2);
     	
-    	System.out.println("Computing paths form vertex " + dj.source + " to all the vertices of the graph ...");
-    	dj.computePaths(dj.source);
-    	System.out.println("Getting the best path to " + dj.target + " ...");
-    	List<Vertex> path = dj.getShortestPath(dj.source, dj.target);
-    	if(path != null) {
+    	System.out.println("Computing paths form vertex " + source + " to all the vertices of the graph ...");
+    	dj.computePaths(source);
+    	System.out.println("Getting the best path to " + target + " ...");
+    	List<Vertex> path = dj.getShortestPath(target);
+    	if(path != null && path.size() != 1) {
     		System.out.println("=========================");
     		System.out.println("RESULT HAS BEEN FOUND !");
     		System.out.print("BEGINNING ");
@@ -289,9 +330,9 @@ public class Dijkstra implements Graph {
     		System.out.println(" -> END");
     		System.out.println();
     		System.out.println("- - - - - - - - - - - -");
-    		System.out.println("Distance of the minimal path : " + dj.target.minDistance);
+    		System.out.println("Distance of the minimal path : " + target.minDistance);
     		System.out.println("- - - - - - - - - - - -");
-    		System.out.println("Total number of nodes in the zone : " + zone.getNoeuds().size());
+    		System.out.println("Total number of nodes in the zone : " + z.getNoeuds().size());
     		System.out.println("Total number of nodes in the graph : " + dj.vertices.size());
     		System.out.println("Number of visited nodes : " + (path.size()-1));
     		System.out.println("Unvisited node(s) of the graph for this path :");
@@ -300,22 +341,22 @@ public class Dijkstra implements Graph {
     			System.out.println("NONE");
     		} else {
     			for(Vertex v : dj.vertices) {
-	    			if(!path.contains(v) && v != dj.source)
+	    			if(!path.contains(v) && v != source)
 	    				System.out.println(v.toString());
     			}
     		}
     		System.out.println("=========================");
     	} else {
-    		System.out.println("Error : No path has been found from " + dj.source + " to " + dj.target + " : the two nodes may be not connected through the given graph.");
+    		System.out.println("Error : No path has been found from " + source + " to " + target + " : the two nodes may be not connected through the given graph.");
     	}
     	
-    	/*double[][] costs = dj.getCost();
+    	double[][] costs = dj.getCost();
     	for(int i = 0; i < dj.getNbVertices(); i++) {
     		for(int j = 0; j < dj.getNbVertices(); j++) {
     			System.out.print("[" + costs[i][j] + "]");
     		}
     		System.out.println();
-    	}*/
+    	}
     	System.out.println("=========================");
 	    /*for (int i = 0; i < dj.getNbVertices(); i++) {
 	    	System.out.println("Successors of " + dj.vertices.get(i) +" :");
@@ -363,20 +404,7 @@ public class Dijkstra implements Graph {
 
 	@Override
 	public double[][] getCost() {
-		int n = this.getNbVertices();
-		double[][] res = new double[n][n];
-		
-		for(int i = 0; i < n; i++) {
-			Vertex v = this.vertices.get(i);
-			for(int j = 0; j < n; j++) {
-				res[i][j] = this.getMaxArcCost()+1;
-			}
-			for(Edge e : v.adjacencies) {
-				res[i][this.vertices.indexOf(e.target)] = e.arc.getCout();
-			}
-			res[i][i] = 0.0;
-		}
-		return res;
+		return this.cost;
 	}
 
 	@Override
