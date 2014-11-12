@@ -18,8 +18,8 @@ public class DemandesDeLivraison {
 	private List<PlageHoraire> plages; 
 	private Jour jour;
 	
-	public DemandesDeLivraison(String nomFic, Jour jour) throws ParseException{
-		this.jour = jour;
+	public DemandesDeLivraison(String nomFic, Jour unJour) throws ParseException{
+		this.jour = unJour;
 		plages = new ArrayList<PlageHoraire>();
 		
 		//try{
@@ -56,7 +56,11 @@ public class DemandesDeLivraison {
 	        	int id = Integer.parseInt(currentLivraison.getAttributeValue("id"));
 	        	int client = Integer.parseInt(currentLivraison.getAttributeValue("client"));
 	        	int adresse = Integer.parseInt(currentLivraison.getAttributeValue("adresse"));
+	        	//if( jour.getPlan().verifierNoeud(adresse)){
+	        	jour.getPlan().verifierNoeud(adresse);
 	        	plageHoraire.ajouterLivraison(id, client, adresse); 
+	        	
+	        	//else { System.out.println("adresse "+adresse+" inexistante"); }
 	        	
 	        }
 	        
@@ -64,8 +68,6 @@ public class DemandesDeLivraison {
 		//}
 		//catch(Exception e){
 		//}
-		
-		
 		
 	}
 
