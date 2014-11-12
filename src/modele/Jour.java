@@ -1,21 +1,24 @@
 package modele;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
 import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
-import vue.acceuil;
+import vue.*;
 
 public class Jour {
 	
-	private static DemandesDeLivraison demandes;
+	private DemandesDeLivraison demandes;
+	private ZoneGeographique plan;
 	
-	public void creerZoneGeographique(String nomFichier){
-		
+	public void creerZoneGeographique(String nomFichier) throws JDOMException, IOException{
+		plan = new ZoneGeographique(nomFichier);
 	}
 	
 	public void chargerLivraison(String nomFichier) throws ParseException{
@@ -38,11 +41,16 @@ public class Jour {
 		return demandes;
 	}
 	
-	public static void main(String[] args) throws ParseException{
-		Jour j = new Jour();
-		acceuil a = new acceuil(j);
-		
+	public ZoneGeographique getPlan(){
+		return plan;
 	}
 	
+	public static void main(String[] args) throws ParseException, JDOMException, IOException{
+		Jour j = new Jour();
+		//j.creerZoneGeographique("fic/plan10x10.xml");
+		//j.chargerLivraison("fic/livraison20x20-2.xml");
+		Accueil a = new Accueil();
+		
+	}
 	
 }

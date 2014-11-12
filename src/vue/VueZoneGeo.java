@@ -21,7 +21,7 @@ public class VueZoneGeo extends JPanel{
 	private ZoneGeographique zoneGeo;
 	private ArrayList<VueNoeud> vueNoeuds;
 	private ArrayList<VueTroncon> vueTroncons;
-	private Color couleurArrierePlan = Color.gray;
+	private Color couleurArrierePlan = new Color(193,193,193);
 	private int largeur;
 	private int hauteur;
 	private int rayon=12;
@@ -87,16 +87,19 @@ public class VueZoneGeo extends JPanel{
 		addMouseMotionListener(new MouseAdapter(){
         	public void mouseDragged(MouseEvent e){
         		double echelle = getEchelle();
-//        		int[] coord = {(int)((e.getX()-clic[0])/echelle), (int)((e.getY()-clic[1])/echelle)};
         		int[] coord = {e.getX()-clic[0], e.getY()-clic[1]};
-        		deplacement = coord;
-        		deplacerPlan();
+        		if(origine[0]+coord[0]<0 && origine[0]+coord[0]>500-800*echelle){
+	        		deplacement[0] = coord[0];
+	        		deplacerPlan();
+        		}
+        		if(origine[1]+coord[1]<0 && origine[1]+coord[1]>500-800*echelle){
+        			deplacement[1] = coord[1];
+        			deplacerPlan();
+        		}
         	}
         });
-		/*----- Test -----*/
-//		add(vt);
-//		vt.setLocation(vt.troncon.source.getX(),vt.troncon.source.getY());
-		
+/*-------------------------- Test ----------------------------*/
+		changerCouleur(30);
      }
 	
 	public void creerVueTroncons(){
@@ -134,16 +137,31 @@ public class VueZoneGeo extends JPanel{
     }
 	
 	public void changerEchelle(double echelle){
+		double ancienneLongueur = 800*this.echelle;
 		this.echelle=echelle;
         rayonAjuste = (int)(rayon/2*echelle);
+        if(origine[0]<0){
+        	System.out.println("Old : "+ancienneLongueur+" New : "+800*echelle);
+        	origine[0]+=(int)(ancienneLongueur-800*echelle);
+        	if(origine[0]>0){
+        		origine[0]=0;
+        	}
+        }
+        if(origine[1]<0){
+        	origine[1]+=(int)(ancienneLongueur-800*echelle);
+        	if(origine[1]>0){
+        		origine[1]=0;
+        	}
+        }
         for(VueNoeud vn : vueNoeuds){
         	vn.changerEchelle(echelle);
         	vn.setLocation(origine[0]+deplacement[0]+vn.getXVue(), origine[1]+deplacement[1]+vn.getYVue());
-        	//        	vn.setLocation(origine[0]+vn.getXVue()-rayonAjuste+deplacement[0], origine[1]+vn.getYVue()-rayonAjuste+deplacement[1]);
         }
         for(VueTroncon vt : vueTroncons){
         	vt.changerEchelle(echelle);
         }
+		System.out.println("Origine en "+origine[0]+","+origine[1]);
+
 	}
 	
 	public void deplacerPlan(){
@@ -159,7 +177,15 @@ public class VueZoneGeo extends JPanel{
 		return echelle;
 	}
 	
-
+	public void changerCouleur(int n){
+		for(VueNoeud vn : vueNoeuds){
+			vn.changerCouleur(n);
+		}
+		for(VueTroncon vt : vueTroncons){
+			vt.changerCouleur();
+		}
 	
+	}
+
 
 }

@@ -11,6 +11,7 @@ import java.awt.Rectangle;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,28 +30,37 @@ import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 
+import org.jdom2.JDOMException;
+
 import modele.*;
 
-public class acceuil{
+public class Accueil{
+	private Tournee ddl;
+	private ZoneGeographique plan;
+	
 	private JFrame cadre;
 	private JButton chargerLivraison = new JButton("Charger une demande de livraison");
+	private JButton chargerPlan = new JButton("Charger un plan");
 	private JButton calculerItineraire = new JButton("Calculer l'itinéraire");
 	private JPanel south = new JPanel();
 	private JPanel center = new JPanel();
 	private JPanel west = new JPanel();
 	private JPanel east = new JPanel();
 	private JPanel north = new JPanel();
-	int largeur = 1200;
+	int largeur = 1300;
 	int hauteur = 600; 
 	
-	private JTextArea plan;
-	private JTextArea livraison;
+	private JTextArea tPlan;
+	private JTextArea tLivraison;
 	
+	private JPanel pPlan = new JPanel();
+	private JPanel pList = new JPanel();
+	private VueZoneGeo geo;
 	private JList list;
 	private DefaultListModel<String> listModel = new DefaultListModel<String>();
 	
 	
-	public acceuil(final Jour j){
+	public Accueil(){
 		cadre = new JFrame();
 		cadre.setLayout(null);
 		cadre.setSize(largeur, hauteur);
@@ -64,6 +74,8 @@ public class acceuil{
 		cadre.getContentPane().add(east, BorderLayout.EAST);
 		cadre.getContentPane().add(center, BorderLayout.CENTER);
 		
+		pPlan.setLayout(null);
+		
 		chargerLivraison.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			   String chemin="";
@@ -74,17 +86,15 @@ public class acceuil{
 		                    chemin = chemin.replace("\\", "/");
 		                    
 		                }
-		        
-		                plan.setText(chemin);
 		                try {
-							j.chargerLivraison(chemin);
+							plan.chargerLivraison(chemin);
 						} catch (ParseException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 	                    
 		                Vector<String> livraisons = new Vector<String>();
-	                    DemandesDeLivraison ddl = j.getDemandes();
+		                ddl = plan.getDemandes();
 	            		for(int i = 0 ; i<ddl.getPlages().size();i++){
 	            			PlageHoraire ph = ddl.getPlages().get(i); 
 	            			for(int j = 0 ; j<ph.getLivraisons().size() ; j++){
@@ -92,12 +102,42 @@ public class acceuil{
 	            				(listModel).addElement("Livraison n°"+l.getId()+" chez "+l.getClient() + " à l'adresse "+l.getNoeud());
 	            			}
 	            		}
+	            		geo.changerCouleur(ddl.getEntrepot());
+	            		geo.repaint();
 			  }
 		});
 		
+		chargerPlan.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent arg0) {
+				String chemin="";
+				JFileChooser fc = new JFileChooser();
+				int retval = fc.showOpenDialog(null);
+			                if (retval == JFileChooser.APPROVE_OPTION) {
+			                    chemin = fc.getSelectedFile().getAbsolutePath();
+			                    chemin = chemin.replace("\\", "/");			                    
+			                }
+			                try {
+								plan = new ZoneGeographique(chemin);
+								geo =  new VueZoneGeo(0,0,500,500, 500.0/800.0, plan);
+								pPlan.add(geo);
+							} catch (JDOMException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}       
+			pPlan.repaint();
+			
+			}
+		});
+		
+		
+		
 		//SOUTH ----------------------------
 		GridLayout gl = new GridLayout();
-		gl.setColumns(2);
+		gl.setColumns(3);
 		gl.setRows(1);
 		gl.setHgap(10); //Cinq pixels d'espace entre les colonnes (H comme Horizontal)
 		gl.setVgap(10); //Cinq pixels d'espace entre les lignes (V comme Vertical)
@@ -105,20 +145,21 @@ public class acceuil{
 		
 		
 		south.add(calculerItineraire);
+		south.add(chargerPlan);
 		south.add(chargerLivraison);
 		
 		//NORTH ----------------------------
-		/*north.setLayout(gl);
-		JTextArea Bonjour = new JTextArea("");
-		plan.setFont(new Font("Serif", Font.PLAIN, 16));
-		plan.setLineWrap(true);
-		plan.setWrapStyleWord(true);
-		JTextArea livraison = new JTextArea("Points de livraison");
+		north.setLayout(gl);
+		JTextArea message = new JTextArea("Bonjour");
+		message.setFont(new Font("Serif", Font.PLAIN, 16));
+		message.setLineWrap(true);
+		message.setWrapStyleWord(true);
+		/*JTextArea livraison = new JTextArea("Points de livraison");
 		livraison.setFont(new Font("Serif", Font.PLAIN, 16));
 		livraison.setLineWrap(true);
 		livraison.setWrapStyleWord(true);
-		north.add(plan);
-		north.add(livraison);*/
+		north.add(plan);*/
+		north.add(message);
 		
 		//CENTER ----------------------------
 		GridLayout g2 = new GridLayout();
@@ -128,23 +169,15 @@ public class acceuil{
 		g2.setVgap(10); //Cinq pixels d'espace entre les lignes (V comme Vertical)
 		center.setLayout(gl);
 		
-		plan = new JTextArea("Plan de zone");
+		/*plan = new JTextArea("Plan de zone");
 		plan.setFont(new Font("Serif", Font.PLAIN, 16));
 		plan.setLineWrap(true);
 		plan.setWrapStyleWord(true);
 		livraison = new JTextArea("Points de livraison");
 		livraison.setFont(new Font("Serif", Font.PLAIN, 16));
-		livraison.setLineWrap(true);
-		livraison.setWrapStyleWord(true);
-		
-		
-		
-		JPanel pPlan = new JPanel();
-		pPlan.add(plan);
-		
-		
-		
-		JPanel pList = new JPanel();
+		livraison.setLineWrap(true);	
+		livraison.setWrapStyleWord(true);*/
+
 		
 		list = new JList(listModel); //data has type Object[]
 		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
@@ -153,8 +186,6 @@ public class acceuil{
 		JScrollPane listScroller = new JScrollPane(list);
 		listScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		listScroller.setPreferredSize(new Dimension(250, 500));
-
-		
 		pList.add(listScroller);
 		
 		/*center.add(plan);

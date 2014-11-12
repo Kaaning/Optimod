@@ -9,7 +9,7 @@ import modele.Troncon;
 
 public class VueTroncon {
 
-	private Color couleur = new Color(53,53,53);
+	private Color couleur = new Color(123,123,123);
 	public Troncon troncon;
 	double echelle;
 
@@ -71,12 +71,21 @@ public class VueTroncon {
         antiAlias.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         
 		g.setColor(couleur);
-		((Graphics2D) g).setStroke(new BasicStroke(2));
+		((Graphics2D) g).setStroke(new BasicStroke((float) (3*echelle)));
 		g.drawLine(origine[0]+deplacement[0]+getXVue("source"), origine[1]+deplacement[1]+getYVue("source"), origine[0]+deplacement[0]+getXVue("cible"), origine[1]+deplacement[1]+getYVue("cible"));
 //		System.out.println("Troncon situé en "+getXVue("source")+","+getYVue("source"));
 	}
 	
 	public void changerEchelle(double echelle){
 		this.echelle=echelle;
+	}
+	
+	public void changerCouleur(){
+		if(troncon.getNbPassage()==1){
+			couleur = new Color(0,173,0);
+		}
+		else{
+			couleur = new Color(123,123,123);
+		}
 	}
 }

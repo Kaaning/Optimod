@@ -5,13 +5,17 @@ package modele;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
+
+import vue.Accueil;
 
 
 /**
@@ -28,6 +32,9 @@ public class ZoneGeographique {
 	private int Ymin;
 	private int Ymax;
 	
+	private Tournee demandes;
+	
+	
 	/**
 	 * Constructeur avec paramètres de l'Objet ZoneGeographique
 	 * @param nomFic String chemin relatif du fichier xml du plan à charger
@@ -36,9 +43,13 @@ public class ZoneGeographique {
 	public ZoneGeographique(String nomFic) throws JDOMException, IOException {
 		lirePlanXML(nomFic);
 		this.Xmax = findXMax();
-	    this.Ymax = findYMax();
-	    this.Xmin = findXMin();
-	    this.Ymin = findYMin();
+	    	this.Ymax = findYMax();
+		this.Xmin = findXMin();
+	    	this.Ymin = findYMin();
+	}
+	
+	public void chargerLivraison(String nomFic) throws ParseException{
+		demandes = new Tournee(nomFic,this);
 	}
 	
 	/**
@@ -46,7 +57,6 @@ public class ZoneGeographique {
 	 * @return List<Noeud> Liste des Objets Noeuds contenus dans le plan à charger
 	 *
 	 */
-
 	public List<Noeud> getNoeuds() {
 		return this.noeuds;
 	}
@@ -96,6 +106,10 @@ public class ZoneGeographique {
 		return Ymax;
 	}
 	
+	public Tournee getDemandes() {
+		return demandes;
+	}
+	
 	/**
 	 * Ajoute un Objet Noeud à l'Attribut noeuds (qui représente la liste des noeuds du plan à charger)
 	 * @param noeud Objet Noeud à rajouer à la liste 
@@ -110,7 +124,6 @@ public class ZoneGeographique {
 	 * @param troncon Objet Troncon à rajouer à la liste 
 	 *
 	 */
-
 	public void ajouterTroncon(Troncon Troncon) {
 		this.troncons.add(Troncon);
 	}
@@ -170,11 +183,11 @@ public class ZoneGeographique {
 		    while(it.hasNext())
 			{
 		       Element tronconCourant = (Element)it.next();
-	    	   Troncon troncon = new Troncon(tronconCourant.getAttributeValue("nomRue"), Double.parseDouble(tronconCourant.getAttributeValue("vitesse").replace(',', '.')) ,Double.parseDouble(tronconCourant.getAttributeValue("longueur").replace(',', '.')));
+	    	   Troncon troncon = new Troncon(tronconCourant.getAttributeValue("nomRue"), Double.parseDouble(tronconCourant.getAttributeValue("longueur").replace(',', '.'))/Double.parseDouble(tronconCourant.getAttributeValue("vitesse").replace(',', '.')), Double.parseDouble(tronconCourant.getAttributeValue("longueur").replace(',', '.')));
 	    	   troncon.setCible(this.findNoeudById(Integer.parseInt(tronconCourant.getAttributeValue("idNoeudDestination"))));
 	    	   troncon.setSource(this.findNoeudById(Integer.parseInt(listeNoeuds.get(cpt).getAttributeValue("id"))));
 	    	   this.findNoeudById(Integer.parseInt(listeNoeuds.get(cpt).getAttributeValue("id"))).ajouterTronconSortant(troncon);
-	    	   this.findNoeudById(Integer.parseInt(tronconCourant.getAttributeValue("idNoeudDestination"))).ajouterTronconEntrants(troncon);
+	    	   this.findNoeudById(Integer.parseInt(tronconCourant.getAttributeValue("idNoeudDestination"))).ajouterTronconEntrant(troncon);
 	    	   ajouterTroncon(troncon);
 		    }	
 	    }
@@ -188,9 +201,9 @@ public class ZoneGeographique {
 	 */
 	private int findXMax() {
 		int temp = this.noeuds.get(0).getX();
-		for (int i=1; i<this.noeuds.size(); i++) {
-			if (this.noeuds.get(i).getX() > temp) {
-				temp = this.noeuds.get(i).getX();
+		for (Noeud n : noeuds) {
+			if (n.getX() > temp) {
+				temp = n.getX();
 			}
 		}
 		return temp;
@@ -204,9 +217,9 @@ public class ZoneGeographique {
 	 */
 	private int findYMax() {
 		int temp = this.noeuds.get(0).getY();
-		for (int i=1; i<this.noeuds.size(); i++) {
-			if (this.noeuds.get(i).getY() > temp) {
-				temp = this.noeuds.get(i).getY();
+		for (Noeud n : noeuds) {
+			if (n.getY() > temp) {
+				temp = n.getY();
 			}
 		}
 		return temp;		
@@ -220,9 +233,9 @@ public class ZoneGeographique {
 	 */
 	private int findXMin() {
 		int temp = this.noeuds.get(0).getX();
-		for (int i=1; i<this.noeuds.size(); i++) {
-			if (this.noeuds.get(i).getX() < temp) {
-				temp = this.noeuds.get(i).getX();
+		for (Noeud n : noeuds) {
+			if (n.getX() < temp) {
+				temp = n.getX();
 			}
 		}
 		return temp;	
@@ -236,21 +249,34 @@ public class ZoneGeographique {
 	 */
 	private int findYMin() {
 		int temp = this.noeuds.get(0).getY();
-		for (int i=1; i<this.noeuds.size(); i++) {
-			if (this.noeuds.get(i).getY() < temp) {
-				temp = this.noeuds.get(i).getY();
+		for (Noeud n : noeuds) {
+			if (n.getY() < temp) {
+				temp = n.getY();
 			}
 		}
 		return temp;		
 	}
 	
-	public boolean verifierNoeud(int id){
-		for(Noeud n : noeuds){
-			if(n.getId()==id){
-				n.setVisite(true);
+	/**
+	 * Methode qui verifie si le noeud dont l'Id est passe en parametre a ete visit�e dans la tourn�ee ou pas
+	 * @param id int Id du noeud à verifier
+	 * @return boolean true si le noeud passe en parametre a ete visite false sinon 
+	 *
+	 */
+	public boolean verifierNoeud(int id) {
+		for (Noeud n : noeuds) {
+			if (n.getId()==id) {
+				n.setEtat(0);
 				return true;
 			}
 		}
 		return false;
+	}
+	
+	public static void main(String[] args) throws ParseException, JDOMException, IOException{
+		//j.creerZoneGeographique("fic/plan10x10.xml");
+		//j.chargerLivraison("fic/livraison20x20-2.xml");
+		Accueil a = new Accueil();
+		
 	}
 }

@@ -22,6 +22,10 @@ public class Fenetre extends JFrame{
 	private VueZoneGeo plan;
 	private double echelle = 500.0/800.0;
 
+	public static void main(String[] args){
+		new Fenetre(900,700);
+	}
+	
  
     public Fenetre(int largeur, int hauteur) {
         // Creation d'un cadre contenant un menu, deux boutons,
@@ -36,7 +40,7 @@ public class Fenetre extends JFrame{
 //        creeMenus();
 //        creeBoutons(largeur,hauteur);
         try {
-        	ZoneGeographique zg = new ZoneGeographique("res/plan20x20.xml");
+        	ZoneGeographique zg = new ZoneGeographique("fic/plan20x20.xml");
 			plan =  new VueZoneGeo(0,0,500,500, echelle, zg);
 		} catch (JDOMException e) {
 			// TODO Auto-generated catch block

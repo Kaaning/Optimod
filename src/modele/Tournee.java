@@ -12,14 +12,14 @@ import org.jdom2.*;
 import org.jdom2.input.SAXBuilder;
 
 
-public class DemandesDeLivraison {
+public class Tournee {
 	
 	private int entrepot;
 	private List<PlageHoraire> plages; 
-	private Jour jour;
+	private ZoneGeographique zg;
 	
-	public DemandesDeLivraison(String nomFic, Jour unJour) throws ParseException{
-		this.jour = unJour;
+	public Tournee(String nomFic, ZoneGeographique unZg) throws ParseException{
+		this.zg = unZg;
 		plages = new ArrayList<PlageHoraire>();
 		
 		//try{
@@ -57,7 +57,7 @@ public class DemandesDeLivraison {
 	        	int client = Integer.parseInt(currentLivraison.getAttributeValue("client"));
 	        	int adresse = Integer.parseInt(currentLivraison.getAttributeValue("adresse"));
 	        	//if( jour.getPlan().verifierNoeud(adresse)){
-	        	jour.getPlan().verifierNoeud(adresse);
+	        	zg.verifierNoeud(adresse);
 	        	plageHoraire.ajouterLivraison(id, client, adresse); 
 	        	
 	        	//else { System.out.println("adresse "+adresse+" inexistante"); }
