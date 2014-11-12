@@ -15,7 +15,7 @@ public class Noeud {
 	private int id;
 	private int x;
 	private int y;
-	private List<Troncon> tronconsSortans = new ArrayList<Troncon>();
+	private List<Troncon> tronconsSortants = new ArrayList<Troncon>();
 	private List<Troncon> tronconsEntrants = new ArrayList<Troncon>();
 	private boolean visite=false;
 	
@@ -43,7 +43,7 @@ public class Noeud {
 	 *
 	 */
 	public void ajouterTronconSortant(Troncon troncon) {
-		this.tronconsSortans.add(troncon);
+		this.tronconsSortants.add(troncon);
 	}
 	
 	/**
@@ -51,7 +51,7 @@ public class Noeud {
 	 * @param troncon L'Objet Troncon Ã  rajouter
 	 *
 	 */
-	public void ajouterTronconEntrants(Troncon troncon) {
+	public void ajouterTronconEntrant(Troncon troncon) {
 		this.tronconsEntrants.add(troncon);
 	}
 	
@@ -70,7 +70,7 @@ public class Noeud {
 	 *
 	 */
 	public List<Troncon> getTronconsSortants() {
-		return this.tronconsSortans;
+		return this.tronconsSortants;
 	}
 	
 	

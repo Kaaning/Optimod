@@ -168,11 +168,11 @@ public class ZoneGeographique {
 		    while(it.hasNext())
 			{
 		       Element tronconCourant = (Element)it.next();
-	    	   Troncon troncon = new Troncon(tronconCourant.getAttributeValue("nomRue"), Double.parseDouble(tronconCourant.getAttributeValue("longueur").replace(',', '.'))/Double.parseDouble(tronconCourant.getAttributeValue("vitesse").replace(',', '.')));
+	    	   Troncon troncon = new Troncon(tronconCourant.getAttributeValue("nomRue"), Double.parseDouble(tronconCourant.getAttributeValue("longueur").replace(',', '.'))/Double.parseDouble(tronconCourant.getAttributeValue("vitesse").replace(',', '.')), Double.parseDouble(tronconCourant.getAttributeValue("longueur").replace(',', '.')));
 	    	   troncon.setCible(this.findNoeudById(Integer.parseInt(tronconCourant.getAttributeValue("idNoeudDestination"))));
 	    	   troncon.setSource(this.findNoeudById(Integer.parseInt(listeNoeuds.get(cpt).getAttributeValue("id"))));
 	    	   this.findNoeudById(Integer.parseInt(listeNoeuds.get(cpt).getAttributeValue("id"))).ajouterTronconSortant(troncon);
-	    	   this.findNoeudById(Integer.parseInt(tronconCourant.getAttributeValue("idNoeudDestination"))).ajouterTronconEntrants(troncon);
+	    	   this.findNoeudById(Integer.parseInt(tronconCourant.getAttributeValue("idNoeudDestination"))).ajouterTronconEntrant(troncon);
 	    	   ajouterTroncon(troncon);
 		    }	
 	    }
@@ -243,9 +243,9 @@ public class ZoneGeographique {
 	}
 	
 	/**
-	 * Méthode qui vérifie si le noeud dont l'Id est passé en paramètre a été visité dans la tournée ou pas
-	 * @param id int Id du noeud à vérifier
-	 * @return boolean true si le noeud passé en paramètre a été visité false sinon 
+	 * Methode qui verifie si le noeud dont l'Id est passe en parametre a ete visit�e dans la tourn�ee ou pas
+	 * @param id int Id du noeud à verifier
+	 * @return boolean true si le noeud passe en parametre a ete visite false sinon 
 	 *
 	 */
 	public boolean verifierNoeud(int id) {

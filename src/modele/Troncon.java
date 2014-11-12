@@ -12,17 +12,20 @@ package modele;
 public class Troncon {
 	private String nomRue;
 	private double cout;
+	private double longueur;
 	private Noeud cible = new Noeud();
 	private Noeud source = new Noeud();
 	
 	/**
-	 * Constructeur avec paramètres de l'Objet Troncon
-	 * @param uneRue le nom de la rue que modélise l'Objet Troncon
-	 * @param cout indique le temps nécessaire pour parcourir le troncon
+	 * Constructeur avec parametres de l'Objet Troncon
+	 * @param uneRue String le nom de la rue que modelise l'Objet Troncon
+	 * @param cout double le temps necessaire pour parcourir le troncon
+	 * @param longueur double la longueur de l'Objet Troncon
 	 */
-	public Troncon(String uneRue, double unCout) {
+	public Troncon(String uneRue, double unCout, double uneLongueur) {
 		nomRue = uneRue;
 		cout = unCout;
+		longueur = uneLongueur;
 	}
 	
 	/**
@@ -34,13 +37,22 @@ public class Troncon {
 		return this.nomRue;
 	}
 	
-/**
+	/**
 	 * Accesseur de l'Attribut cout de l'Objet Troncon
 	 * @return double la valeur de l'Attribut cout de l'Objet Troncon qui représente le temps nécessaire pour parcourir le troncon
 	 *
 	 */
 	public double getCout() {
 		return this.cout;
+	}
+	
+	/**
+	 * Accesseur de l'Attribut longueur de l'Objet Troncon
+	 * @return double la valeur de l'Attribut longueur de l'Objet Troncon qui represente la longueur de la rue representee par le Troncon
+	 *
+	 */
+	public double getLongueur() {
+		return this.longueur;
 	}
 	
 	/**
