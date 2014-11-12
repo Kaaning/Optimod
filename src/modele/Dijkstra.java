@@ -1,11 +1,19 @@
 package modele;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.PriorityQueue;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Queue;
 import java.util.Vector;
+
+import org.jdom2.JDOMException;
+
+/**
+ * @author Adrien Garcia
+ */
 
 class Vertex implements Comparable<Vertex>
 {
@@ -93,17 +101,23 @@ public class Dijkstra implements Graph {
 	Vertex source;
 	Vertex target;
 	
-	public Dijkstra (List<Noeud> nodes) {
+	public Dijkstra (ZoneGeographique zone, DemandesDeLivraison ddl) {
+		
+		List<Noeud> nodes = zone.getNoeuds();
 		
 		vertices = new Vector<Vertex>();
+		
+		vertices.add(new Vertex(zone.findNoeudById(ddl.getEntrepot())));
 		
 		for (int i = 0; i < nodes.size(); i++) {
 			Vertex v = new Vertex (nodes.get(i));
 			vertices.add(v);
 		}
 		
+		vertices.add(new Vertex(zone.findNoeudById(ddl.getEntrepot())));
+		
 		for (Vertex v : vertices) {
-			for (Troncon t : v.node.getTronconsSortants()) {
+			for (Troncon t : v.node.getTronconsSortant()) {
 				Edge e = new Edge (getVertexById(t.getCible().getId()), t);
 				v.adjacencies.add(e);// (vTemp != null ? new Edge(vTemp, v.node.getTronconsSortants().get(j)) : null) );
 			}
@@ -184,12 +198,14 @@ public class Dijkstra implements Graph {
         //
         
         Collections.reverse(path);
+        path.add(path.get(0));
+        
         return path;
     }
     
-    public static void main(String[] args)
+    public static void main(String[] args) throws JDOMException, IOException, ParseException
     {
-    	Noeud n0 = new Noeud(0, 0, 0);
+    	/*Noeud n0 = new Noeud(0, 0, 0);
     	Noeud n1 = new Noeud(1, 1, 1);
     	Noeud n2 = new Noeud(2, 2, 2);
     	Noeud n3 = new Noeud(3, 3, 3);
@@ -204,27 +220,33 @@ public class Dijkstra implements Graph {
     	ln.add(n4);
     	ln.add(n5);
     	
-    	Troncon t01 = new Troncon("rue du Caca", 1.5, 6.2);
+    	Troncon t01 = new Troncon("rue du Caca", 15.0, 6.2);
     	t01.setSource(n0);
     	t01.setCible(n1);
-    	/*Troncon t02 = new Troncon("rue du Tabac", 27.5, 15.0);
+    	Troncon t02 = new Troncon("rue du Tabac", 27.5, 15.0);
     	t02.setSource(n0);
-    	t02.setCible(n2);*/
-    	Troncon t12 = new Troncon("rue du Papa", 2.8, 7.1);
+    	t02.setCible(n2);
+    	Troncon t12 = new Troncon("rue du Papa", 28.0, 7.1);
     	t12.setSource(n1);
     	t12.setCible(n2);
     	
     	n0.ajouterTronconSortant(t01);
-    	//n1.ajouterTronconEntrant(t01);
-    	//n0.ajouterTronconSortant(t02);
-    	//n2.ajouterTronconEntrant(t02);
-    	n1.ajouterTronconSortant(t12);
-    	//n2.ajouterTronconEntrant(t12);
+    	n1.ajouterTronconEntrant(t01);
     	
-    	Dijkstra dj = new Dijkstra(ln);
+    	n0.ajouterTronconSortant(t02);
+    	n2.ajouterTronconEntrant(t02);
+    	
+    	n1.ajouterTronconSortant(t12);
+    	n2.ajouterTronconEntrant(t12);*/
+    	
+    	Jour jour = new Jour();
+    	ZoneGeographique zone = new ZoneGeographique("res\\plan10x10.xml");
+    	DemandesDeLivraison ddl = new DemandesDeLivraison("res\\livraison10x10-1.xml", jour);
+    	
+    	Dijkstra dj = new Dijkstra(zone, ddl);
     	
     	System.out.println("Nodes list :");
-    	System.out.println(ln.toString());
+    	//System.out.println(zone.getNoeuds().toString());
     	System.out.println("Vertices list :");
     	System.out.println(dj.vertices);
     	
@@ -237,7 +259,7 @@ public class Dijkstra implements Graph {
     	
     	// Asking for the minimal path from vertex 0 to vertex 2 :
     	dj.source = dj.vertices.get(0);
-    	dj.target = dj.vertices.get(2);
+    	dj.target = dj.vertices.get(20);
     	
     	System.out.println("Computing paths form vertex " + dj.source + " to all the vertices of the graph ...");
     	dj.computePaths(dj.source);
@@ -246,16 +268,18 @@ public class Dijkstra implements Graph {
     	if(path != null) {
     		System.out.println("=========================");
     		System.out.println("RESULT HAS BEEN FOUND !");
+    		System.out.print("BEGINNING -> " + path.get(0));
     		for(Vertex v : path) {
-    			System.out.print((v == path.get(0)?"BEGINNING -> ":"") + v + (v == path.get(path.size()-1)?" -> END":" -> "));
+    			System.out.print(" -> " + v);
     		}
+    		System.out.println(" -> END");
     		System.out.println();
     		System.out.println("- - - - - - - - - - - -");
     		System.out.println("Distance of the minimal path : " + dj.target.minDistance);
     		System.out.println("- - - - - - - - - - - -");
     		System.out.println("Total number of nodes in the graph : " + dj.vertices.size());
     		System.out.println("Number of visited nodes : " + path.size());
-    		System.out.println("Not visited node(s) for this path :");
+    		System.out.println("Unvisited node(s) for this path :");
     		
     		if(path.size() == dj.vertices.size()) {
     			System.out.println("NONE");
@@ -278,11 +302,14 @@ public class Dijkstra implements Graph {
     		System.out.println();
     	}
     	System.out.println("=========================");
-    	
-    	int[] succ_0 = dj.getSucc(0);
-    	for(int i = 0; i < succ_0.length; i++) {
-    		System.out.print("[" + succ_0[i] + "]");
-    	}
+	    for (int i = 0; i < dj.getNbVertices(); i++) {
+	    	System.out.println("Successors of " + dj.getVertexById(i) +" :");
+	    	int[] succ = dj.getSucc(i);
+	    	for(int j = 0; j < succ.length; j++) {
+	    		System.out.print("[" + dj.getVertexById(succ[j]) + "]");
+	    	}
+	    	System.out.println();
+	    }
     	System.out.println("=========================");
     	System.out.println("Minimum cost in this graph : " + dj.getMinArcCost());
     	System.out.println("=========================");
@@ -328,11 +355,12 @@ public class Dijkstra implements Graph {
 			Vertex v = this.vertices.get(i);
 			for(int j = 0; j < n; j++) {
 				res[i][j] = this.getMaxArcCost()+1;
+				//res[i][j] = -1.0;
 			}
 			for(Edge e : v.adjacencies) {
 				res[i][this.vertices.indexOf(e.target)] = e.arc.getCout();
 			}
-			
+			res[i][i] = 0.0;
 		}
 		return res;
 	}
