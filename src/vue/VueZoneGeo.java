@@ -159,7 +159,13 @@ public class VueZoneGeo extends JPanel{
 		return echelle;
 	}
 	
-
+	public void changerCouleur(int n){
+		for(VueNoeud vn : vueNoeuds){
+			//vn.noeud.getId()=
+			vn.changerCouleur(n);
+		}
 	
+	}
+
 
 }
