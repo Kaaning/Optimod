@@ -12,12 +12,14 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+import controleur.Command;
 import modele.Noeud;
 import modele.Troncon;
 import modele.ZoneGeographique;
 
 public class VueZoneGeo extends JPanel{
 	
+	private Command cmd;
 	private ZoneGeographique zoneGeo;
 	private ArrayList<VueNoeud> vueNoeuds;
 	private ArrayList<VueTroncon> vueTroncons;
@@ -31,7 +33,7 @@ public class VueZoneGeo extends JPanel{
 	private int[] clic = {0,0};
 	private int[] deplacement = {0,0};
 	
-	public VueZoneGeo (int x, int y, int largeur, int hauteur, double echelle, ZoneGeographique zoneGeo) {
+	public VueZoneGeo (int x, int y, int largeur, int hauteur, double echelle, ZoneGeographique zoneGeo, Command command) {
     	// Creation d'un panneau pour dessiner les boules
         this.largeur = largeur;
         this.hauteur = hauteur;
@@ -110,7 +112,7 @@ public class VueZoneGeo extends JPanel{
 	public void creerVueNoeuds(){
 		List<Noeud> noeuds = zoneGeo.getNoeuds();
 		for(Noeud noeud : noeuds){
-			VueNoeud vn = new VueNoeud(noeud, echelle);
+			VueNoeud vn = new VueNoeud(noeud, echelle, cmd);
 			vueNoeuds.add(vn);
 			add(vn);
 			vn.setLocation(origine[0]+deplacement[0]+vn.getXVue(), origine[1]+deplacement[1]+vn.getYVue());

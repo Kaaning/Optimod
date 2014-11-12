@@ -32,11 +32,13 @@ import javax.swing.ScrollPaneConstants;
 
 import org.jdom2.JDOMException;
 
+import controleur.*;
 import modele.*;
 
 public class Accueil{
-	private DemandesDeLivraison ddl;
+	private Tournee ddl;
 	private ZoneGeographique plan;
+	private Command cmd;
 	
 	private JFrame cadre;
 	private JButton chargerLivraison = new JButton("Charger une demande de livraison");
@@ -50,8 +52,7 @@ public class Accueil{
 	int largeur = 1300;
 	int hauteur = 600; 
 	
-	private JTextArea tPlan;
-	private JTextArea tLivraison;
+	private JTextArea message;
 	
 	private JPanel pPlan = new JPanel();
 	private JPanel pList = new JPanel();
@@ -59,8 +60,12 @@ public class Accueil{
 	private JList list;
 	private DefaultListModel<String> listModel = new DefaultListModel<String>();
 	
+	public void message(String mess){
+		message.setText(mess);
+	}
 	
-	public Accueil(Jour j){
+	public Accueil(Command command){
+		cmd = command;
 		cadre = new JFrame();
 		cadre.setLayout(null);
 		cadre.setSize(largeur, hauteur);
@@ -87,14 +92,14 @@ public class Accueil{
 		                    
 		                }
 		                try {
-							j.chargerLivraison(chemin);
+							plan.chargerLivraison(chemin);
 						} catch (ParseException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 	                    
 		                Vector<String> livraisons = new Vector<String>();
-		                ddl = j.getDemandes();
+		                ddl = plan.getDemandes();
 	            		for(int i = 0 ; i<ddl.getPlages().size();i++){
 	            			PlageHoraire ph = ddl.getPlages().get(i); 
 	            			for(int j = 0 ; j<ph.getLivraisons().size() ; j++){
@@ -111,7 +116,6 @@ public class Accueil{
 			
 			public void actionPerformed(ActionEvent arg0) {
 				String chemin="";
-				ZoneGeographique zg;
 				JFileChooser fc = new JFileChooser();
 				int retval = fc.showOpenDialog(null);
 			                if (retval == JFileChooser.APPROVE_OPTION) {
@@ -119,9 +123,8 @@ public class Accueil{
 			                    chemin = chemin.replace("\\", "/");			                    
 			                }
 			                try {
-								j.creerZoneGeographique(chemin);
-								plan = j.getPlan();
-								geo =  new VueZoneGeo(0,0,500,500, 500.0/800.0, j.getPlan());
+								plan = new ZoneGeographique(chemin);
+								geo =  new VueZoneGeo(0,0,500,500, 500.0/800.0, plan, cmd);
 								pPlan.add(geo);
 							} catch (JDOMException e) {
 								// TODO Auto-generated catch block
@@ -152,15 +155,11 @@ public class Accueil{
 		
 		//NORTH ----------------------------
 		north.setLayout(gl);
-		JTextArea message = new JTextArea("Bonjour");
+		message = new JTextArea("Bonjour");
 		message.setFont(new Font("Serif", Font.PLAIN, 16));
 		message.setLineWrap(true);
 		message.setWrapStyleWord(true);
-		/*JTextArea livraison = new JTextArea("Points de livraison");
-		livraison.setFont(new Font("Serif", Font.PLAIN, 16));
-		livraison.setLineWrap(true);
-		livraison.setWrapStyleWord(true);
-		north.add(plan);*/
+		
 		north.add(message);
 		
 		//CENTER ----------------------------
@@ -170,17 +169,8 @@ public class Accueil{
 		g2.setHgap(10); //Cinq pixels d'espace entre les colonnes (H comme Horizontal)
 		g2.setVgap(10); //Cinq pixels d'espace entre les lignes (V comme Vertical)
 		center.setLayout(gl);
-		
-		/*plan = new JTextArea("Plan de zone");
-		plan.setFont(new Font("Serif", Font.PLAIN, 16));
-		plan.setLineWrap(true);
-		plan.setWrapStyleWord(true);
-		livraison = new JTextArea("Points de livraison");
-		livraison.setFont(new Font("Serif", Font.PLAIN, 16));
-		livraison.setLineWrap(true);	
-		livraison.setWrapStyleWord(true);*/
 
-		
+		//Liste des points de livraison
 		list = new JList(listModel); //data has type Object[]
 		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
@@ -190,8 +180,6 @@ public class Accueil{
 		listScroller.setPreferredSize(new Dimension(250, 500));
 		pList.add(listScroller);
 		
-		/*center.add(plan);
-		center.add(livraison);*/
 		center.add(pPlan);
 		center.add(pList);
 				

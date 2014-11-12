@@ -6,8 +6,9 @@ public class Livraison {
 	private int noeud;
 	private int client;
 	private String etat;
+	private PlageHoraire horaire;
 	
-	public Livraison(int id, int idClient, int idNoeud) {
+	public Livraison(int id, int idClient, int idNoeud, PlageHoraire pl) {
 		this.id = id;
 		client = idClient;
 		noeud = idNoeud;
@@ -34,6 +35,10 @@ public class Livraison {
 
 	public String getEtat() {
 		return etat;
+	}
+	
+	public String display(){
+		return "Livraison chez " + client + " entre "+horaire.getHeureDebut() + " et " + horaire.getHeureFin();
 	}
 	
 	
