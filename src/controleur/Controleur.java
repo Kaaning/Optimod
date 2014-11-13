@@ -25,7 +25,6 @@ public class Controleur {
 		
 			try {
 				this.modelZoneGeographique.chargerLivraison(chemin);
-				this.viewAccueil.
 				return 0;
 			} catch (ParseException e) {
 				e.printStackTrace();

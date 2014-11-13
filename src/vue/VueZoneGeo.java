@@ -39,10 +39,10 @@ public class VueZoneGeo extends JPanel{
         this.hauteur = hauteur;
         this.zoneGeo = zoneGeo;
         this.ctrl=ctrl;
+        this.setLayout(null);
         setSize(largeur,hauteur);
         plan = new VuePlan(zoneGeo, ctrl);
         add(plan);
-<<<<<<< HEAD
         creerVueTournee();
 //        add(new VueTournee(zoneGeo, ctrl, zoneGeo.getTournee()));
 	}
@@ -54,13 +54,21 @@ public class VueZoneGeo extends JPanel{
 	
 	public int MAJVueZoneGeographique () {
 		return 0;
-=======
      }
 	
 	public void creerVueTournee(Tournee tournee){
 		this.vueTournee = new VueTournee(tournee, ctrl);
 		this.add(vueTournee);
+		vueTournee.setLocation(500,0);
 		this.repaint();
+<<<<<<< HEAD
+>>>>>>> origin/Jérémy
+=======
+		this.revalidate();
+	}
+	
+	public void changerCouleur(int n){
+		plan.changerCouleur(n);
 >>>>>>> origin/Jérémy
 	}
 
