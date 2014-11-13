@@ -1,11 +1,10 @@
 package controleur;
 
-public class ConcreteCommandChargerZoneGeo implements Command {
+public class ConcreteCommandChargerZoneGeo  implements Command{
 
 	@Override
 	public int execute() {
 		// TODO Auto-generated method stub
-		
 		return 0;
 	}
 

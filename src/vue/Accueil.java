@@ -45,6 +45,7 @@ import org.jdom2.JDOMException;
 import org.xml.sax.SAXException;
 
 import controleur.Controleur;
+import bibliothequesTiers.ExampleFileFilter;
 
 
 
@@ -53,12 +54,6 @@ public class Accueil{
 	private ZoneGeographique zoneGeo;
 	private Controleur ctrl;
 	private VueZoneGeo vueZoneGeo;
-import modele.*;
-import bibliothequesTiers.*;
-
-public class Accueil{
-	private Tournee ddl;
-	private ZoneGeographique plan;
 
 	private JFrame cadre;
 	private JButton chargerLivraison = new JButton("Charger une demande de livraison");
@@ -80,7 +75,6 @@ public class Accueil{
 
 	private JPanel pPlan = new JPanel();
 	private JPanel pList = new JPanel();
-//	private VuePlan geo;
 	private JList list;
 	private DefaultListModel listModel = new DefaultListModel();
 	
@@ -95,7 +89,7 @@ public class Accueil{
 		cadre.setSize(largeur, hauteur);
 		cadre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		cadre.setLocationRelativeTo(null);
-
+		
 		cadre.setLayout(new BorderLayout());
 		cadre.getContentPane().add(south, BorderLayout.SOUTH);
 		cadre.getContentPane().add(north, BorderLayout.NORTH);
@@ -106,37 +100,14 @@ public class Accueil{
 		vueZoneGeo = new VueZoneGeo(1100,500);
 		pPlan.setLayout(null);
 		
+		// Impossible d'appuyer sur ces boutons au départ
+		chargerLivraison.setEnabled(false);
+		calculerItineraire.setEnabled(false);
 		
 		chargerLivraison.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String chemin="";
 				JFileChooser fc = new JFileChooser();
-				int retval = fc.showOpenDialog(null);
-				if (retval == JFileChooser.APPROVE_OPTION) {
-					chemin = fc.getSelectedFile().getAbsolutePath();
-					chemin = chemin.replace("\\", "/");
-
-				}
-				try {
-					zoneGeo.chargerLivraison(chemin);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-				Vector<String> livraisons = new Vector<String>();
-				ddl = zoneGeo.getTournee();
-				for(int i = 0 ; i<ddl.getPlages().size();i++){
-					PlageHoraire ph = ddl.getPlages().get(i); 
-					for(int j = 0 ; j<ph.getLivraisons().size() ; j++){
-						Livraison l = ph.getLivraisons().get(j);
-						(listModel).addElement("Livraison n°"+l.getId()+" chez "+l.getClient() + " à l'adresse "+l.getNoeud());
-					}
-				}
-//				geo.changerCouleur(ddl.getEntrepot());
-//				geo.repaint();
-				calculerItineraire.setEnabled(true);
-=======
 				fc.setDialogTitle("Charger une livraison");
 				fc.addChoosableFileFilter(new FileNameExtensionFilter("Fichier .xml", "xml", "XML"));
 				int retval = fc.showOpenDialog(null);
@@ -146,13 +117,13 @@ public class Accueil{
 						chemin = fc.getSelectedFile().getAbsolutePath();
 						chemin = chemin.replace("\\", "/");
 						try {
-							plan.chargerLivraison(chemin);
+							zoneGeo.chargerLivraison(chemin);
 						} catch (ParseException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 						Vector<String> livraisons = new Vector<String>();
-						ddl = plan.getDemandes();
+						ddl = zoneGeo.getTournee();
 						for(int i = 0 ; i<ddl.getPlages().size();i++){
 							PlageHoraire ph = ddl.getPlages().get(i); 
 							for(int j = 0 ; j<ph.getLivraisons().size() ; j++){
@@ -160,16 +131,16 @@ public class Accueil{
 								(listModel).addElement("Livraison n°"+l.getId()+" chez "+l.getClient() + " à l'adresse "+l.getNoeud());
 							}
 						}
-						geo.changerCouleur(ddl.getEntrepot());
-						geo.repaint();
+						//						geo.changerCouleur(ddl.getEntrepot());
+						//						geo.repaint();
 					} else {
 						JOptionPane.showMessageDialog(cadre, "Format non pris en compte !", "Erreur !", JOptionPane.ERROR_MESSAGE);
 					}
 				}
->>>>>>> origin/Riadh-Xml
+				calculerItineraire.setEnabled(true);
 			}
 		});
-
+		
 		chargerPlan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String chemin="";
@@ -179,54 +150,26 @@ public class Accueil{
 				fc.addChoosableFileFilter(ff);
 				fc.setFileFilter(ff);
 				int retval = fc.showOpenDialog(null);
-<<<<<<< HEAD
-			                if (retval == JFileChooser.APPROVE_OPTION) {
-			                    chemin = fc.getSelectedFile().getAbsolutePath();
-			                    chemin = chemin.replace("\\", "/");			                    
-			                }
-			                try {
-								zoneGeo = new ZoneGeographique(chemin);
-								center.remove(vueZoneGeo);
-								vueZoneGeo = new VueZoneGeo(1100, 500, zoneGeo, ctrl);
-								center.add(vueZoneGeo);
-								cadre.repaint();
-//								geo =  new VuePlan(0,0,500,500, 500.0/800.0, zoneGeo, ctrl);
-//								pPlan.add(geo);
-							} catch (JDOMException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}       
-			pPlan.repaint();
-			chargerLivraison.setEnabled(true);
-			System.out.println(zoneGeo.getNoeuds().size());
-			}
-		});
-		// Impossible d'appuyer sur ces boutons au départ
-		chargerLivraison.setEnabled(false);
-		calculerItineraire.setEnabled(false);
-		
-		
-=======
 				if (retval == JFileChooser.APPROVE_OPTION) {
 					ExampleFileFilter filtre = new ExampleFileFilter("xml");
 					if (filtre.accept(fc.getSelectedFile())) {
 						chemin = fc.getSelectedFile().getAbsolutePath();
 						chemin = chemin.replace("\\", "/");
 						try {
-								//XMLValidateur.validerXML(chemin, "res\\plan.xsd");
-								plan = new ZoneGeographique(chemin);
-								//if (!plan.getReussi()) {
-									//JOptionPane.showMessageDialog(cadre, "Erreur dans le ficher XML !", "Erreur !", JOptionPane.ERROR_MESSAGE);	
-								//} else {
-									geo =  new VueZoneGeo(0, 0, 500, 500, 500.0/800.0, plan);
-									pPlan.add(geo);
-									pPlan.repaint();
-								//}
-							
-						} catch (JDOMException | IOException | HeadlessException | ParserConfigurationException | SAXException e) {
+							//XMLValidateur.validerXML(chemin, "res\\plan.xsd");
+							zoneGeo = new ZoneGeographique(chemin);
+							//if (!plan.getReussi()) {
+							//JOptionPane.showMessageDialog(cadre, "Erreur dans le ficher XML !", "Erreur !", JOptionPane.ERROR_MESSAGE);	
+							//} else {
+							center.remove(vueZoneGeo);
+							vueZoneGeo = new VueZoneGeo(1100, 500, zoneGeo, ctrl);
+							center.add(vueZoneGeo);
+							cadre.repaint();
+							chargerLivraison.setEnabled(true);
+							System.out.println(zoneGeo.getNoeuds().size());
+							//}
+
+						} catch (JDOMException | IOException | HeadlessException /*| ParserConfigurationException | SAXException*/ e) {
 							//e.printStackTrace();
 							System.out.println(e.getMessage());
 						} catch (NumberFormatException e) {
@@ -239,10 +182,8 @@ public class Accueil{
 				}		
 			}
 		});
+		
 
-
-
->>>>>>> origin/Riadh-Xml
 		//SOUTH ----------------------------
 		GridLayout gl = new GridLayout();
 		gl.setColumns(3);
@@ -250,12 +191,12 @@ public class Accueil{
 		gl.setHgap(10); //Cinq pixels d'espace entre les colonnes (H comme Horizontal)
 		gl.setVgap(10); //Cinq pixels d'espace entre les lignes (V comme Vertical)
 		south.setLayout(gl);
-
-
+		
+		
 		south.add(calculerItineraire);
 		south.add(chargerPlan);
 		south.add(chargerLivraison);
-
+		
 		//NORTH ----------------------------
 		north.setLayout(gl);
 		message = new JTextArea("Bonjour");
@@ -264,7 +205,7 @@ public class Accueil{
 		message.setWrapStyleWord(true);
 		
 		north.add(message);
-
+		
 		//CENTER ----------------------------
 //		GridLayout g2 = new GridLayout();
 //		g2.setColumns(2);
@@ -289,9 +230,9 @@ public class Accueil{
 				
 
 		cadre.setVisible(true);
-
+		
 	}
-
-
+	
+	
 
 }
