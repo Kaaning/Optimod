@@ -294,10 +294,7 @@ public class Dijkstra implements Graph {
     	return res;
 	}
 
-	public static void main(String[] args) throws JDOMException, IOException, ParseException
-    {
-<<<<<<< HEAD
-=======
+	public static void main(String[] args) throws JDOMException, IOException, ParseException {
 		ZoneGeographique z = new ZoneGeographique("fic\\plan10x10-test.xml");
     	Tournee t = new Tournee("fic\\livraison10x10-test.xml", z);
     	
@@ -330,20 +327,13 @@ public class Dijkstra implements Graph {
     	
     	System.out.println("Cost from 0 to 2 : " + dj.cost[0][2]);
     	System.out.println("==========================================");
-    	
-    	for(Vertex v : dj.vertices) {
-    		System.out.println(v.minDistance);
-    	}
-    	
+    }
     	/*for(int i = 0; i < dj.getNbVertices(); i++) {
     		for(int j = 0; j < dj.getNbVertices(); j++) {
     			System.out.print("[" + dj.getCost()[i][j] + "]");
     		}
     		System.out.println();
     	}*/
->>>>>>> parent of 32c68d8... Revert "Update modele"
-    	
-    }
 
 	@Override
 	public int getMaxArcCost() {

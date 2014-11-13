@@ -6,7 +6,6 @@ import solver.constraints.IntConstraintFactory;
 import solver.search.loop.monitors.SearchMonitorFactory;
 import solver.search.strategy.IntStrategyFactory;
 import solver.variables.IntVar;
-import solver.variables.RealVar;
 import solver.variables.VariableFactory;
 
 /**
@@ -16,7 +15,7 @@ import solver.variables.VariableFactory;
 public class TSP {
 
 	private int[] next;
-	private double totalCost;
+	private int totalCost;
 	private SolutionState state;
 	private Graph graph;
 
@@ -36,9 +35,9 @@ public class TSP {
 	 */
 	public SolutionState solve(int timeLimit, int bound) {
 		int n = graph.getNbVertices();
-		double minCost = graph.getMinArcCost();
-		double maxCost = graph.getMaxArcCost();
-		double[][] cost = graph.getCost();
+		int minCost = graph.getMinArcCost();
+		int maxCost = graph.getMaxArcCost();
+		int[][] cost = graph.getCost();
 		next = new int[n];
 		Solver solver = new Solver();
 
