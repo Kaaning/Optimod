@@ -296,6 +296,52 @@ public class Dijkstra implements Graph {
 
 	public static void main(String[] args) throws JDOMException, IOException, ParseException
     {
+<<<<<<< HEAD
+=======
+		ZoneGeographique z = new ZoneGeographique("fic\\plan10x10-test.xml");
+    	Tournee t = new Tournee("fic\\livraison10x10-test.xml", z);
+    	
+    	Dijkstra dj = new Dijkstra(z, t);
+    	Vertex source = dj.getVertexByNodeId(0);
+    	Vertex target = dj.getVertexByNodeId(2);
+    	
+    	System.out.println("Computing paths form vertex " + source + " to all the vertices of the graph ...");
+    	dj.computePaths(source);
+    	System.out.println("Getting the best path to " + target + " ...");
+    	List<Vertex> path = dj.getShortestPath(target);
+    	if(path != null && path.size() != 1) {
+    		System.out.println("=========================");
+    		System.out.println("RESULT HAS BEEN FOUND !");
+    		System.out.print("BEGINNING ");
+    		for(Vertex v : path) {
+    			System.out.print(" -> " + v);
+    		}
+    		System.out.println(" -> END");
+    	} else {
+    		System.out.println("No result has been found");
+    		if(path == null) {
+    			System.out.println("NULL");
+    		}
+    		if(path.size() == 1) {
+    			System.out.println("Size = " + path.size());
+    			System.out.println(path);
+    		}
+    	}
+    	
+    	System.out.println("Cost from 0 to 2 : " + dj.cost[0][2]);
+    	System.out.println("==========================================");
+    	
+    	for(Vertex v : dj.vertices) {
+    		System.out.println(v.minDistance);
+    	}
+    	
+    	/*for(int i = 0; i < dj.getNbVertices(); i++) {
+    		for(int j = 0; j < dj.getNbVertices(); j++) {
+    			System.out.print("[" + dj.getCost()[i][j] + "]");
+    		}
+    		System.out.println();
+    	}*/
+>>>>>>> parent of 32c68d8... Revert "Update modele"
     	
     }
 
