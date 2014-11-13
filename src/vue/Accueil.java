@@ -104,7 +104,7 @@ public class Accueil{
 		chargerLivraison.setEnabled(false);
 		calculerItineraire.setEnabled(false);
 		
-		chargerLivraison.addActionListener(new ActionListener() {
+		/*chargerLivraison.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String chemin="";
 				JFileChooser fc = new JFileChooser();
@@ -116,12 +116,10 @@ public class Accueil{
 					if (filtre.accept(fc.getSelectedFile())) {
 						chemin = fc.getSelectedFile().getAbsolutePath();
 						chemin = chemin.replace("\\", "/");
-						try {
-							zoneGeo.chargerLivraison(chemin);
-						} catch (ParseException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+						
+						ctrl.chargerLivraison(chemin);
+						MAJModele();
+						
 						Vector<String> livraisons = new Vector<String>();
 						ddl = zoneGeo.getTournee();
 						for(int i = 0 ; i<ddl.getPlages().size();i++){
@@ -139,7 +137,7 @@ public class Accueil{
 				}
 				calculerItineraire.setEnabled(true);
 			}
-		});
+		});*/
 		
 		chargerPlan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -197,6 +195,7 @@ public class Accueil{
 		                
 		                ctrl.chargerLivraison(chemin);
 	                    MAJModele();
+	                    
 		                
 	                    /*
 		                ddl = zoneGeographique.getDemandes();
@@ -275,6 +274,8 @@ public class Accueil{
 	public void creerVueTournee (Tournee tournee) {
 		this.vueZoneGeo.creerVueTournee(this.zoneGeo.getTournee());
 	}
+	
+	
 
 
 

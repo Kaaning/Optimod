@@ -1,15 +1,6 @@
 package controleur;
 
-public class ConcreteCommandChargerLivraisons implements Command {
-	
-	private String path;
-	
-	
-	
-	
-	public ConcreteCommandChargerLivraisons(String path) {
-		this.path = path;
-	}
+public class ConcreteCommandAjouterLivraison implements Command {
 
 	@Override
 	public int execute() {
