@@ -12,10 +12,11 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JComponent;
 
+import controleur.Controleur;
 import modele.Noeud;
 
 public class VueNoeud extends JComponent implements MouseListener{
-
+	
 	private Color couleur;
 	public Noeud noeud;
 	private int rayon = 12;
@@ -25,9 +26,11 @@ public class VueNoeud extends JComponent implements MouseListener{
 	private Dimension size;
 	private Color fond = new Color(73,73,73);
 	private Color surbrillance = new Color(93,93,93);
+	private Controleur ctrl;
 	
-	public VueNoeud(Noeud noeud, double echelle){
+	public VueNoeud(Noeud noeud, double echelle, Controleur ctrl){
 		super();
+		this.ctrl = ctrl; 
 		this.noeud = noeud;
 		this.couleur = fond;
 		this.echelle=echelle;
@@ -87,6 +90,7 @@ public class VueNoeud extends JComponent implements MouseListener{
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		System.out.println("A cliqué en "+getXPlan()+","+getYPlan());
+		ctrl.infoLivraison(noeud.getId());
 	}
 
 	@Override

@@ -1,14 +1,20 @@
 package controleur;
 
-public class Command {
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.List;
 
-	public int execute(){
-		return 0;
-	}
+import modele.*;
+
+import org.jdom2.JDOMException;
+
+import vue.Accueil;
+
+public interface Command {
 	
-	public int unexecute(){
-		return 0;
-	}
+	public int execute();
 	
-	
+	public int unexecute();
 }
+
+

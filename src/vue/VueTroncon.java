@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+
+import controleur.Controleur;
 import modele.Troncon;
 
 public class VueTroncon {
@@ -12,12 +14,14 @@ public class VueTroncon {
 	private Color couleur = new Color(123,123,123);
 	public Troncon troncon;
 	double echelle;
+	private Controleur ctrl;
 
 	
-	public VueTroncon(Troncon troncon, double echelle){
+	public VueTroncon(Troncon troncon, double echelle, Controleur ctrl){
 		super();
 		this.troncon = troncon;
 		this.echelle=echelle;
+		this.ctrl=ctrl;
 	}
 	
 	public int getXVue(String noeud){
