@@ -17,6 +17,7 @@ public class Tournee {
 	private int entrepot;
 	private List<PlageHoraire> plages; 
 	private ZoneGeographique zg;
+	private List<Etape> etapes;
 	
 	public Tournee(String nomFic, ZoneGeographique unZg) throws ParseException{
 		this.zg = unZg;

@@ -3,8 +3,9 @@ package modele;
 import java.util.List;
 
 public class Etape {
-	List<Troncon> troncons;
-	Livraison livraison;
+	private List<Troncon> troncons;
+	private Livraison livraison;
+	private String heureArrivee;
 	
 	/*public Etape(int[]) {
 		// TODO : Gerer l'entrepot en debut et fin de parcours
