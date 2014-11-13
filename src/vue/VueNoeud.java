@@ -90,7 +90,7 @@ public class VueNoeud extends JComponent implements MouseListener{
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		System.out.println("A cliqué en "+getXPlan()+","+getYPlan());
-//		ctrl.infoLivraison(noeud.getId());
+		ctrl.infoLivraison(noeud);
 	}
 
 	@Override

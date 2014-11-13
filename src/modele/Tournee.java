@@ -56,7 +56,7 @@ public class Tournee {
 	        	int id = Integer.parseInt(currentLivraison.getAttributeValue("id"));
 	        	int client = Integer.parseInt(currentLivraison.getAttributeValue("client"));
 	        	int adresse = Integer.parseInt(currentLivraison.getAttributeValue("adresse"));
-	        	Noeud noeud = zg.findNoeudById(adresse);
+	        	Noeud noeud = zg.getNoeudById(adresse);
 	        	if(noeud!=null){
 	        		plageHoraire.ajouterLivraison(id, client, noeud);
 	        	}

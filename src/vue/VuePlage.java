@@ -1,5 +1,6 @@
 package vue;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -45,7 +46,17 @@ public class VuePlage extends JPanel{
 	}
 	
 	private String DisplayH(Date d){
-		return d.getHours()+"h"+d.getMinutes();
+		String heure = String.valueOf(d.getHours());
+		String minute = String.valueOf(d.getMinutes());
+		if( d.getHours()==0)
+		{
+			heure="00";
+		}
+		if( d.getMinutes()==0)
+		{
+			minute="00";
+		}
+		return heure+"h"+minute;
 	}
 	
 }

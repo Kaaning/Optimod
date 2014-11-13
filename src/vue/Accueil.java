@@ -6,7 +6,6 @@ import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -15,11 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.xml.parsers.ParserConfigurationException;
 
-import org.jdom2.JDOMException;
-import org.xml.sax.SAXException;
-
+import modele.Noeud;
 import modele.Tournee;
 import modele.ZoneGeographique;
 import controleur.Controleur;
@@ -39,7 +35,7 @@ public class Accueil{
 	private JPanel west = new JPanel();
 	private JPanel east = new JPanel();
 	private JPanel north = new JPanel();
-	int largeur = 1100;
+	int largeur = 1200;
 	int hauteur = 600; 
 	
 	private JLabel message;
@@ -121,25 +117,17 @@ public class Accueil{
 						chemin = fc.getSelectedFile().getAbsolutePath();
 						chemin = chemin.replace("\\", "/");
 						try {
-							int err = ctrl.ChargerZoneGeo(chemin);
-							if (err == -1) {
-								String messageErreur = "Le fichier XML n'est pas valide !";
-								afficherMessageErreur(messageErreur);
-							} else if (err == 1) {
-								String messageErreur = "Erreur de conversion dans le fichier XML: vitesse, longueur ou identifiant negatif";
-								afficherMessageErreur(messageErreur);
-							} else if (err == 2){
-								String messageErreur = "Erreur dans le fichier XML !";
-								afficherMessageErreur(messageErreur);
-							} else {
-							}
-						} catch (IOException | JDOMException | ParserConfigurationException | SAXException | HeadlessException | NumberFormatException e) {
+							//XMLValidateur.validerXML(chemin, "res\\plan.xsd");
+							ctrl.ChargerZoneGeo(chemin);
+						} catch (/*JDOMException | IOException |*/ HeadlessException /*| ParserConfigurationException | SAXException*/ e) {
+							//e.printStackTrace();
+							System.out.println(e.getMessage());
+						} catch (NumberFormatException e) {
 							String messageErreur = "Erreur dans le ficher XML: " + e.getMessage();
-							afficherMessageErreur(messageErreur);
+							JOptionPane.showMessageDialog(cadre, messageErreur, "Erreur !", JOptionPane.ERROR_MESSAGE);	
 						}
 					} else {
-						String messageErreur = "Format non pris en compte !";
-						afficherMessageErreur(messageErreur);
+						JOptionPane.showMessageDialog(cadre, "Format non pris en compte !", "Erreur !", JOptionPane.ERROR_MESSAGE);
 					}
 				}		
 			}
@@ -156,18 +144,6 @@ public class Accueil{
 		                    
 		                }
 		                ctrl.chargerLivraison(chemin);
-	                    /*
-		                ddl = zoneGeographique.getDemandes();
-	            		for(int i = 0 ; i<ddl.getPlages().size();i++){
-	            			PlageHoraire ph = ddl.getPlages().get(i); 
-	            			for(int j = 0 ; j<ph.getLivraisons().size() ; j++){
-	            				Livraison l = ph.getLivraisons().get(j);
-	            				(listModel).addElement("Livraison n°"+l.getId()+" chez "+l.getClient() + " à l'adresse "+l.getNoeud());
-	            			}
-	            		}
-	            		geo.changerCouleur(ddl.getEntrepot());
-	            		geo.repaint();
-	            		*/
 			  }
 		});
 		
@@ -234,12 +210,15 @@ public class Accueil{
 	}
 	
 	public void afficherMessageErreur(String erreur){
-		JOptionPane.showMessageDialog(cadre, erreur, "Erreur !", JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(cadre, erreur, "", JOptionPane.ERROR_MESSAGE);
 	}
 
 	public void MAJVueZoneGeographique() {
 		vueZoneGeo.MAJVueZoneGeographique();
-		
+	}
+	
+	public void MAJVueEtape(Noeud n){
+		vueZoneGeo.MAJVueEtape(n);
 	}
 
 
