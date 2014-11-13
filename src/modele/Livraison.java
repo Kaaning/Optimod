@@ -3,20 +3,20 @@ package modele;
 public class Livraison {
 
 	private int id;
-	private int noeud;
+	private Noeud noeud;
 	private int client;
 	private String etat;
 	
-	public Livraison(int id, int idClient, int idNoeud) {
+	public Livraison(int id, int idClient, Noeud adresse) {
 		this.id = id;
 		client = idClient;
-		noeud = idNoeud;
+		noeud = adresse;
 		etat="en attente";
 	}
 	
-	public Livraison(int idClient, int idNoeud) {
+	public Livraison(int idClient, Noeud adresse) {
 		client = idClient;
-		noeud = idNoeud;
+		noeud = adresse;
 		etat="en attente";
 	}
 
@@ -24,7 +24,7 @@ public class Livraison {
 		return id;
 	}
 
-	public int getNoeud() {
+	public Noeud getNoeud() {
 		return noeud;
 	}
 

@@ -97,6 +97,8 @@ class Edge implements Comparable<Edge>
 
 public class Dijkstra implements Graph {
 	
+	List< List<Livraison> > ordDeliv;
+	List< List<Vertex> > ordVertices;
 	double[][] cost;
 	ZoneGeographique zone;
 	Tournee tour;
@@ -106,6 +108,19 @@ public class Dijkstra implements Graph {
 		
 		this.zone = zone;
 		this.tour = tour;
+		ordDeliv = new ArrayList< List<Livraison> >();
+		ordVertices = new ArrayList< List<Vertex> >();
+		
+		for(PlageHoraire p : tour.getPlages()) {
+			List<Livraison> lDeliv = new ArrayList<Livraison>();
+			List<Vertex> lVert = new ArrayList<Vertex>();
+			for(Livraison l : p.getLivraisons()) {
+				lDeliv.add(l);
+				Noeud n = l.getNoeud();
+				lVert.add(new Vertex(n));
+				
+			}
+		}
 		
 		vertices = new Vector<Vertex>();
 		
@@ -141,7 +156,7 @@ public class Dijkstra implements Graph {
 	    			if(path == null || path.size() == 1) {
     					weight = getMaxArcCost()+1;
     				} else {
-		    			for(int j = 0; j < path.size()-1; j++) {
+		    			/*for(int j = 0; j < path.size()-1; j++) {
 		    				//Vertex prev = path.get(j).previous;
 		    				Vertex sommet = path.get(j);
 		    				Vertex next = path.get(j+1);
@@ -151,7 +166,8 @@ public class Dijkstra implements Graph {
 		    						index = sommet.adjacencies.indexOf(e);
 		    				}
 		    				weight += sommet.adjacencies.get(index).arc.getCout();
-		    			}
+		    			}*/
+    					weight = getTotalCost(path);
 	    			}
 	    			this.cost[a][i] = weight;
     			}
@@ -176,11 +192,14 @@ public class Dijkstra implements Graph {
 	// If v.previous == v, the vertex is an isolated vertex of the graph (at least, not reachable by <source>)
 	// -> To get the minimal path from <source> to a vertex <target>, use getShortestPath(target), which returns a List<Vertex>
     public void computePaths(Vertex source) {
-        // Distance mini
+        // Minimum distance from <source> to <source> equals 0
     	source.minDistance = 0.;
+    	
+    	// List of vertices which are not yet the ending of their path(s)
+    	// i.e. they remain to be tested for the obtention of the minimal paths
         Queue<Vertex> vertexQueue = new PriorityQueue<Vertex>();
       	vertexQueue.add(source);
-
+      	
 		while (!vertexQueue.isEmpty()) {
 		    Vertex u = vertexQueue.poll();
 	
@@ -239,13 +258,22 @@ public class Dijkstra implements Graph {
     }
     
     public double getTotalCost(List<Vertex> path) {
-    	double res = 0;
-    	//TODO : Insert code of constructor Dijkstra
+    	double res = -1;
+    	for(int j = 0; j < path.size()-1; j++) {
+			//Vertex prev = path.get(j).previous;
+			Vertex sommet = path.get(j);
+			Vertex next = path.get(j+1);
+			int index = -2;
+			for(Edge e : sommet.adjacencies) {
+				if(e.target == next)
+					index = sommet.adjacencies.indexOf(e);
+			}
+			res += sommet.adjacencies.get(index).arc.getCout();
+    	}
     	return res;
     }
     
     public List<Etape> obtainEtapes() {
-    	
     	return null; //return Dijkstra.verticesToEtapes(this.getShortestPath(this.target));
     }
     
@@ -370,6 +398,11 @@ public class Dijkstra implements Graph {
     	System.out.println("Minimum cost in this graph : " + dj.getMinArcCost());
     	System.out.println("=========================");
     	System.out.println("Maximum cost in this graph : " + dj.getMaxArcCost());
+    	
+    	System.out.println("=========================");
+    	System.out.println("Ordered list of deliveries : " + dj.ordDeliv);
+    	System.out.println("=========================");
+    	System.out.println("Ordered list of vertices : " + dj.ordVertices);
     	
     }
 

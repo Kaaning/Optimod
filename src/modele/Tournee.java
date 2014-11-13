@@ -55,7 +55,13 @@ public class Tournee {
 	        	Element currentLivraison = (Element)j.next();
 	        	int id = Integer.parseInt(currentLivraison.getAttributeValue("id"));
 	        	int client = Integer.parseInt(currentLivraison.getAttributeValue("client"));
-	        	int adresse = Integer.parseInt(currentLivraison.getAttributeValue("adresse"));
+	        	Noeud adresse;
+	        	Iterator<Noeud> it = zg.getNoeuds().iterator();
+	        	while((adresse = it.next()).getId() != Integer.parseInt(currentLivraison.getAttributeValue("adresse")));
+	        	if(!it.hasNext()) {
+	        		adresse = null;
+	        	}
+	        	//Integer.parseInt(currentLivraison.getAttributeValue("adresse"));
 	        	//if( jour.getPlan().verifierNoeud(adresse)){
 	        	zg.verifierNoeud(adresse);
 	        	plageHoraire.ajouterLivraison(id, client, adresse); 
@@ -71,7 +77,7 @@ public class Tournee {
 		
 	}
 
-	public void supprimerLivraison(int adresse){
+	public void supprimerLivraison(Noeud adresse){
 		Iterator<PlageHoraire> i = plages.iterator();
 		
 		while(i.hasNext()){
