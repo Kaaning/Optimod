@@ -30,13 +30,23 @@ import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 
+import modele.Livraison;
+import modele.PlageHoraire;
+import modele.Tournee;
+import modele.ZoneGeographique;
+
 import org.jdom2.JDOMException;
 
-import modele.*;
+import controleur.Controleur;
+
+
 
 public class Accueil{
 	private Tournee ddl;
-	private ZoneGeographique plan;
+	private ZoneGeographique zoneGeo;
+	private Controleur ctrl;
+	private VueZoneGeo vueZoneGeo;
+>>>>>>> origin/William-AffichageGraphe
 	
 	private JFrame cadre;
 	private JButton chargerLivraison = new JButton("Charger une demande de livraison");
@@ -47,20 +57,23 @@ public class Accueil{
 	private JPanel west = new JPanel();
 	private JPanel east = new JPanel();
 	private JPanel north = new JPanel();
-	int largeur = 1300;
+	int largeur = 1100;
 	int hauteur = 600; 
 	
-	private JTextArea tPlan;
-	private JTextArea tLivraison;
+	private JTextArea message;
 	
 	private JPanel pPlan = new JPanel();
 	private JPanel pList = new JPanel();
-	private VueZoneGeo geo;
+//	private VuePlan geo;
 	private JList list;
-	private DefaultListModel<String> listModel = new DefaultListModel<String>();
+	private DefaultListModel listModel = new DefaultListModel();
 	
+	public void message(String mess){
+		message.setText(mess);
+	}
 	
-	public Accueil(){
+	public Accueil(Controleur controleur){
+		ctrl = controleur;
 		cadre = new JFrame();
 		cadre.setLayout(null);
 		cadre.setSize(largeur, hauteur);
@@ -74,41 +87,43 @@ public class Accueil{
 		cadre.getContentPane().add(east, BorderLayout.EAST);
 		cadre.getContentPane().add(center, BorderLayout.CENTER);
 		
+		vueZoneGeo = new VueZoneGeo(1100,500);
 		pPlan.setLayout(null);
+		
 		
 		chargerLivraison.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			   String chemin="";
-		       JFileChooser fc = new JFileChooser();
-		                int retval = fc.showOpenDialog(null);
-		                if (retval == JFileChooser.APPROVE_OPTION) {
-		                    chemin = fc.getSelectedFile().getAbsolutePath();
-		                    chemin = chemin.replace("\\", "/");
-		                    
-		                }
-		                try {
-							plan.chargerLivraison(chemin);
-						} catch (ParseException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-	                    
-		                Vector<String> livraisons = new Vector<String>();
-		                ddl = plan.getDemandes();
-	            		for(int i = 0 ; i<ddl.getPlages().size();i++){
-	            			PlageHoraire ph = ddl.getPlages().get(i); 
-	            			for(int j = 0 ; j<ph.getLivraisons().size() ; j++){
-	            				Livraison l = ph.getLivraisons().get(j);
-	            				(listModel).addElement("Livraison n°"+l.getId()+" chez "+l.getClient() + " à l'adresse "+l.getNoeud());
-	            			}
-	            		}
-	            		geo.changerCouleur(ddl.getEntrepot());
-	            		geo.repaint();
-			  }
+				String chemin="";
+				JFileChooser fc = new JFileChooser();
+				int retval = fc.showOpenDialog(null);
+				if (retval == JFileChooser.APPROVE_OPTION) {
+					chemin = fc.getSelectedFile().getAbsolutePath();
+					chemin = chemin.replace("\\", "/");
+
+				}
+				try {
+					zoneGeo.chargerLivraison(chemin);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				Vector<String> livraisons = new Vector<String>();
+				ddl = zoneGeo.getTournee();
+				for(int i = 0 ; i<ddl.getPlages().size();i++){
+					PlageHoraire ph = ddl.getPlages().get(i); 
+					for(int j = 0 ; j<ph.getLivraisons().size() ; j++){
+						Livraison l = ph.getLivraisons().get(j);
+						(listModel).addElement("Livraison n°"+l.getId()+" chez "+l.getClient() + " à l'adresse "+l.getNoeud());
+					}
+				}
+//				geo.changerCouleur(ddl.getEntrepot());
+//				geo.repaint();
+				calculerItineraire.setEnabled(true);
+			}
 		});
 		
 		chargerPlan.addActionListener(new ActionListener() {
-			
 			public void actionPerformed(ActionEvent arg0) {
 				String chemin="";
 				JFileChooser fc = new JFileChooser();
@@ -118,9 +133,13 @@ public class Accueil{
 			                    chemin = chemin.replace("\\", "/");			                    
 			                }
 			                try {
-								plan = new ZoneGeographique(chemin);
-								geo =  new VueZoneGeo(0,0,500,500, 500.0/800.0, plan);
-								pPlan.add(geo);
+								zoneGeo = new ZoneGeographique(chemin);
+								center.remove(vueZoneGeo);
+								vueZoneGeo = new VueZoneGeo(1100, 500, zoneGeo, ctrl);
+								center.add(vueZoneGeo);
+								cadre.repaint();
+//								geo =  new VuePlan(0,0,500,500, 500.0/800.0, zoneGeo, ctrl);
+//								pPlan.add(geo);
 							} catch (JDOMException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -129,10 +148,13 @@ public class Accueil{
 								e.printStackTrace();
 							}       
 			pPlan.repaint();
-			
+			chargerLivraison.setEnabled(true);
+			System.out.println(zoneGeo.getNoeuds().size());
 			}
 		});
-		
+		// Impossible d'appuyer sur ces boutons au départ
+		chargerLivraison.setEnabled(false);
+		calculerItineraire.setEnabled(false);
 		
 		
 		//SOUTH ----------------------------
@@ -150,48 +172,34 @@ public class Accueil{
 		
 		//NORTH ----------------------------
 		north.setLayout(gl);
-		JTextArea message = new JTextArea("Bonjour");
+		message = new JTextArea("Bonjour");
 		message.setFont(new Font("Serif", Font.PLAIN, 16));
 		message.setLineWrap(true);
 		message.setWrapStyleWord(true);
-		/*JTextArea livraison = new JTextArea("Points de livraison");
-		livraison.setFont(new Font("Serif", Font.PLAIN, 16));
-		livraison.setLineWrap(true);
-		livraison.setWrapStyleWord(true);
-		north.add(plan);*/
+		
 		north.add(message);
 		
 		//CENTER ----------------------------
-		GridLayout g2 = new GridLayout();
-		g2.setColumns(2);
-		g2.setRows(2);
-		g2.setHgap(10); //Cinq pixels d'espace entre les colonnes (H comme Horizontal)
-		g2.setVgap(10); //Cinq pixels d'espace entre les lignes (V comme Vertical)
-		center.setLayout(gl);
-		
-		/*plan = new JTextArea("Plan de zone");
-		plan.setFont(new Font("Serif", Font.PLAIN, 16));
-		plan.setLineWrap(true);
-		plan.setWrapStyleWord(true);
-		livraison = new JTextArea("Points de livraison");
-		livraison.setFont(new Font("Serif", Font.PLAIN, 16));
-		livraison.setLineWrap(true);	
-		livraison.setWrapStyleWord(true);*/
+//		GridLayout g2 = new GridLayout();
+//		g2.setColumns(2);
+//		g2.setRows(2);
+//		g2.setHgap(10); //Cinq pixels d'espace entre les colonnes (H comme Horizontal)
+//		g2.setVgap(10); //Cinq pixels d'espace entre les lignes (V comme Vertical)
+//		center.setLayout(gl);
 
-		
-		list = new JList(listModel); //data has type Object[]
-		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-		list.setVisibleRowCount(-1);
-		JScrollPane listScroller = new JScrollPane(list);
-		listScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		listScroller.setPreferredSize(new Dimension(250, 500));
-		pList.add(listScroller);
-		
-		/*center.add(plan);
-		center.add(livraison);*/
-		center.add(pPlan);
-		center.add(pList);
+		//Liste des points de livraison
+//		list = new JList(listModel); //data has type Object[]
+//		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+//		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+//		list.setVisibleRowCount(-1);
+//		JScrollPane listScroller = new JScrollPane(list);
+//		listScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+//		listScroller.setPreferredSize(new Dimension(250, 500));
+//		pList.add(listScroller);
+//		center.add(pPlan);
+//		center.add(pList);
+		center.setLayout(null);
+		center.add(vueZoneGeo);
 				
 
 		cadre.setVisible(true);
