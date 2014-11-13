@@ -3,6 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/xml"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Choco"/>
 	<classpathentry kind="lib" path="lib/jdom-2.0.5/jdom-2.0.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -43,9 +43,12 @@ public class ZoneGeographique {
 	
 	
 	
-	public ZoneGeographique() {
-		
-		
+	public ZoneGeographique(String nomFic) throws JDOMException, IOException {
+		lirePlanXML(nomFic);
+		this.Xmax = findXMax();
+	    	this.Ymax = findYMax();
+		this.Xmin = findXMin();
+	    	this.Ymin = findYMin();
 	}
 	
 	public void chargerLivraison(String nomFic) throws ParseException{

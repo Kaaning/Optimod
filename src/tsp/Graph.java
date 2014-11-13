@@ -9,12 +9,12 @@ public interface Graph {
 	/**
 	 * @return the maximal cost of an arc of <code>this</code>
 	 */
-	public abstract double getMaxArcCost();
+	public abstract int getMaxArcCost();
 
 	/**
 	 * @return the minimal cost of an arc of <code>this</code>
 	 */
-	public abstract double getMinArcCost();
+	public abstract int getMinArcCost();
 
 	/**
 	 * @return the number of vertices of <code>this</code>
@@ -26,7 +26,7 @@ public interface Graph {
 	 * if <code>(i,j)</code> is an arc of <code>this</code>, then <code>cost[i][j]</code> = cost of <code>(i,j)</code>, 
 	 * otherwise <code>cost[i][j] = this.getMaxArcCost()+1</code>
 	 */
-	public abstract double[][] getCost();
+	public abstract int[][] getCost();
 
 	/**
 	 * @param i a vertex such that <code>0 <= i < this.getNbVertices()</code>
