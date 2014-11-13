@@ -52,5 +52,9 @@ public class VueZoneGeo extends JPanel{
 		this.repaint();
 		this.revalidate();
 	}
+	
+	public void changerCouleur(int n){
+		plan.changerCouleur(n);
+	}
 
 }

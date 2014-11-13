@@ -115,7 +115,7 @@ public class Accueil{
 						try {
 							zoneGeo.chargerLivraison(chemin);
 							vueZoneGeo.creerVueTournee(zoneGeo.getTournee());
-							
+							vueZoneGeo.changerCouleur(zoneGeo.getTournee().getEntrepot());
 							
 						} catch (ParseException e) {
 							// TODO Auto-generated catch block

@@ -23,7 +23,6 @@ import controleur.Controleur;
 public class VueTournee extends JPanel{
 
 	private Controleur ctrl;
-	private ZoneGeographique zoneGeo;
 	private Tournee tournee;
 	private List<VuePlage> vuePlages = new ArrayList<VuePlage>();
 	private VueEtape vueEtape;
@@ -37,7 +36,6 @@ public class VueTournee extends JPanel{
 	public VueTournee (Tournee tournee, Controleur ctrl) {
     	// Creation d'un panneau pour dessiner les boules
 		this.ctrl = ctrl;
-		this.zoneGeo = tournee.getPlan();
 		this.tournee = tournee;
 		setSize(600, 500);
 		
@@ -53,7 +51,7 @@ public class VueTournee extends JPanel{
         pList.add(box);
 		
 		pEtape.setSize(300, 500);
-        pEtape.setBackground(Color.MAGENTA);
+        pEtape.setBackground(Color.gray);
         
                
 
@@ -61,6 +59,7 @@ public class VueTournee extends JPanel{
 		//Liste des points de livraison
 		JScrollPane listScroller = new JScrollPane(pList);
 		listScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		listScroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		listScroller.setPreferredSize(new Dimension(250, 250));
         
 		if(tournee.getPlages()!=null){

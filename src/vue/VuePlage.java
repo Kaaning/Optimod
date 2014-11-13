@@ -45,7 +45,7 @@ public class VuePlage extends JPanel{
 	}
 	
 	private String DisplayH(Date d){
-		return d.getHours()+"h"+d.getMinutes()+"m"+d.getSeconds()+"s";
+		return d.getHours()+"h"+d.getMinutes();
 	}
 	
 }
