@@ -4,7 +4,6 @@
 <LeTronconSortant nomRue="v0" vitesse="3,900000" longueur="602,100000" idNoeudDestination="1"/>
 </Noeud>
 <Noeud id="1" x="88" y="171">
-<LeTronconSortant nomRue="v0" vitesse="4,100000" longueur="602,100000" idNoeudDestination="0"/>
 <LeTronconSortant nomRue="v0" vitesse="3,800000" longueur="627,500000" idNoeudDestination="2"/>
 </Noeud>
 <Noeud id="2" x="103" y="248">

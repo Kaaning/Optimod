@@ -9,12 +9,12 @@ public interface Graph {
 	/**
 	 * @return the maximal cost of an arc of <code>this</code>
 	 */
-	public abstract double getMaxArcCost();
+	public abstract int getMaxArcCost();
 
 	/**
 	 * @return the minimal cost of an arc of <code>this</code>
 	 */
-	public abstract double getMinArcCost();
+	public abstract int getMinArcCost();
 
 	/**
 	 * @return the number of vertices of <code>this</code>

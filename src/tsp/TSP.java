@@ -6,6 +6,7 @@ import solver.constraints.IntConstraintFactory;
 import solver.search.loop.monitors.SearchMonitorFactory;
 import solver.search.strategy.IntStrategyFactory;
 import solver.variables.IntVar;
+import solver.variables.RealVar;
 import solver.variables.VariableFactory;
 
 /**
