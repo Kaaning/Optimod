@@ -1,4 +1,4 @@
-package modele;
+package tsp;
 
 /**
  * @author Christine Solnon

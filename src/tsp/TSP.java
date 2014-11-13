@@ -1,4 +1,4 @@
-package modele;
+package tsp;
 
 import java.choco.solver.ResolutionPolicy;
 import solver.Solver;

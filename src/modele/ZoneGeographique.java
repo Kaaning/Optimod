@@ -263,8 +263,14 @@ public class ZoneGeographique {
 	 * @return boolean true si le noeud passe en parametre a ete visite false sinon 
 	 *
 	 */
-	public boolean verifierNoeud(Noeud n) {
-		return noeuds.contains(n);
+	public boolean verifierNoeud(int id) {
+		//return noeuds.contains(n);
+		for(Noeud n : this.noeuds) {
+			if(n.getId() == id) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 }

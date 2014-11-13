@@ -11,6 +11,9 @@ import java.util.Vector;
 
 import org.jdom2.JDOMException;
 
+import tsp.Graph;
+import tsp.TSP;
+
 /**
  * @author Adrien Garcia
  */
@@ -274,10 +277,17 @@ public class Dijkstra implements Graph {
     }
     
     public List<Etape> obtainEtapes() {
-    	return null; //return Dijkstra.verticesToEtapes(this.getShortestPath(this.target));
+    	TSP tsp = new TSP(this);
+    	int[] order = tsp.getNext();
+    	return Dijkstra.verticesToEtapes(Dijkstra.intsToVertices(order));
     }
     
-    private static List<Etape> verticesToEtapes(List<Vertex> path) {
+    private static List<Vertex> intsToVertices(int[] order) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private static List<Etape> verticesToEtapes(List<Vertex> path) {
 		List<Etape> res = new ArrayList<Etape>();
     	/*for(Iterator<Vertex> it = path.) {
 			
