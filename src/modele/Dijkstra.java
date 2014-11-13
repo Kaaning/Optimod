@@ -102,7 +102,7 @@ public class Dijkstra implements Graph {
 	
 	List< List<Livraison> > ordDeliv;
 	List< List<Vertex> > ordVertices;
-	double[][] cost;
+	int[][] cost;
 	ZoneGeographique zone;
 	Tournee tour;
 	List<Vertex> vertices;
@@ -143,21 +143,21 @@ public class Dijkstra implements Graph {
 			}
 		}
 		
-		cost = new double[this.getNbVertices()][this.getNbVertices()];
+		cost = new int[this.getNbVertices()][this.getNbVertices()];
 		
 		for(int a = 0; a < this.getNbVertices(); a++) {
     		this.computePaths(vertices.get(a));
     		for(int i = 0; i < this.getNbVertices(); i++) {
     			if (i == a) {
-    				cost[a][i] = 0.0;
+    				cost[a][i] = 0;
     			} else {
-    				double weight = 0.0;
+    				int weight = 0;
 	    			List<Vertex> path = getShortestPath(this.vertices.get(i));
 	    			if(a > i) {
 	    				System.out.println("A = " + a + ", I = " + i + ", Path is : " + path + " of length " + path.size());
 	    			}
 	    			if(path == null || path.size() == 1) {
-    					weight = getMaxArcCost()+1;
+    					weight = (int)getMaxArcCost()+1;
     				} else {
 		    			/*for(int j = 0; j < path.size()-1; j++) {
 		    				//Vertex prev = path.get(j).previous;
@@ -170,7 +170,7 @@ public class Dijkstra implements Graph {
 		    				}
 		    				weight += sommet.adjacencies.get(index).arc.getCout();
 		    			}*/
-    					weight = getTotalCost(path);
+    					weight = (int)getTotalCost(path);
 	    			}
 	    			this.cost[a][i] = weight;
     			}
@@ -351,7 +351,7 @@ public class Dijkstra implements Graph {
     	}
     	
     	// Asking for the minimal path from vertex 0 to vertex 2 :
-    	Vertex source = dj.getVertexByNodeId(t.getEntrepot());
+    	Vertex source = dj.getVertexByNodeId(0);
     	Vertex target = dj.getVertexByNodeId(2);
     	
     	System.out.println("Computing paths form vertex " + source + " to all the vertices of the graph ...");
@@ -388,7 +388,7 @@ public class Dijkstra implements Graph {
     		System.out.println("Error : No path has been found from " + source + " to " + target + " : the two nodes may be not connected through the given graph.");
     	}
     	
-    	double[][] costs = dj.getCost();
+    	int[][] costs = dj.getCost();
     	for(int i = 0; i < dj.getNbVertices(); i++) {
     		for(int j = 0; j < dj.getNbVertices(); j++) {
     			System.out.print("[" + costs[i][j] + "]");
@@ -446,7 +446,7 @@ public class Dijkstra implements Graph {
 	}
 
 	@Override
-	public double[][] getCost() {
+	public int[][] getCost() {
 		return this.cost;
 	}
 

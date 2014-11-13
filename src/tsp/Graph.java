@@ -26,7 +26,7 @@ public interface Graph {
 	 * if <code>(i,j)</code> is an arc of <code>this</code>, then <code>cost[i][j]</code> = cost of <code>(i,j)</code>, 
 	 * otherwise <code>cost[i][j] = this.getMaxArcCost()+1</code>
 	 */
-	public abstract double[][] getCost();
+	public abstract int[][] getCost();
 
 	/**
 	 * @param i a vertex such that <code>0 <= i < this.getNbVertices()</code>

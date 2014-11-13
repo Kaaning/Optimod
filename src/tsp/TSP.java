@@ -1,6 +1,6 @@
 package tsp;
 
-import java.choco.solver.ResolutionPolicy;
+import solver.ResolutionPolicy;
 import solver.Solver;
 import solver.constraints.IntConstraintFactory;
 import solver.search.loop.monitors.SearchMonitorFactory;
