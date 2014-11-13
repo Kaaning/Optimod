@@ -32,12 +32,21 @@ import javax.swing.ScrollPaneConstants;
 
 import org.jdom2.JDOMException;
 
+import controleur.Controler;
 import modele.*;
 
 public class Accueil{
-	private Tournee ddl;
-	private ZoneGeographique plan;
 	
+	// controleur
+	Controler controler;
+	
+	// Vue ZoneGeoGraphique
+	private VueZoneGeo vuZoneGeographique;
+	
+	private ZoneGeographique zoneGeographique;
+	
+	
+	// Elements de la fenetre
 	private JFrame cadre;
 	private JButton chargerLivraison = new JButton("Charger une demande de livraison");
 	private JButton chargerPlan = new JButton("Charger un plan");
@@ -55,12 +64,15 @@ public class Accueil{
 	
 	private JPanel pPlan = new JPanel();
 	private JPanel pList = new JPanel();
-	private VueZoneGeo geo;
+	
 	private JList list;
-	private DefaultListModel<String> listModel = new DefaultListModel<String>();
+	private DefaultListModel listModel = new DefaultListModel();
 	
 	
-	public Accueil(){
+	public Accueil(Controler unControler){
+		
+		this.controler = unControler;
+		
 		cadre = new JFrame();
 		cadre.setLayout(null);
 		cadre.setSize(largeur, hauteur);
@@ -76,6 +88,23 @@ public class Accueil{
 		
 		pPlan.setLayout(null);
 		
+		chargerPlan.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String chemin="";
+				JFileChooser fc = new JFileChooser();
+				int retval = fc.showOpenDialog(null);
+			                if (retval == JFileChooser.APPROVE_OPTION) {
+			                    chemin = fc.getSelectedFile().getAbsolutePath();
+			                    chemin = chemin.replace("\\", "/");			                    
+			                }
+			                controler.ChargerZoneGeo(chemin);
+			                MAJModele();
+			                
+			pPlan.repaint();
+			
+			}
+		});
+		
 		chargerLivraison.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			   String chemin="";
@@ -86,15 +115,12 @@ public class Accueil{
 		                    chemin = chemin.replace("\\", "/");
 		                    
 		                }
-		                try {
-							plan.chargerLivraison(chemin);
-						} catch (ParseException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-	                    
-		                Vector<String> livraisons = new Vector<String>();
-		                ddl = plan.getDemandes();
+		                
+		                controler.chargerLivraison(chemin);
+	                    MAJModele();
+		                
+	                    /*
+		                ddl = zoneGeographique.getDemandes();
 	            		for(int i = 0 ; i<ddl.getPlages().size();i++){
 	            			PlageHoraire ph = ddl.getPlages().get(i); 
 	            			for(int j = 0 ; j<ph.getLivraisons().size() ; j++){
@@ -104,34 +130,11 @@ public class Accueil{
 	            		}
 	            		geo.changerCouleur(ddl.getEntrepot());
 	            		geo.repaint();
+	            		*/
 			  }
 		});
 		
-		chargerPlan.addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent arg0) {
-				String chemin="";
-				JFileChooser fc = new JFileChooser();
-				int retval = fc.showOpenDialog(null);
-			                if (retval == JFileChooser.APPROVE_OPTION) {
-			                    chemin = fc.getSelectedFile().getAbsolutePath();
-			                    chemin = chemin.replace("\\", "/");			                    
-			                }
-			                try {
-								plan = new ZoneGeographique(chemin);
-								geo =  new VueZoneGeo(0,0,500,500, 500.0/800.0, plan);
-								pPlan.add(geo);
-							} catch (JDOMException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}       
-			pPlan.repaint();
-			
-			}
-		});
+		
 		
 		
 		
@@ -197,6 +200,24 @@ public class Accueil{
 		cadre.setVisible(true);
 		
 	}
+
+	
+	public void creerVueZoneGeographique(int i, int j, int k, int l, double d, ZoneGeographique zoneGeographique) {
+		this.vuZoneGeographique = new VueZoneGeo(0,0,500,500, 500.0/800.0, zoneGeographique); 
+		pPlan.add(this.vuZoneGeographique);
+		
+	}
+	
+	public void MAJModele(){
+		this.zoneGeographique = controler.getModelZoneGeographique();
+	}
+	
+	public void creerVueTournee (Tournee tournee) {
+		this.vuZoneGeographique.creerVueTournee(this.zoneGeographique.getTournee());
+	}
+
+
+
 	
 	
 

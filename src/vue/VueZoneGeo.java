@@ -13,6 +13,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import modele.Noeud;
+import modele.Tournee;
 import modele.Troncon;
 import modele.ZoneGeographique;
 
@@ -21,6 +22,8 @@ public class VueZoneGeo extends JPanel{
 	private ZoneGeographique zoneGeo;
 	private ArrayList<VueNoeud> vueNoeuds;
 	private ArrayList<VueTroncon> vueTroncons;
+	private VueTournee vueTournee;
+	
 	private Color couleurArrierePlan = Color.gray;
 	private int largeur;
 	private int hauteur;
@@ -50,7 +53,7 @@ public class VueZoneGeo extends JPanel{
 		/* ----- Gestion du zoom via la molette ----- */
 		addMouseWheelListener(new MouseAdapter() {
         	public void mouseWheelMoved(MouseWheelEvent e) {
-        		double sens = e.getPreciseWheelRotation();
+        		double sens = e.getWheelRotation();
         		double echelle = getEchelle();
         		if(sens==1.0 && echelle>0.630){
                 	echelle-=0.1;
@@ -165,6 +168,11 @@ public class VueZoneGeo extends JPanel{
 			vn.changerCouleur(n);
 		}
 	
+	}
+
+	public void creerVueTournee(Tournee tournee) {
+		this.vueTournee = new VueTournee(tournee);
+		
 	}
 
 

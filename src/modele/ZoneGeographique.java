@@ -25,14 +25,18 @@ import vue.Accueil;
  */
 
 public class ZoneGeographique {
+	
+	
 	private List<Noeud> noeuds = new ArrayList<Noeud>(); 
 	private List<Troncon> troncons = new ArrayList<Troncon>();
+	private Tournee tournee;
+	
 	private int Xmin;
 	private int Xmax;
 	private int Ymin;
 	private int Ymax;
 	
-	private Tournee demandes;
+	
 	
 	
 	/**
@@ -40,16 +44,16 @@ public class ZoneGeographique {
 	 * @param nomFic String chemin relatif du fichier xml du plan à charger
 	 * @throws remonte des Exceptions reliées à l'ouverture d'un fichier et l'utlisiation de JDOM pour parser le fichier XML
 	 */
-	public ZoneGeographique(String nomFic) throws JDOMException, IOException {
-		lirePlanXML(nomFic);
-		this.Xmax = findXMax();
-	    	this.Ymax = findYMax();
-		this.Xmin = findXMin();
-	    	this.Ymin = findYMin();
+	
+	
+	
+	public ZoneGeographique() {
+		
+		
 	}
 	
 	public void chargerLivraison(String nomFic) throws ParseException{
-		demandes = new Tournee(nomFic,this);
+		tournee = new Tournee(nomFic,this);
 	}
 	
 	/**
@@ -106,8 +110,8 @@ public class ZoneGeographique {
 		return Ymax;
 	}
 	
-	public Tournee getDemandes() {
-		return demandes;
+	public Tournee getTournee() {
+		return tournee;
 	}
 	
 	/**
@@ -150,7 +154,7 @@ public class ZoneGeographique {
 	 * @param nomFic String chemin relatif du fichier xml du plan à charger 
 	 *
 	 */
-	private void lirePlanXML(String nomFic){
+	public int lirePlanXML(String nomFic){
 		SAXBuilder sxb = new SAXBuilder();
 		Document document = null;
 		Element racine;
@@ -191,6 +195,11 @@ public class ZoneGeographique {
 	    	   ajouterTroncon(troncon);
 		    }	
 	    }
+	    this.Xmax = findXMax();
+    	this.Ymax = findYMax();
+    	this.Xmin = findXMin();
+    	this.Ymin = findYMin();
+    	return 0;
 	}
 	
 	/**
@@ -273,10 +282,5 @@ public class ZoneGeographique {
 		return false;
 	}
 	
-	public static void main(String[] args) throws ParseException, JDOMException, IOException{
-		//j.creerZoneGeographique("fic/plan10x10.xml");
-		//j.chargerLivraison("fic/livraison20x20-2.xml");
-		Accueil a = new Accueil();
-		
-	}
+	
 }
