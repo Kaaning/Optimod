@@ -16,13 +16,13 @@ public class Controleur {
 
 	private Invoker invoker;
 	
-	 private Accueil viewAcceuil;
+	 private Accueil viewAccueil;
 	 private ZoneGeographique modelZoneGeographique;
 	  
 	 public Controleur() {
 		
 		this.invoker = new Invoker();
-		this.viewAcceuil = new Accueil(this);
+		this.viewAccueil = new Accueil(this);
 		
 		 
 	}
@@ -41,10 +41,8 @@ public class Controleur {
 	
 	public int ChargerZoneGeo (String chemin) {
 			this.modelZoneGeographique = new ZoneGeographique();
-			ConcreteCommandChargerZoneGeo command = new ConcreteCommandChargerZoneGeo(chemin , modelZoneGeographique);
-			int retour = command.execute();
-			invoker.addCommand(command);
-			viewAcceuil.creerVueZoneGeographique(1100,500, this.modelZoneGeographique);
+			modelZoneGeographique.lirePlanXML(chemin);
+			viewAccueil.creerVueZoneGeographique(1100,500, this.modelZoneGeographique);
 			return 0;
 	}
 	

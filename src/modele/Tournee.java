@@ -56,11 +56,10 @@ public class Tournee {
 	        	int id = Integer.parseInt(currentLivraison.getAttributeValue("id"));
 	        	int client = Integer.parseInt(currentLivraison.getAttributeValue("client"));
 	        	int adresse = Integer.parseInt(currentLivraison.getAttributeValue("adresse"));
-	        	//if( jour.getPlan().verifierNoeud(adresse)){
-	        	zg.verifierNoeud(adresse);
-	        	plageHoraire.ajouterLivraison(id, client, adresse); 
-	        	
-	        	//else { System.out.println("adresse "+adresse+" inexistante"); }
+	        	Noeud noeud = zg.getNoeudById(adresse);
+	        	if(noeud!=null){
+	        		plageHoraire.ajouterLivraison(id, client, noeud);
+	        	}
 	        	
 	        }
 	        
@@ -71,7 +70,7 @@ public class Tournee {
 		
 	}
 
-	public void supprimerLivraison(int adresse){
+	public void supprimerLivraison(Noeud adresse){
 		Iterator<PlageHoraire> i = plages.iterator();
 		
 		while(i.hasNext()){

@@ -23,6 +23,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -67,7 +68,7 @@ public class Accueil{
 	int largeur = 1100;
 	int hauteur = 600; 
 	
-	private JTextArea message;
+	private JLabel message;
 	
 
 	private JTextArea tPlan;
@@ -229,10 +230,8 @@ public class Accueil{
 		
 		//NORTH ----------------------------
 		north.setLayout(gl);
-		message = new JTextArea("Bonjour");
+		message = new JLabel("Bonjour");
 		message.setFont(new Font("Serif", Font.PLAIN, 16));
-		message.setLineWrap(true);
-		message.setWrapStyleWord(true);
 		
 		north.add(message);
 		
@@ -274,6 +273,10 @@ public class Accueil{
 	
 	public void creerVueTournee (Tournee tournee) {
 		this.vueZoneGeo.creerVueTournee(this.zoneGeo.getTournee());
+	}
+	
+	public void afficherMessageErreur(String erreur){
+		JOptionPane.showMessageDialog(cadre, erreur, "", JOptionPane.ERROR_MESSAGE);
 	}
 
 
