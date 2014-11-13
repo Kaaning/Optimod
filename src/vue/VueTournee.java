@@ -1,15 +1,19 @@
 package vue;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 
 
+
 import javax.swing.Box;
 import javax.swing.JLabel;
-
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
+import modele.PlageHoraire;
 import modele.Tournee;
 import modele.ZoneGeographique;
 import controleur.Controleur;
@@ -18,11 +22,13 @@ public class VueTournee extends JPanel{
 
 	private Controleur ctrl;
 	private Tournee tournee;
-	private int largeur;
-	private int hauteur;
-//	private List<VueLivraison> vueLivraisons;
-//	private VueEtape vueEtape;
-
+	private List<VuePlage> vuePlages = new ArrayList<VuePlage>();
+	private VueEtape vueEtape;
+	
+	private JPanel pList = new JPanel();
+	private JPanel pEtape = new JPanel();
+	
+	
 	public VueTournee (Tournee tournee, Controleur ctrl) {
     	// Creation d'un panneau pour dessiner les boules
 		this.ctrl = ctrl;

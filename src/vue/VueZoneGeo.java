@@ -61,15 +61,11 @@ public class VueZoneGeo extends JPanel{
 		this.add(vueTournee);
 		vueTournee.setLocation(500,0);
 		this.repaint();
-<<<<<<< HEAD
->>>>>>> origin/Jérémy
-=======
 		this.revalidate();
 	}
 	
 	public void changerCouleur(int n){
 		plan.changerCouleur(n);
->>>>>>> origin/Jérémy
 	}
 
 }
