@@ -40,12 +40,12 @@ public class ZoneGeographique {
 	 * @param nomFic String chemin relatif du fichier xml du plan à charger
 	 * @throws remonte des Exceptions reliées à l'ouverture d'un fichier et l'utlisiation de JDOM pour parser le fichier XML
 	 */
-	public ZoneGeographique(String nomFic) throws JDOMException, IOException {
-		lirePlanXML(nomFic);
-		this.Xmax = findXMax();
-	    	this.Ymax = findYMax();
-		this.Xmin = findXMin();
-	    	this.Ymin = findYMin();
+	
+	
+	
+	public ZoneGeographique() {
+		
+		
 	}
 	
 	public void chargerLivraison(String nomFic) throws ParseException{
@@ -150,7 +150,7 @@ public class ZoneGeographique {
 	 * @param nomFic String chemin relatif du fichier xml du plan à charger 
 	 *
 	 */
-	private void lirePlanXML(String nomFic){
+	public int lirePlanXML(String nomFic){
 		SAXBuilder sxb = new SAXBuilder();
 		Document document = null;
 		Element racine;
@@ -191,6 +191,11 @@ public class ZoneGeographique {
 	    	   ajouterTroncon(troncon);
 		    }	
 	    }
+	    this.Xmax = findXMax();
+    	this.Ymax = findYMax();
+    	this.Xmin = findXMin();
+    	this.Ymin = findYMin();
+    	return 0;
 	}
 	
 	/**

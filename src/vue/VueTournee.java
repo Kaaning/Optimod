@@ -1,5 +1,6 @@
 package vue;
 
+<<<<<<< HEAD
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,5 +34,5 @@ public class VueTournee extends JPanel{
         setLocation(500,0);
         
 //        vueLivraison = new ArrayList<VueLivraison>();
-	}
+	}	
 }

@@ -157,19 +157,20 @@ public class Accueil{
 						chemin = chemin.replace("\\", "/");
 						try {
 							//XMLValidateur.validerXML(chemin, "res\\plan.xsd");
-							zoneGeo = new ZoneGeographique(chemin);
+							ctrl.ChargerZoneGeo(chemin);
+			                MAJModele();
 							//if (!plan.getReussi()) {
 							//JOptionPane.showMessageDialog(cadre, "Erreur dans le ficher XML !", "Erreur !", JOptionPane.ERROR_MESSAGE);	
 							//} else {
 							center.remove(vueZoneGeo);
-							vueZoneGeo = new VueZoneGeo(1100, 500, zoneGeo, ctrl);
+							creerVueZoneGeographique(1100, 500, zoneGeo);
 							center.add(vueZoneGeo);
 							cadre.repaint();
 							chargerLivraison.setEnabled(true);
 							System.out.println(zoneGeo.getNoeuds().size());
 							//}
 
-						} catch (JDOMException | IOException | HeadlessException /*| ParserConfigurationException | SAXException*/ e) {
+						} catch (/*JDOMException | IOException |*/ HeadlessException /*| ParserConfigurationException | SAXException*/ e) {
 							//e.printStackTrace();
 							System.out.println(e.getMessage());
 						} catch (NumberFormatException e) {
@@ -181,6 +182,35 @@ public class Accueil{
 					}
 				}		
 			}
+		});
+		
+		chargerLivraison.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			   String chemin="";
+		       JFileChooser fc = new JFileChooser();
+		                int retval = fc.showOpenDialog(null);
+		                if (retval == JFileChooser.APPROVE_OPTION) {
+		                    chemin = fc.getSelectedFile().getAbsolutePath();
+		                    chemin = chemin.replace("\\", "/");
+		                    
+		                }
+		                
+		                ctrl.chargerLivraison(chemin);
+	                    MAJModele();
+		                
+	                    /*
+		                ddl = zoneGeographique.getDemandes();
+	            		for(int i = 0 ; i<ddl.getPlages().size();i++){
+	            			PlageHoraire ph = ddl.getPlages().get(i); 
+	            			for(int j = 0 ; j<ph.getLivraisons().size() ; j++){
+	            				Livraison l = ph.getLivraisons().get(j);
+	            				(listModel).addElement("Livraison n°"+l.getId()+" chez "+l.getClient() + " à l'adresse "+l.getNoeud());
+	            			}
+	            		}
+	            		geo.changerCouleur(ddl.getEntrepot());
+	            		geo.repaint();
+	            		*/
+			  }
 		});
 		
 
@@ -232,6 +262,22 @@ public class Accueil{
 		cadre.setVisible(true);
 		
 	}
+
+	
+	public void creerVueZoneGeographique(int largeur, int hauteur, ZoneGeographique zoneGeographique) {
+		this.vueZoneGeo = new VueZoneGeo(largeur, hauteur, zoneGeographique, ctrl);
+	}
+	
+	public void MAJModele(){
+		this.zoneGeo = ctrl.getModelZoneGeographique();
+	}
+	
+	public void creerVueTournee (Tournee tournee) {
+		this.vueZoneGeo.creerVueTournee(this.zoneGeo.getTournee());
+	}
+
+
+
 	
 	
 

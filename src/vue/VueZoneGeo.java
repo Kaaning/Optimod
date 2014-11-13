@@ -12,6 +12,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import modele.Noeud;
+import modele.Tournee;
 import modele.Troncon;
 import modele.ZoneGeographique;
 import controleur.Controleur;
@@ -24,7 +25,7 @@ public class VueZoneGeo extends JPanel{
 	private int largeur;
 	private int hauteur;
 	private VuePlan plan;
-//	private VueTournee vueTournee;
+	private VueTournee vueTournee;
 	
 	public VueZoneGeo(int largeur, int hauteur){
 		this.largeur = largeur;
@@ -41,7 +42,12 @@ public class VueZoneGeo extends JPanel{
         setSize(largeur,hauteur);
         plan = new VuePlan(zoneGeo, ctrl);
         add(plan);
-        add(new VueTournee(zoneGeo, ctrl, zoneGeo.getTournee()));
-     }
+//        add(new VueTournee(zoneGeo, ctrl, zoneGeo.getTournee()));
+	}
+
+	public void creerVueTournee(Tournee tournee) {
+		this.vueTournee = new VueTournee(tournee, ctrl);
+		
+	}
 
 }
