@@ -23,13 +23,18 @@ public class Controleur {
 	 
 	public int chargerLivraison (String chemin ) {
 		
-			try {
-				this.modelZoneGeographique.chargerLivraison(chemin);
-				return 0;
-			} catch (ParseException e) {
-				e.printStackTrace();
-				return 1;
-			}
+			
+				try {
+					this.modelZoneGeographique.chargerLivraison(chemin);
+					this.viewAccueil.MAJVueZoneGeographique();
+					return 0;
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return 1;
+				}
+			
+			
 
 	}
 	public int ChargerZoneGeo (String chemin) {

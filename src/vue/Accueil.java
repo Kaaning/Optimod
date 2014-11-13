@@ -141,18 +141,6 @@ public class Accueil{
 		                    
 		                }
 		                ctrl.chargerLivraison(chemin);
-	                    /*
-		                ddl = zoneGeographique.getDemandes();
-	            		for(int i = 0 ; i<ddl.getPlages().size();i++){
-	            			PlageHoraire ph = ddl.getPlages().get(i); 
-	            			for(int j = 0 ; j<ph.getLivraisons().size() ; j++){
-	            				Livraison l = ph.getLivraisons().get(j);
-	            				(listModel).addElement("Livraison n°"+l.getId()+" chez "+l.getClient() + " à l'adresse "+l.getNoeud());
-	            			}
-	            		}
-	            		geo.changerCouleur(ddl.getEntrepot());
-	            		geo.repaint();
-	            		*/
 			  }
 		});
 		
