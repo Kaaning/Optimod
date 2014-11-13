@@ -57,7 +57,7 @@ class Edge {
 	
 }
 
-public class Dijkstra implements Graph {
+public class Dijkstra {
 	
 	private ZoneGeographique zone;
 	private Tournee tour;
@@ -109,6 +109,7 @@ public class Dijkstra implements Graph {
 		}
 		//
 		
+		this.computeCosts();
 	}
 	
 	public static void main(String[] args) throws JDOMException, IOException, ParseException {
@@ -117,14 +118,11 @@ public class Dijkstra implements Graph {
 		
 		Dijkstra dj = new Dijkstra(zone, tour);
 		
-		dj.computePaths(dj.vertices.get(1));
-		for(Vertex v : dj.vertices) {
-			System.out.println(v.toString() + " : distance = " + v.minDistance);
-		}
-		for(Vertex v : dj.vertices) {
-			for(Edge e : v.adjacencies) {
-				System.out.println(v.toString() + " -> " + e.toString());
+		for(int i = 0; i < dj.cost.length; i++) {
+			for(int j = 0; j < dj.cost[i].length; j++) {
+				System.out.print("[" + dj.cost[i][j] + "]");
 			}
+			System.out.println();
 		}
 	}
 	
@@ -134,6 +132,25 @@ public class Dijkstra implements Graph {
 				return v;
 		}
 		return null;
+	}
+	
+	private int[][] computeCosts() {
+		for(int i = 0; i < this.vertices.size(); i++) {
+			for(Vertex v : this.vertices) {
+				v.minDistance = Double.POSITIVE_INFINITY;
+			}
+			this.computePaths(this.vertices.get(i));
+			for(int j = 0; j < this.vertices.size(); j++) {
+				if(i == j) {
+					this.cost[i][j] = 0;
+				} else {
+					int c = (int) this.vertices.get(j).minDistance;
+					this.cost[i][j] = (c == Integer.MAX_VALUE ? -1 : c);
+				}
+			}
+		}
+		
+		return this.cost;
 	}
 	
 	// +computePaths :
@@ -218,46 +235,5 @@ public class Dijkstra implements Graph {
     	}
     	return res;
     }
-    
-    public int getMinCost(int sourceNode, int targetNode) {
-    	this.computePaths(getVertexByNodeId(sourceNode));
-    	return (int) this.vertices.get(this.vertices.indexOf(getVertexByNodeId(targetNode))).minDistance;
-    }
-
-	@Override
-	public int getMaxArcCost() {
-		return this.maxArcCost;
-	}
-
-	@Override
-	public int getMinArcCost() {
-		return this.minArcCost;
-	}
-
-	@Override
-	public int getNbVertices() {
-		return this.vertices.size();
-	}
-
-	@Override
-	public int[][] getCost() {
-		return this.cost;
-	}
-
-	@Override
-	public int[] getSucc(int i) throws ArrayIndexOutOfBoundsException {
-		Vertex v = this.vertices.get(i);
-		int[] res = new int[v.adjacencies.size()];
-		for(int j = 0; j < res.length; j++) {
-			res[j] = this.vertices.indexOf(v.adjacencies.get(j).target);
-		}
-		return null;
-	}
-
-	@Override
-	public int getNbSucc(int i) throws ArrayIndexOutOfBoundsException {
-		return this.getSucc(i).length;
-	}
-
 	
 }
