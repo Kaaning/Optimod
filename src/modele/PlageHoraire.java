@@ -19,7 +19,7 @@ public class PlageHoraire {
 	}
 
 	public void ajouterLivraison(int id, int client, Noeud adresse){	
-		Livraison livraison = new Livraison(id, client, adresse);
+		Livraison livraison = new Livraison(id, client,adresse);
 		livraisons.add(livraison);
 	}
 

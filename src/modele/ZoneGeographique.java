@@ -32,7 +32,7 @@ public class ZoneGeographique {
 	private int Ymin;
 	private int Ymax;
 	
-	private Tournee demandes;
+	private Tournee tournee;
 	
 	
 	/**
@@ -40,16 +40,16 @@ public class ZoneGeographique {
 	 * @param nomFic String chemin relatif du fichier xml du plan à charger
 	 * @throws remonte des Exceptions reliées à l'ouverture d'un fichier et l'utlisiation de JDOM pour parser le fichier XML
 	 */
-	public ZoneGeographique(String nomFic) throws JDOMException, IOException {
-		lirePlanXML(nomFic);
-		this.Xmax = findXMax();
-	    	this.Ymax = findYMax();
-		this.Xmin = findXMin();
-	    	this.Ymin = findYMin();
+	
+	
+	
+	public ZoneGeographique() {
+		
+		
 	}
 	
 	public void chargerLivraison(String nomFic) throws ParseException{
-		demandes = new Tournee(nomFic,this);
+		tournee = new Tournee(nomFic,this);
 	}
 	
 	/**
@@ -106,8 +106,8 @@ public class ZoneGeographique {
 		return Ymax;
 	}
 	
-	public Tournee getDemandes() {
-		return demandes;
+	public Tournee getTournee() {
+		return tournee;
 	}
 	
 	/**
@@ -150,7 +150,7 @@ public class ZoneGeographique {
 	 * @param nomFic String chemin relatif du fichier xml du plan à charger 
 	 *
 	 */
-	private void lirePlanXML(String nomFic){
+	public int lirePlanXML(String nomFic){
 		SAXBuilder sxb = new SAXBuilder();
 		Document document = null;
 		Element racine;
@@ -191,6 +191,11 @@ public class ZoneGeographique {
 	    	   ajouterTroncon(troncon);
 		    }	
 	    }
+	    this.Xmax = findXMax();
+    	this.Ymax = findYMax();
+    	this.Xmin = findXMin();
+    	this.Ymin = findYMin();
+    	return 0;
 	}
 	
 	/**
@@ -263,14 +268,14 @@ public class ZoneGeographique {
 	 * @return boolean true si le noeud passe en parametre a ete visite false sinon 
 	 *
 	 */
-	public boolean verifierNoeud(int id) {
-		//return noeuds.contains(n);
-		for(Noeud n : this.noeuds) {
-			if(n.getId() == id) {
-				return true;
+	public Noeud getNoeudById(int id) {
+		for (Noeud n : noeuds) {
+			if (n.getId()==id) {
+				n.setEtat(0);
+				return n;
 			}
 		}
-		return false;
+		return null;
 	}
 	
 }
