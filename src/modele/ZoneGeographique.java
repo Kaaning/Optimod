@@ -32,7 +32,7 @@ public class ZoneGeographique {
 	private int Ymin;
 	private int Ymax;
 	
-	private Tournee demandes;
+	private Tournee tournee =new Tournee(this);
 	
 	
 	/**
@@ -49,7 +49,7 @@ public class ZoneGeographique {
 	}
 	
 	public void chargerLivraison(String nomFic) throws ParseException{
-		demandes = new Tournee(nomFic,this);
+		tournee = new Tournee(nomFic,this);
 	}
 	
 	/**
@@ -106,8 +106,8 @@ public class ZoneGeographique {
 		return Ymax;
 	}
 	
-	public Tournee getDemandes() {
-		return demandes;
+	public Tournee getTournee() {
+		return tournee;
 	}
 	
 	/**

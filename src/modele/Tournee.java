@@ -18,6 +18,10 @@ public class Tournee {
 	private List<PlageHoraire> plages; 
 	private ZoneGeographique zg;
 	
+	public Tournee(ZoneGeographique unZg){
+		this.zg = unZg;
+	}
+	
 	public Tournee(String nomFic, ZoneGeographique unZg) throws ParseException{
 		this.zg = unZg;
 		plages = new ArrayList<PlageHoraire>();
@@ -56,11 +60,10 @@ public class Tournee {
 	        	int id = Integer.parseInt(currentLivraison.getAttributeValue("id"));
 	        	int client = Integer.parseInt(currentLivraison.getAttributeValue("client"));
 	        	int adresse = Integer.parseInt(currentLivraison.getAttributeValue("adresse"));
-	        	//if( jour.getPlan().verifierNoeud(adresse)){
-	        	zg.verifierNoeud(adresse);
-	        	plageHoraire.ajouterLivraison(id, client, adresse); 
-	        	
-	        	//else { System.out.println("adresse "+adresse+" inexistante"); }
+	        	if( zg.verifierNoeud(adresse)){
+	        		plageHoraire.ajouterLivraison(id, client, adresse); 
+	        	}
+	        	else { System.out.println("adresse "+adresse+" inexistante"); }
 	        	
 	        }
 	        
@@ -114,6 +117,10 @@ public class Tournee {
 	
 	public int getEntrepot(){
 		return entrepot;
+	}
+	
+	public ZoneGeographique getPlan(){
+		return zg;
 	}
 	
 	public void display(){
