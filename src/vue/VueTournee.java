@@ -1,6 +1,5 @@
 package vue;
 
-<<<<<<< HEAD
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +20,7 @@ public class VueTournee extends JPanel{
 //	private List<VueLivraison> vueLivraisons;
 //	private VueEtape vueEtape;
 
-	public VueTournee (ZoneGeographique zoneGeo, Controleur ctrl, Tournee tournee) {
+	public VueTournee (Tournee tournee, Controleur ctrl) {
     	// Creation d'un panneau pour dessiner les boules
 		this.ctrl = ctrl;
 		this.zoneGeo = zoneGeo;
