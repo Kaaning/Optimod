@@ -50,7 +50,7 @@ public class Invoker {
 	
 	public int addCommand(Command command) {
 		if (this.currentCommandIndex != this.commands.size() -1 ) {
-			this.commands = new ArrayList<Command>(this.commands.subList(0, this.currentCommandIndex));
+			this.commands = new ArrayList<Command>(this.commands.subList(0, this.currentCommandIndex +1));
 		}
 		this.commands.add(command);
 		currentCommandIndex ++;

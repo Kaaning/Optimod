@@ -1,12 +1,6 @@
 package controleur;
 
-import java.io.IOException;
 import java.text.ParseException;
-import java.util.List;
-
-import org.jdom2.JDOMException;
-
-import modele.Livraison;
 import modele.ZoneGeographique;
 import vue.Accueil;
 
@@ -38,7 +32,6 @@ public class Controleur {
 			}
 
 	}
-	
 	public int ChargerZoneGeo (String chemin) {
 			this.modelZoneGeographique = new ZoneGeographique();
 			modelZoneGeographique.lirePlanXML(chemin);
@@ -48,6 +41,33 @@ public class Controleur {
 	
 	public ZoneGeographique getModelZoneGeographique() {
 		return this.modelZoneGeographique;
+	}
+	
+	public int AjouterLivraison () {
+		ConcreteCommandAjouterLivraison command = new ConcreteCommandAjouterLivraison();
+		command.execute();
+		this.invoker.addCommand(command);
+		return 0;
+	}
+	
+	public int SupprimerLivraison() {
+		ConcreteCommandSupprimerLivraison command = new ConcreteCommandSupprimerLivraison();
+		command.execute();
+		this.invoker.addCommand(command);
+		return 0;
+	}
+	
+	public int undo(){
+		return invoker.undo();
+	}
+	
+	public int redo(){
+		return this.invoker.redo();
+	}
+	
+	public int CalculerItineraire () {
+		//this.modelZoneGeographique.calculerItineraire();
+		return 0;
 	}
 	
 //	public void infoLivraison(int id){
@@ -63,6 +83,19 @@ public class Controleur {
 	public static void main(String[] args) throws ParseException{
 		 	
 		 Controleur controler = new Controleur();
+		 controler.AjouterLivraison();
+		 controler.AjouterLivraison();
+		 controler.SupprimerLivraison();
+		 
+		 controler.undo();
+		 controler.redo();
+		 controler.redo();
+		 controler.undo();
+		 
+		 controler.AjouterLivraison();
+		 
+		 controler.undo();
+		 
 			
 		}
 

@@ -53,7 +53,7 @@ public class VuePlan extends JPanel{
 		/* ----- Gestion du zoom via la molette ----- */
 		addMouseWheelListener(new MouseAdapter() {
         	public void mouseWheelMoved(MouseWheelEvent e) {
-        		double sens = e.getPreciseWheelRotation();
+        		double sens = e.getWheelRotation();
         		double echelle = getEchelle();
         		if(sens==1.0 && echelle>0.630){
                 	echelle-=0.1;
