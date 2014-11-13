@@ -42,12 +42,17 @@ public class VueZoneGeo extends JPanel{
         setSize(largeur,hauteur);
         plan = new VuePlan(zoneGeo, ctrl);
         add(plan);
+        creerVueTournee();
 //        add(new VueTournee(zoneGeo, ctrl, zoneGeo.getTournee()));
 	}
 
-	public void creerVueTournee(Tournee tournee) {
-		this.vueTournee = new VueTournee(tournee, ctrl);
+	public void creerVueTournee() {
+		this.vueTournee = new VueTournee(this.zoneGeo.getTournee() , this.ctrl);
 		
+	}
+	
+	public int MAJVueZoneGeographique () {
+		return 0;
 	}
 
 }

@@ -24,7 +24,8 @@ public class Controleur {
 	public int chargerLivraison (String chemin ) {
 		
 			try {
-				modelZoneGeographique.chargerLivraison(chemin);
+				this.modelZoneGeographique.chargerLivraison(chemin);
+				this.viewAccueil.
 				return 0;
 			} catch (ParseException e) {
 				e.printStackTrace();
@@ -38,36 +39,30 @@ public class Controleur {
 			viewAccueil.creerVueZoneGeographique(1100,500, this.modelZoneGeographique);
 			return 0;
 	}
-	
-	public ZoneGeographique getModelZoneGeographique() {
-		return this.modelZoneGeographique;
-	}
-	
 	public int AjouterLivraison () {
 		ConcreteCommandAjouterLivraison command = new ConcreteCommandAjouterLivraison();
 		command.execute();
 		this.invoker.addCommand(command);
+		this.viewAccueil.MAJVueZoneGeographique();
 		return 0;
 	}
-	
 	public int SupprimerLivraison() {
-		ConcreteCommandSupprimerLivraison command = new ConcreteCommandSupprimerLivraison();
+		ConcreteCommandSupprimerLivraison command = new ConcreteCommandSupprimerLivraison(modelZoneGeographique , 0);
 		command.execute();
 		this.invoker.addCommand(command);
+		this.viewAccueil.MAJVueZoneGeographique();
 		return 0;
 	}
-	
 	public int undo(){
-		return invoker.undo();
+		int retour = invoker.undo();
+		this.viewAccueil.MAJVueZoneGeographique();
+		return retour;
 	}
-	
 	public int redo(){
 		return this.invoker.redo();
 	}
-	
 	public int CalculerItineraire () {
-		//this.modelZoneGeographique.calculerItineraire();
-		return 0;
+		return this.modelZoneGeographique.calculerItineraire();
 	}
 	
 //	public void infoLivraison(int id){
@@ -78,23 +73,14 @@ public class Controleur {
 //			}
 //		}
 //	}
-
+	public ZoneGeographique getModelZoneGeographique() {
+		return this.modelZoneGeographique;
+	}
 	
 	public static void main(String[] args) throws ParseException{
 		 	
 		 Controleur controler = new Controleur();
-		 controler.AjouterLivraison();
-		 controler.AjouterLivraison();
-		 controler.SupprimerLivraison();
-		 
-		 controler.undo();
-		 controler.redo();
-		 controler.redo();
-		 controler.undo();
-		 
-		 controler.AjouterLivraison();
-		 
-		 controler.undo();
+		
 		 
 			
 		}

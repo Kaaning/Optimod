@@ -13,7 +13,6 @@ import controleur.Controleur;
 public class VueTournee extends JPanel{
 
 	private Controleur ctrl;
-	private ZoneGeographique zoneGeo;
 	private Tournee tournee;
 	private int largeur;
 	private int hauteur;
@@ -23,7 +22,6 @@ public class VueTournee extends JPanel{
 	public VueTournee (Tournee tournee, Controleur ctrl) {
     	// Creation d'un panneau pour dessiner les boules
 		this.ctrl = ctrl;
-		this.zoneGeo = zoneGeo;
 		this.tournee = tournee;
         this.largeur = 600;
         this.hauteur = 500;
@@ -33,5 +31,8 @@ public class VueTournee extends JPanel{
         setLocation(500,0);
         
 //        vueLivraison = new ArrayList<VueLivraison>();
-	}	
+	}
+	
+	
+	
 }

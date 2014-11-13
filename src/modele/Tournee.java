@@ -133,5 +133,10 @@ public class Tournee {
 		}
 		return livraisons;
 	}
-
+	
+	public int calculerItineraire() {
+		// mettre la vrai fonction
+		return 0;
+	}
+	
 }

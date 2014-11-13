@@ -1,61 +1,28 @@
 package vue;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
-import java.awt.Rectangle;
-import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
-
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextPane;
-import javax.swing.ListModel;
-import javax.swing.ListSelectionModel;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.xml.parsers.ParserConfigurationException;
-
-import modele.Livraison;
-import modele.PlageHoraire;
 import modele.Tournee;
 import modele.ZoneGeographique;
-
-import org.jdom2.JDOMException;
-import org.xml.sax.SAXException;
-
 import controleur.Controleur;
 import bibliothequesTiers.ExampleFileFilter;
 
 
 
 public class Accueil{
-	private Tournee ddl;
-	private ZoneGeographique zoneGeo;
 	private Controleur ctrl;
 	private VueZoneGeo vueZoneGeo;
-
 	private JFrame cadre;
 	private JButton chargerLivraison = new JButton("Charger une demande de livraison");
 	private JButton chargerPlan = new JButton("Charger un plan");
@@ -69,15 +36,7 @@ public class Accueil{
 	int hauteur = 600; 
 	
 	private JLabel message;
-	
-
-	private JTextArea tPlan;
-	private JTextArea tLivraison;
-
 	private JPanel pPlan = new JPanel();
-	private JPanel pList = new JPanel();
-	private JList list;
-	private DefaultListModel listModel = new DefaultListModel();
 	
 	public void message(String mess){
 		message.setText(mess);
@@ -157,18 +116,6 @@ public class Accueil{
 						try {
 							//XMLValidateur.validerXML(chemin, "res\\plan.xsd");
 							ctrl.ChargerZoneGeo(chemin);
-			                MAJModele();
-							//if (!plan.getReussi()) {
-							//JOptionPane.showMessageDialog(cadre, "Erreur dans le ficher XML !", "Erreur !", JOptionPane.ERROR_MESSAGE);	
-							//} else {
-							center.remove(vueZoneGeo);
-							creerVueZoneGeographique(1100, 500, zoneGeo);
-							center.add(vueZoneGeo);
-							cadre.repaint();
-							chargerLivraison.setEnabled(true);
-							System.out.println(zoneGeo.getNoeuds().size());
-							//}
-
 						} catch (/*JDOMException | IOException |*/ HeadlessException /*| ParserConfigurationException | SAXException*/ e) {
 							//e.printStackTrace();
 							System.out.println(e.getMessage());
@@ -193,11 +140,7 @@ public class Accueil{
 		                    chemin = chemin.replace("\\", "/");
 		                    
 		                }
-		                
 		                ctrl.chargerLivraison(chemin);
-	                    MAJModele();
-	                    
-		                
 	                    /*
 		                ddl = zoneGeographique.getDemandes();
 	            		for(int i = 0 ; i<ddl.getPlages().size();i++){
@@ -263,19 +206,25 @@ public class Accueil{
 
 	
 	public void creerVueZoneGeographique(int largeur, int hauteur, ZoneGeographique zoneGeographique) {
-		this.vueZoneGeo = new VueZoneGeo(largeur, hauteur, zoneGeographique, ctrl);
-	}
-	
-	public void MAJModele(){
-		this.zoneGeo = ctrl.getModelZoneGeographique();
+		center.remove(vueZoneGeo);
+		this.vueZoneGeo = new VueZoneGeo(1100, 500, zoneGeographique, ctrl);
+		center.add(vueZoneGeo);
+		cadre.repaint();
+		chargerLivraison.setEnabled(true);
+		System.out.println(zoneGeographique.getNoeuds().size());
 	}
 	
 	public void creerVueTournee (Tournee tournee) {
-		this.vueZoneGeo.creerVueTournee(this.zoneGeo.getTournee());
+		this.vueZoneGeo.creerVueTournee();
 	}
 	
 	public void afficherMessageErreur(String erreur){
 		JOptionPane.showMessageDialog(cadre, erreur, "", JOptionPane.ERROR_MESSAGE);
+	}
+
+	public void MAJVueZoneGeographique() {
+		vueZoneGeo.MAJVueZoneGeographique();
+		
 	}
 
 

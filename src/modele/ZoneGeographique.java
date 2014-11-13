@@ -15,7 +15,7 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
-import vue.Accueil;
+
 
 
 /**
@@ -25,14 +25,17 @@ import vue.Accueil;
  */
 
 public class ZoneGeographique {
+	
 	private List<Noeud> noeuds = new ArrayList<Noeud>(); 
 	private List<Troncon> troncons = new ArrayList<Troncon>();
+	private Tournee tournee;
+	
 	private int Xmin;
 	private int Xmax;
 	private int Ymin;
 	private int Ymax;
 	
-	private Tournee tournee;
+	
 	
 	
 	/**
@@ -40,16 +43,12 @@ public class ZoneGeographique {
 	 * @param nomFic String chemin relatif du fichier xml du plan à charger
 	 * @throws remonte des Exceptions reliées à l'ouverture d'un fichier et l'utlisiation de JDOM pour parser le fichier XML
 	 */
-	
-	
-	
 	public ZoneGeographique() {
-		
-		
+	
 	}
 	
 	public void chargerLivraison(String nomFic) throws ParseException{
-		tournee = new Tournee(nomFic,this);
+		this.tournee = new Tournee(nomFic,this);
 	}
 	
 	/**
@@ -276,6 +275,21 @@ public class ZoneGeographique {
 			}
 		}
 		return null;
+	}
+	
+	
+	public int calculerItineraire() {
+		return 0;
+	}
+
+	public int supprimerLivraison(Livraison supprime) {
+		return 0;
+		// TODO Auto-generated method stub
+	}
+	
+	public int ajouterLivraison (Livraison aAjouter , Livraison precedente) {
+		// mettre le bon appel et la bonne signature
+		return 0;
 	}
 	
 }
