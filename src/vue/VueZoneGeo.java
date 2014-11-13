@@ -39,6 +39,7 @@ public class VueZoneGeo extends JPanel{
         this.hauteur = hauteur;
         this.zoneGeo = zoneGeo;
         this.ctrl=ctrl;
+        this.setLayout(null);
         setSize(largeur,hauteur);
         plan = new VuePlan(zoneGeo, ctrl);
         add(plan);
@@ -47,7 +48,9 @@ public class VueZoneGeo extends JPanel{
 	public void creerVueTournee(Tournee tournee){
 		this.vueTournee = new VueTournee(tournee, ctrl);
 		this.add(vueTournee);
+		vueTournee.setLocation(500,0);
 		this.repaint();
+		this.revalidate();
 	}
 
 }

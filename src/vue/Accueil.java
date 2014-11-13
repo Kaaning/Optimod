@@ -121,7 +121,8 @@ public class Accueil{
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						 						
+						 
+						
 						
 					} else {
 						JOptionPane.showMessageDialog(cadre, "Format non pris en compte !", "Erreur !", JOptionPane.ERROR_MESSAGE);
@@ -134,17 +135,18 @@ public class Accueil{
 		chargerPlan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String chemin="";
-				JFileChooser fc = new JFileChooser();
-				fc.setDialogTitle("Charger un plan");
-				FileNameExtensionFilter ff = new FileNameExtensionFilter("Fichiers .xml", "xml", "XML");
-				fc.addChoosableFileFilter(ff);
-				fc.setFileFilter(ff);
-				int retval = fc.showOpenDialog(null);
-				if (retval == JFileChooser.APPROVE_OPTION) {
+				chemin="fic/plan20x20.xml";
+				//JFileChooser fc = new JFileChooser();
+				//fc.setDialogTitle("Charger un plan");
+				//FileNameExtensionFilter ff = new FileNameExtensionFilter("Fichiers .xml", "xml", "XML");
+				//fc.addChoosableFileFilter(ff);
+				//fc.setFileFilter(ff);
+				//int retval = fc.showOpenDialog(null);
+				//if (retval == JFileChooser.APPROVE_OPTION) {
 					ExampleFileFilter filtre = new ExampleFileFilter("xml");
-					if (filtre.accept(fc.getSelectedFile())) {
+					/*if (filtre.accept(fc.getSelectedFile())) {
 						chemin = fc.getSelectedFile().getAbsolutePath();
-						chemin = chemin.replace("\\", "/");
+						chemin = chemin.replace("\\", "/");*/
 						try {
 							//XMLValidateur.validerXML(chemin, "res\\plan.xsd");
 							zoneGeo = new ZoneGeographique(chemin);
@@ -166,10 +168,10 @@ public class Accueil{
 							String messageErreur = "Erreur dans le ficher XML: " + e.getMessage();
 							JOptionPane.showMessageDialog(cadre, messageErreur, "Erreur !", JOptionPane.ERROR_MESSAGE);	
 						}
-					} else {
+					/*} else {
 						JOptionPane.showMessageDialog(cadre, "Format non pris en compte !", "Erreur !", JOptionPane.ERROR_MESSAGE);
-					}
-				}
+					}*/
+				//}
 			}
 		});
 		
