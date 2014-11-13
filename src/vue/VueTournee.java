@@ -34,7 +34,7 @@ public class VueTournee extends JPanel{
 		this.ctrl = ctrl;
 		this.tournee = tournee;
 		setSize(600, 500);
-		
+		if (tournee != null) {
 		GridLayout gl = new GridLayout();
 		gl.setColumns(2);
 		gl.setRows(1);
@@ -68,6 +68,6 @@ public class VueTournee extends JPanel{
 		
         this.add(pEtape);		
         this.add(listScroller);
-        
+	}
 	}
 }

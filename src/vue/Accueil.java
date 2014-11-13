@@ -6,6 +6,8 @@ import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -13,6 +15,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.jdom2.JDOMException;
+import org.xml.sax.SAXException;
+
 import modele.Tournee;
 import modele.ZoneGeographique;
 import controleur.Controleur;
@@ -114,17 +121,25 @@ public class Accueil{
 						chemin = fc.getSelectedFile().getAbsolutePath();
 						chemin = chemin.replace("\\", "/");
 						try {
-							//XMLValidateur.validerXML(chemin, "res\\plan.xsd");
-							ctrl.ChargerZoneGeo(chemin);
-						} catch (/*JDOMException | IOException |*/ HeadlessException /*| ParserConfigurationException | SAXException*/ e) {
-							//e.printStackTrace();
-							System.out.println(e.getMessage());
-						} catch (NumberFormatException e) {
+							int err = ctrl.ChargerZoneGeo(chemin);
+							if (err == -1) {
+								String messageErreur = "Le fichier XML n'est pas valide !";
+								afficherMessageErreur(messageErreur);
+							} else if (err == 1) {
+								String messageErreur = "Erreur de conversion dans le fichier XML: vitesse, longueur ou identifiant negatif";
+								afficherMessageErreur(messageErreur);
+							} else if (err == 2){
+								String messageErreur = "Erreur dans le fichier XML !";
+								afficherMessageErreur(messageErreur);
+							} else {
+							}
+						} catch (IOException | JDOMException | ParserConfigurationException | SAXException | HeadlessException | NumberFormatException e) {
 							String messageErreur = "Erreur dans le ficher XML: " + e.getMessage();
-							JOptionPane.showMessageDialog(cadre, messageErreur, "Erreur !", JOptionPane.ERROR_MESSAGE);	
+							afficherMessageErreur(messageErreur);
 						}
 					} else {
-						JOptionPane.showMessageDialog(cadre, "Format non pris en compte !", "Erreur !", JOptionPane.ERROR_MESSAGE);
+						String messageErreur = "Format non pris en compte !";
+						afficherMessageErreur(messageErreur);
 					}
 				}		
 			}
@@ -219,7 +234,7 @@ public class Accueil{
 	}
 	
 	public void afficherMessageErreur(String erreur){
-		JOptionPane.showMessageDialog(cadre, erreur, "", JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(cadre, erreur, "Erreur !", JOptionPane.ERROR_MESSAGE);
 	}
 
 	public void MAJVueZoneGeographique() {
