@@ -1,12 +1,15 @@
 package vue;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -38,7 +41,7 @@ public class Accueil{
 	int largeur = 1200;
 	int hauteur = 600; 
 	
-	private JLabel message;
+	private JLabel message = new JLabel();
 	private JPanel pPlan = new JPanel();
 	
 	public void message(String mess){
@@ -116,18 +119,10 @@ public class Accueil{
 					if (filtre.accept(fc.getSelectedFile())) {
 						chemin = fc.getSelectedFile().getAbsolutePath();
 						chemin = chemin.replace("\\", "/");
-						try {
-							//XMLValidateur.validerXML(chemin, "res\\plan.xsd");
-							ctrl.ChargerZoneGeo(chemin);
-						} catch (/*JDOMException | IOException |*/ HeadlessException /*| ParserConfigurationException | SAXException*/ e) {
-							//e.printStackTrace();
-							System.out.println(e.getMessage());
-						} catch (NumberFormatException e) {
-							String messageErreur = "Erreur dans le ficher XML: " + e.getMessage();
-							JOptionPane.showMessageDialog(cadre, messageErreur, "Erreur !", JOptionPane.ERROR_MESSAGE);	
-						}
+						ctrl.ChargerZoneGeo(chemin);
 					} else {
-						JOptionPane.showMessageDialog(cadre, "Format non pris en compte !", "Erreur !", JOptionPane.ERROR_MESSAGE);
+						String messageErreur = "Format non pris en compte !";
+						afficherMessageErreur(messageErreur);
 					}
 				}		
 			}
@@ -149,44 +144,22 @@ public class Accueil{
 		
 
 		//SOUTH ----------------------------
-		GridLayout gl = new GridLayout();
-		gl.setColumns(3);
-		gl.setRows(1);
-		gl.setHgap(10); //Cinq pixels d'espace entre les colonnes (H comme Horizontal)
-		gl.setVgap(10); //Cinq pixels d'espace entre les lignes (V comme Vertical)
-		south.setLayout(gl);
-		
-		
-		south.add(calculerItineraire);
+		south.setLayout(new BoxLayout(south, BoxLayout.LINE_AXIS));
+		south.add(Box.createHorizontalGlue());
 		south.add(chargerPlan);
+		south.add(Box.createRigidArea(new Dimension(30,0)));
 		south.add(chargerLivraison);
+		south.add(Box.createRigidArea(new Dimension(30,0)));
+		south.add(calculerItineraire);
+		south.add(Box.createHorizontalGlue());
 		
 		//NORTH ----------------------------
-		north.setLayout(gl);
-		message = new JLabel("Bonjour");
-		message.setFont(new Font("Serif", Font.PLAIN, 16));
-		
+		north.setLayout(new BoxLayout(north, BoxLayout.LINE_AXIS));
+		north.add(Box.createHorizontalGlue());
 		north.add(message);
+		north.add(Box.createHorizontalGlue());
 		
 		//CENTER ----------------------------
-//		GridLayout g2 = new GridLayout();
-//		g2.setColumns(2);
-//		g2.setRows(2);
-//		g2.setHgap(10); //Cinq pixels d'espace entre les colonnes (H comme Horizontal)
-//		g2.setVgap(10); //Cinq pixels d'espace entre les lignes (V comme Vertical)
-//		center.setLayout(gl);
-
-		//Liste des points de livraison
-//		list = new JList(listModel); //data has type Object[]
-//		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-//		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-//		list.setVisibleRowCount(-1);
-//		JScrollPane listScroller = new JScrollPane(list);
-//		listScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-//		listScroller.setPreferredSize(new Dimension(250, 500));
-//		pList.add(listScroller);
-//		center.add(pPlan);
-//		center.add(pList);
 		center.setLayout(null);
 		center.add(vueZoneGeo);
 				
@@ -211,6 +184,11 @@ public class Accueil{
 	
 	public void afficherMessageErreur(String erreur){
 		JOptionPane.showMessageDialog(cadre, erreur, "", JOptionPane.ERROR_MESSAGE);
+	}
+	
+	public void afficherMessage(String message){
+		this.message.setText(message);
+		this.message.setFont(new Font("Serif", Font.PLAIN, 16));
 	}
 
 	public void MAJVueZoneGeographique() {

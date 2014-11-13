@@ -34,12 +34,25 @@ public class Controleur {
 					return 1;
 				}	
 	}
-	public int ChargerZoneGeo (String chemin) {
-			this.modelZoneGeographique = new ZoneGeographique();
-			modelZoneGeographique.lirePlanXML(chemin);
+	public void ChargerZoneGeo (String nomFic) {
+		this.modelZoneGeographique = new ZoneGeographique();
+		int res = modelZoneGeographique.lirePlanXML(nomFic);
+		if (res == 0) {
 			viewAccueil.creerVueZoneGeographique(1100,500, this.modelZoneGeographique);
-			return 0;
+			viewAccueil.afficherMessage("Chargement du plan réussi. Veuillez maintenant charger des livraisons.");
+		}
+		else if (res == -1) {
+			String messageErreur = "Le fichier XML n'est pas valide !";
+			viewAccueil.afficherMessageErreur(messageErreur);
+		} else if (res == 1) {
+			String messageErreur = "Erreur de conversion dans le fichier XML: vitesse, longueur ou identifiant negatif";
+			viewAccueil.afficherMessageErreur(messageErreur);
+		} else if (res == 2){
+			String messageErreur = "Erreur dans le fichier XML !";
+			viewAccueil.afficherMessageErreur(messageErreur);
+		}
 	}
+	
 	public int AjouterLivraison () {
 		ConcreteCommandAjouterLivraison command = new ConcreteCommandAjouterLivraison();
 		command.execute();

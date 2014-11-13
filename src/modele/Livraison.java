@@ -1,5 +1,7 @@
 package modele;
-
+/**
+ * @author H4303 - 2014
+ */
 public class Livraison {
 
 	private int id;
@@ -7,6 +9,12 @@ public class Livraison {
 	private int client;
 	private String etat;
 	
+	/**
+	 * Constructeur de livraison
+	 * @param id 
+	 * @param idClient
+	 * @param noeud
+	 */
 	public Livraison(int id, int idClient, Noeud noeud) {
 		this.id = id;
 		client = idClient;
