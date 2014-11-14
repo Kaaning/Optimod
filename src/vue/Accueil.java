@@ -258,9 +258,9 @@ public class Accueil{
 	 * 
 	 */
 	public void MAJVueZoneGeographique() {
-		vueZoneGeo.MAJVueZoneGeographique();
+		vueZoneGeo.MAJVueTournee();
+		cadre.repaint();
 	}
-
 
 	
 
@@ -269,17 +269,7 @@ public class Accueil{
 		cadre.repaint();
 	}
 	
-	public void MAJVueZoneGeographique() {
-		vueZoneGeo.MAJVueTournee();
-		cadre.repaint();
-	}
 	
-	
-	public void MAJVueEtape(Noeud n){
-		vueZoneGeo.MAJVueEtape(n);
-	}
-	
-
 	
 	/**Met a jour la VueEtape
 	 * @param n : noeud clique

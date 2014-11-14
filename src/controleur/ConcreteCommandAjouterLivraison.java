@@ -1,7 +1,14 @@
 package controleur;
 
+import modele.Noeud;
+
 public class ConcreteCommandAjouterLivraison implements Command {
 
+	
+	public ConcreteCommandAjouterLivraison(int client, int id, Noeud noeudClicked){
+	
+	}
+	
 	@Override
 	public int execute() {
 		// TODO Auto-generated method stub

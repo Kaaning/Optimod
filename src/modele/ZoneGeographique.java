@@ -222,13 +222,6 @@ public class ZoneGeographique {
 						Element tronconCourant = (Element)it.next();
 						if (Double.parseDouble(tronconCourant.getAttributeValue("vitesse").replace(',', '.')) < 0 || Double.parseDouble(tronconCourant.getAttributeValue("longueur").replace(',', '.')) < 0 || Integer.parseInt(listeNoeuds.get(cpt).getAttributeValue("x")) < 0 || Integer.parseInt(listeNoeuds.get(cpt).getAttributeValue("y")) < 0) {
 							erreur = 1;
-						}
-						Troncon troncon = new Troncon(tronconCourant.getAttributeValue("nomRue"), Double.parseDouble(tronconCourant.getAttributeValue("longueur").replace(',', '.'))/Double.parseDouble(tronconCourant.getAttributeValue("vitesse").replace(',', '.')), Double.parseDouble(tronconCourant.getAttributeValue("longueur").replace(',', '.')));
-						troncon.setCible(this.findNoeudById(Integer.parseInt(tronconCourant.getAttributeValue("idNoeudDestination"))));
-						troncon.setSource(this.findNoeudById(Integer.parseInt(listeNoeuds.get(cpt).getAttributeValue("id"))));
-						this.findNoeudById(Integer.parseInt(listeNoeuds.get(cpt).getAttributeValue("id"))).ajouterTronconSortant(troncon);
-						this.findNoeudById(Integer.parseInt(tronconCourant.getAttributeValue("idNoeudDestination"))).ajouterTronconEntrant(troncon);
-						ajouterTroncon(troncon);
 						} else {
 							Troncon troncon = new Troncon(tronconCourant.getAttributeValue("nomRue"), Double.parseDouble(tronconCourant.getAttributeValue("longueur").replace(',', '.'))/Double.parseDouble(tronconCourant.getAttributeValue("vitesse").replace(',', '.')), Double.parseDouble(tronconCourant.getAttributeValue("longueur").replace(',', '.')));
 							troncon.setCible(this.findNoeudById(Integer.parseInt(tronconCourant.getAttributeValue("idNoeudDestination"))));
@@ -324,22 +317,8 @@ public class ZoneGeographique {
 		return temp;		
 	}
 	
-	/**
-	 * Methode qui verifie si le noeud dont l'Id est passe en parametre a ete visitee dans la tournee ou pas
-     * @param id int Id du noeud à verifier
-	 * @return boolean true si le noeud passe en parametre a ete visite false sinon 
-	 *
-	 */
-	public Noeud getNoeudById(int id) {
-		for (Noeud n : noeuds) {
-			if (n.getId()==id) {
-				n.setEtat(0);
-				return n;
-				return true;
-			}
-		}
-		return null;
-	}
+	
+
 	
 	
 	/**Calcule l'itineraire
@@ -356,9 +335,6 @@ public class ZoneGeographique {
 	public int supprimerLivraison(Livraison supprime) {
 		tournee.supprimerLivraison(supprime);
 		return 0;
-	}
-		return 0;
-		// TODO Auto-generated method stub
 	}
 	
 	/**Ajoute une livraison a la tournee

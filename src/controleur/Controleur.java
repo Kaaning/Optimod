@@ -13,25 +13,6 @@ import vue.Accueil;
 /**
  * @author H4303 - 2014
  */
-
-	
-
-
-	
-
-	  
-	 
-
-	 
-
-	
-
-	
-	
-
-	
-
-
 public class Controleur {
 	
 
@@ -58,7 +39,7 @@ public class Controleur {
 		int res = this.modelZoneGeographique.chargerLivraison(nomFic);
 		System.out.println("Livraison erreur: " + res);
 		if (res == 0) {
-			this.viewAccueil.MAJVueZoneGeographique();
+			this.viewAccueil.CreerVueTournee();
 			viewAccueil.afficherMessage("Chargement des livraisons réussi. Vous pouvez maintenant calculer un itinéraire.");
 		} else if (res == -1) {
 			String messageErreur = "Le fichier XML n'est pas valide !";
@@ -92,6 +73,19 @@ public class Controleur {
 			viewAccueil.afficherMessageErreur(messageErreur);
 		}
     }
+	
+	
+	
+	
+
+	
+	public void afficherMessageErreur(String mess){
+		viewAccueil.afficherMessageErreur(mess);
+	}
+	
+	/**Ajoute une livraison
+	 * @return int : eventuel code d'erreur
+	 */
 	public int AjouterLivraison (int client, int id) {
 		if(noeudClicked==null){
 			return -1;
@@ -102,55 +96,13 @@ public class Controleur {
 		this.viewAccueil.MAJVueZoneGeographique();
 		return 0;
 	}
+	/**Supprime une livraison
+	 * @return int : eventuel code d'erreur
+	 */
 	public int SupprimerLivraison(Livraison l) {
 		ConcreteCommandSupprimerLivraison command = new ConcreteCommandSupprimerLivraison(modelZoneGeographique , l);
 		command.execute();
 		//this.invoker.addCommand(command);
-		this.viewAccueil.MAJVueZoneGeographique();
-		return 0;
-	}
-	public int undo(){
-		int retour = invoker.undo();
-		this.viewAccueil.MAJVueZoneGeographique();
-		return retour;
-	}
-	public int redo(){
-		return this.invoker.redo();
-	}
-	public int CalculerItineraire () {
-		return this.modelZoneGeographique.calculerItineraire();
-	}
-	
-	public void infoLivraison(Noeud n){
-		viewAccueil.MAJVueEtape(n);
-		noeudClicked = n;
-	}
-	
-	public ZoneGeographique getModelZoneGeographique() {
-		return this.modelZoneGeographique;
-	}
-	
-	public void afficherMessageErreur(String mess){
-		viewAccueil.afficherMessageErreur(mess);
-	}
-	
-	/**Ajoute une livraison
-	 * @return int : eventuel code d'erreur
-	 */
-	public int AjouterLivraison () {
-		ConcreteCommandAjouterLivraison command = new ConcreteCommandAjouterLivraison();
-		command.execute();
-		this.invoker.addCommand(command);
-		this.viewAccueil.MAJVueZoneGeographique();
-		return 0;
-	}
-	/**Supprime une livraison
-	 * @return int : eventuel code d'erreur
-	 */
-	public int SupprimerLivraison() {
-		ConcreteCommandSupprimerLivraison command = new ConcreteCommandSupprimerLivraison(modelZoneGeographique , 0);
-		command.execute();
-		this.invoker.addCommand(command);
 		this.viewAccueil.MAJVueZoneGeographique();
 		return 0;
 	}
@@ -180,6 +132,7 @@ public class Controleur {
 	 */
 	public void infoLivraison(Noeud n){
 		viewAccueil.MAJVueEtape(n);
+		noeudClicked = n;
 	}
 	
 	/**Renvoie le modele ZoneGeoGraphique

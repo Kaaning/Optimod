@@ -117,7 +117,6 @@ public class VuePlan extends JPanel{
 		//changerCouleur(30);
      }
 	
-<<<<<<< HEAD
 	/**Creer une VueTroncon pour chaque Troncon
 	 * 
 	 */

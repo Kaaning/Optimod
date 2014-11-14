@@ -48,15 +48,6 @@ public class VueEtape extends JPanel{
 	
 	
 	private Livraison l;
-
-	
-	private JButton add = new JButton("Ajouter une livraison");
-	private JButton supp = new JButton("Supprimer une livraison");
-	
-	private Box info = Box.createVerticalBox();
-	private JLabel infoNoeud = new JLabel("Selectionner un Noeud");
-	private JLabel infoLiv = new JLabel();
-	private JPanel boutons = new JPanel();
 	
 	
 	/**Constructeur de la VueEtape
@@ -65,12 +56,6 @@ public class VueEtape extends JPanel{
 	public VueEtape(Controleur controleur){
 		ctrl = controleur;
 		setSize(300, 500);
-		
-		GridLayout gl = new GridLayout();
-		gl.setColumns(1);
-		gl.setRows(2);
-		gl.setHgap(20); //Cinq pixels d'espace entre les colonnes (H comme Horizontal)
-
 		
 		Field.setVisible(false);
 		Box bidNoeud = Box.createHorizontalBox();
@@ -124,14 +109,14 @@ public class VueEtape extends JPanel{
 				
 				try{
 					if(l!=null){
-						controleur.afficherMessageErreur("Déjà une livraison à cette adresse !");
+						ctrl.afficherMessageErreur("Déjà une livraison à cette adresse !");
 					}
-					else if(controleur.AjouterLivraison(Integer.parseInt(IdClient), Integer.parseInt(IdLiv))==-1){
-						controleur.afficherMessageErreur("Selectionner un noeud où livrer !");
+					else if(ctrl.AjouterLivraison(Integer.parseInt(IdClient), Integer.parseInt(IdLiv))==-1){
+						ctrl.afficherMessageErreur("Selectionner un noeud où livrer !");
 					}
 				}
 				catch(Exception e){
-					controleur.afficherMessageErreur("Erreur de format - Les ids doivent être des entiers !");
+					ctrl.afficherMessageErreur("Erreur de format - Les ids doivent être des entiers !");
 				}
 				
 				id.setText("");
@@ -213,6 +198,7 @@ public class VueEtape extends JPanel{
 	 */
 	public void DisplayLivraison(Livraison l){
 		infoLiv.setText("Livraison n°"+ l.getId() + " - idClient " + l.getClient() );
+		this.l=l;
 	}
 	
 	/**Affiche les infos du noeud
@@ -225,10 +211,7 @@ public class VueEtape extends JPanel{
 		l=null;	
     }
 
-	public void DisplayLivraison(Livraison l){
-		infoLiv.setText("Livraison n°"+ l.getId() + " - idClient " + l.getClient() );
-		this.l=l;
-	}
+	
 	
 	
 

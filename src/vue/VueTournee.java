@@ -30,8 +30,6 @@ public class VueTournee extends JPanel{
 	private JPanel pList;
 	private VueEtape pEtape;
 	private Box box;
-	private JPanel pList;
-	private VueEtape pEtape;
 	/**Constructeur de VueTournee
 	 * @param tournee : lien vers le modele
 	 * @param ctrl : lien vers le controleur
