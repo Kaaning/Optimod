@@ -132,23 +132,14 @@ public class Accueil{
 			public void actionPerformed(ActionEvent arg0) {
 			   String chemin="";
 		       JFileChooser fc = new JFileChooser();
-		       fc.setDialogTitle("Charger des livraisons");
-		       FileNameExtensionFilter ff = new FileNameExtensionFilter("Fichiers .xml", "xml", "XML");
-		       fc.addChoosableFileFilter(ff);
-		       fc.setFileFilter(ff);
-		       int retval = fc.showOpenDialog(null);
-		       if (retval == JFileChooser.APPROVE_OPTION) {
-		    	   ExampleFileFilter filtre = new ExampleFileFilter("xml");
-		    	   if (filtre.accept(fc.getSelectedFile())) {
-		    		   chemin = fc.getSelectedFile().getAbsolutePath();
-		    		   chemin = chemin.replace("\\", "/");
-		    		   ctrl.chargerLivraison(chemin);
-		    	   } else {
-		    		   String messageErreur = "Format non pris en compte !";
-		    		   afficherMessageErreur(messageErreur);
-		    	   }
-		       }
-			}
+		                int retval = fc.showOpenDialog(null);
+		                if (retval == JFileChooser.APPROVE_OPTION) {
+		                    chemin = fc.getSelectedFile().getAbsolutePath();
+		                    chemin = chemin.replace("\\", "/");
+		                    
+		                }
+		                ctrl.chargerLivraison(chemin);
+			  }
 		});
 		
 

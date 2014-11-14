@@ -23,24 +23,17 @@ public class Controleur {
 		 
 	}
 	 
-	public void chargerLivraison (String nomFic) {
-		int res = this.modelZoneGeographique.chargerLivraison(nomFic);
-		System.out.println("Livraison erreur: " + res);
-		if (res == 0) {
-			this.viewAccueil.MAJVueZoneGeographique();
-			viewAccueil.afficherMessage("Chargement des livraisons réussi. Vous pouvez maintenant calculer un itinéraire.");
-		} else if (res == -1) {
-			String messageErreur = "Le fichier XML n'est pas valide !";
-			viewAccueil.afficherMessageErreur(messageErreur);
-		} else if (res == 1) {
-			String messageErreur = "Erreur de conversion dans le fichier XML: adresse ou identifiant negatif";
-			viewAccueil.afficherMessageErreur(messageErreur);
-		} else if (res == 2) {
-			String messageErreur = "Erreur dans le fichier XML !";
-			viewAccueil.afficherMessageErreur(messageErreur);
-		}	
+	public int chargerLivraison (String chemin ) {
+				try {
+					this.modelZoneGeographique.chargerLivraison(chemin);
+					this.viewAccueil.MAJVueZoneGeographique();
+					return 0;
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return 1;
+				}	
 	}
-	
 	public void ChargerZoneGeo (String nomFic) {
 		this.modelZoneGeographique = new ZoneGeographique();
 		int res = modelZoneGeographique.lirePlanXML(nomFic);
