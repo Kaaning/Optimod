@@ -280,5 +280,11 @@ public class ZoneGeographique {
 		}
 		return null;
 	}
+
+	public void setTournee(Tournee tournee) {
+		this.tournee = tournee;
+	}
+	
+	
 	
 }

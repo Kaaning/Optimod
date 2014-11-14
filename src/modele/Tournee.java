@@ -134,4 +134,18 @@ public class Tournee {
 		return livraisons;
 	}
 
+	public void setEntrepot(int entrepot) {
+		this.entrepot = entrepot;
+	}
+
+	
+
+	public ZoneGeographique getZg() {
+		return zg;
+	}
+
+	
+	
+	
+
 }

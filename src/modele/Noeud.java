@@ -22,7 +22,17 @@ public class Noeud {
 	/**
 	 * Constructeur sans paramÃ¨tres de l'Objet Noeud
 	 */
-	public Noeud() {
+	public Noeud(){
+		
+	}
+	
+	public Noeud(Noeud other) {
+		this.id = Integer.MAX_VALUE;
+		this.x = other.x;
+		this.y = other.y;
+		this.tronconsEntrants = other.tronconsEntrants;
+		this.tronconsSortants = other.tronconsSortants;
+		this.etat = other.etat;
 	}
 	
 	/**
