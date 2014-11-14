@@ -17,6 +17,14 @@ import modele.Noeud;
 import modele.Troncon;
 import modele.ZoneGeographique;
 
+/**
+ * @author H4303 - 2014
+ *
+ */
+/**
+ * @author William
+ *
+ */
 public class VuePlan extends JPanel{
 	
 	private Controleur ctrl;
@@ -33,6 +41,10 @@ public class VuePlan extends JPanel{
 	private int[] clic = {0,0};
 	private int[] deplacement = {0,0};
 	
+	/**Constructeur de l'objet VuePlan
+	 * @param zoneGeo une zone geographique associe au plan
+	 * @param ctrl le controleur en lien avec le modele
+	 */
 	public VuePlan (ZoneGeographique zoneGeo, Controleur ctrl) {
     	// Creation d'un panneau pour dessiner les boules
         this.largeur = 500;
@@ -105,6 +117,9 @@ public class VuePlan extends JPanel{
 		//changerCouleur(30);
      }
 	
+	/**Creer une VueTroncon pour chaque Troncon
+	 * 
+	 */
 	public void creerVueTroncons(){
 		List<Troncon> troncons = zoneGeo.getTroncons();
 		for(Troncon troncon : troncons){
@@ -113,6 +128,9 @@ public class VuePlan extends JPanel{
 		}
 	}
 	
+	/**Creer une VueNoeud pour chaque Noeud
+	 * 
+	 */
 	public void creerVueNoeuds(){
 		List<Noeud> noeuds = zoneGeo.getNoeuds();
 		for(Noeud noeud : noeuds){
@@ -165,6 +183,9 @@ public class VuePlan extends JPanel{
         }
 	}
 	
+	/**Translate le plan
+	 * 
+	 */
 	public void deplacerPlan(){
 		
 		for(VueNoeud vn : vueNoeuds){
@@ -174,10 +195,16 @@ public class VuePlan extends JPanel{
         }
 	}
 	
+	/**Renvoie l'echelle
+	 * @return double
+	 */
 	public double getEchelle(){
 		return echelle;
 	}
 	
+	/**Rafraichit les couleurs des noeuds et troncons
+	 * @param n : numero d'identification de l'entrepot
+	 */
 	public void changerCouleur(int n){
 		for(VueNoeud vn : vueNoeuds){
 			vn.changerCouleur(n);

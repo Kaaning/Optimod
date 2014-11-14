@@ -24,9 +24,7 @@ import bibliothequesTiers.XMLValidateur;
 
 
 /**
- * Classe de Gestion des Zones Géographiques
- * @author MohamedRiadh
- *
+ * @author H4303 - 2014
  */
 
 public class ZoneGeographique {
@@ -44,14 +42,18 @@ public class ZoneGeographique {
 	
 	
 	/**
-	 * Constructeur avec paramètres de l'Objet ZoneGeographique
+	 * Constructeur avec parametres de l'Objet ZoneGeographique
 	 * @param nomFic String chemin relatif du fichier xml du plan à charger
-	 * @throws remonte des Exceptions reliées à l'ouverture d'un fichier et l'utlisiation de JDOM pour parser le fichier XML
+	 * @throws remonte des Exceptions reliees à l'ouverture d'un fichier et l'utlisiation de JDOM pour parser le fichier XML
 	 */
 	public ZoneGeographique() {
 	
 	}
 	
+	/**Cree une tournee a partir d'un fichier contenant les livraisons a charger
+	 * @param nomFic : fichier a charger
+	 * @throws ParseException
+	 */
 	public void chargerLivraison(String nomFic) throws ParseException{
 		this.tournee = new Tournee(nomFic,this);
 	}
@@ -94,7 +96,7 @@ public class ZoneGeographique {
 	
 	/**
 	 * Accesseur de l'Attribut Ymin
-	 * @return int la valeur de l'ordonnée du noeud la plus petite du plan à charger
+	 * @return int la valeur de l'ordonnee du noeud la plus petite du plan à charger
 	 *
 	 */
 	public int getYMin() {
@@ -103,19 +105,22 @@ public class ZoneGeographique {
 	
 	/**
 	 * Accesseur de l'Attribut Ymax
-	 * @return int la valeur de l'ordonnée du noeud la plus grande du plan à charger
+	 * @return int la valeur de l'ordonnee du noeud la plus grande du plan à charger
 	 *
 	 */
 	public int getYMax() {
 		return Ymax;
 	}
 	
+	/**Renvoie la tournee
+	 * @return Tournee
+	 */
 	public Tournee getTournee() {
 		return tournee;
 	}
 	
 	/**
-	 * Ajoute un Objet Noeud à l'Attribut noeuds (qui représente la liste des noeuds du plan à charger)
+	 * Ajoute un Objet Noeud à l'Attribut noeuds (qui represente la liste des noeuds du plan à charger)
 	 * @param noeud Objet Noeud à rajouer à la liste 
 	 *
 	 */
@@ -124,7 +129,7 @@ public class ZoneGeographique {
 	}
 	
 	/**
-	 * Ajoute un Objet Troncon à l'Attribut troncons (qui représente la liste des troncons du plan à charger)
+	 * Ajoute un Objet Troncon à l'Attribut troncons (qui represente la liste des troncons du plan à charger)
 	 * @param troncon Objet Troncon à rajouer à la liste 
 	 *
 	 */
@@ -135,7 +140,7 @@ public class ZoneGeographique {
 	/**
 	 * Recherche et retourne un Objet Noeud dans la liste des noeuds du plan à charger selon son Identifiant (Attribut Id de l'Objet Noeud)
 	 * @param id int la valeur de l'Identifiant de l'Objet Noeud à rechercher
-	 * @return Noeud dont l'Identifiant est égal au paramètre id passé en paramètre 
+	 * @return Noeud dont l'Identifiant est egal au parametre id passe en parametre 
 	 *
 	 */
 	public Noeud findNoeudById(int id) {
@@ -221,7 +226,7 @@ public class ZoneGeographique {
 	}
 	
 	/**
-	 * Méthode privée appelée dans le constructeur
+	 * Methode privee appelee dans le constructeur
 	 * recherche la plus grande absisse des noeuds du plan à charger
 	 * @return int la valeur de la plus grande absisse des noeuds à charger 
 	 *
@@ -237,9 +242,9 @@ public class ZoneGeographique {
 	}
 	
 	/**
-	 * Méthode privée appelée dans le constructeur
-	 * recherche la plus grande ordonnée des noeuds du plan à charger
-	 * @return int la valeur de la plus grande ordonnée des noeuds à charger 
+	 * Methode privee appelee dans le constructeur
+	 * recherche la plus grande ordonnee des noeuds du plan à charger
+	 * @return int la valeur de la plus grande ordonnee des noeuds à charger 
 	 *
 	 */
 	private int findYMax() {
@@ -253,7 +258,7 @@ public class ZoneGeographique {
 	}
 	
 	/**
-	 * Méthode privée appelée dans le constructeur
+	 * Methode privee appelee dans le constructeur
 	 * recherche la plus petite absisse des noeuds du plan à charger
 	 * @return int la valeur de la plus petite absisse des noeuds à charger 
 	 *
@@ -269,9 +274,9 @@ public class ZoneGeographique {
 	}
 	
 	/**
-	 * Méthode privée appelée dans le constructeur
-	 * recherche la plus petite ordonnée des noeuds du plan à charger
-	 * @return int la valeur de la plus petite ordonnée des noeuds à charger 
+	 * Methode privee appelee dans le constructeur
+	 * recherche la plus petite ordonnee des noeuds du plan à charger
+	 * @return int la valeur de la plus petite ordonnee des noeuds à charger 
 	 *
 	 */
 	private int findYMin() {
@@ -301,15 +306,27 @@ public class ZoneGeographique {
 	}
 	
 	
+	/**Calcule l'itineraire
+	 * @return int : eventuel code d'erreur
+	 */
 	public int calculerItineraire() {
 		return 0;
 	}
 
+	/**Supprimer une livraison de la tournee
+	 * @param supprime : Livraison a supprimer
+	 * @return int : eventuel code d'erreur
+	 */
 	public int supprimerLivraison(Livraison supprime) {
 		return 0;
 		// TODO Auto-generated method stub
 	}
 	
+	/**Ajoute une livraison a la tournee
+	 * @param aAjouter : livraison a ajouter
+	 * @param precedente : livraison a la suite de laquelle sera ajoutee la nouvelle
+	 * @return int : eventuel code d'erreur
+	 */
 	public int ajouterLivraison (Livraison aAjouter , Livraison precedente) {
 		// mettre le bon appel et la bonne signature
 		return 0;

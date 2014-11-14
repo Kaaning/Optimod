@@ -4,9 +4,7 @@
 package modele;
 
 /**
- * Classe de Gestion des Troncons
- * @author MohamedRiadh
- *
+ * @author H4303 - 2014
  */
 
 public class Troncon {
@@ -40,7 +38,7 @@ public class Troncon {
 	
 	/**
 	 * Accesseur de l'Attribut cout de l'Objet Troncon
-	 * @return double la valeur de l'Attribut cout de l'Objet Troncon qui représente le temps nécessaire pour parcourir le troncon
+	 * @return double la valeur de l'Attribut cout de l'Objet Troncon qui represente le temps necessaire pour parcourir le troncon
 	 *
 	 */
 	public double getCout() {
@@ -57,7 +55,7 @@ public class Troncon {
 	}
 	
 	/**
-	 * Accesseur de l'Attribut cible qui représente le Noeud cible (destination) du Troncon 
+	 * Accesseur de l'Attribut cible qui represente le Noeud cible (destination) du Troncon 
 	 * @return Noeud l'Attribut cible de l'Objet Troncon 
 	 *
 	 */
@@ -66,7 +64,7 @@ public class Troncon {
 	}
 	
 	/**
-	 * Accesseur de l'Attribut source qui représente le Noeud source (départ) du Troncon 
+	 * Accesseur de l'Attribut source qui represente le Noeud source (depart) du Troncon 
 	 * @return Noeud l'Attribut source de l'Objet Troncon
 	 *
 	 */
@@ -75,7 +73,7 @@ public class Troncon {
 	}
 	
 	/**
-	 * Mutateur de l'Attribut cible qui représente le Noeud cible (destination) du Troncon
+	 * Mutateur de l'Attribut cible qui represente le Noeud cible (destination) du Troncon
 	 * @param uneCible Objet Noeud à mettre en tant qu'Attribut cible de l'Objet Troncon 
 	 *
 	 */
@@ -84,7 +82,7 @@ public class Troncon {
 	}
 	
 	/**
-	 * Mutateur de l'Attribut source qui représente le Noeud source (départ) du Troncon
+	 * Mutateur de l'Attribut source qui represente le Noeud source (depart) du Troncon
 	 * @param uneSource Objet Noeud à mettre en tant qu'Attribut source de l'Objet Troncon
 	 *
 	 */
@@ -92,10 +90,16 @@ public class Troncon {
 		source = uneSource;
 	}
 	
+	/**Change le nombre de passage par ce troncon
+	 * @param nb : nouveau nombre
+	 */
 	public void setNbPassage(int nb){
 		nbPassage=nb;
 	}
 	
+	/**Renvoie le nombre de passage actuel par le troncon
+	 * @return int
+	 */
 	public int getNbPassage(){
 		return nbPassage;
 	}

@@ -17,6 +17,9 @@ import modele.Tournee;
 import modele.ZoneGeographique;
 import controleur.Controleur;
 
+/**
+ * @author H4303 - 2014
+ */
 public class VueEtape extends JPanel{
 	private Controleur ctrl;
 	
@@ -29,6 +32,9 @@ public class VueEtape extends JPanel{
 	private JPanel boutons = new JPanel();
 	
 	
+	/**Constructeur de la VueEtape
+	 * @param controleur : lien vers le controleur
+	 */
 	public VueEtape(Controleur controleur){
 		ctrl = controleur;
 		setSize(300, 500);
@@ -74,10 +80,18 @@ public class VueEtape extends JPanel{
         
 	}
 	
+	/**Affiche les infos de la livraison
+	 * Methode appelee apres un clic sur un noeud ayant une livraison
+	 * @param l : livraison
+	 */
 	public void DisplayLivraison(Livraison l){
 		infoLiv.setText("Livraison n°"+ l.getId() + " - idClient " + l.getClient() );
 	}
 	
+	/**Affiche les infos du noeud
+	 * Methode appelee apres un clic sur un noeud
+	 * @param n : noeud
+	 */
 	public void DisplayNoeud(Noeud n){
 		infoLiv.setText("");
 		infoNoeud.setText("Noeud n°"+n.getId());

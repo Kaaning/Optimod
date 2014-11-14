@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Classe de Gestion des Noeuds
  * @author H4303-2014
  */
 public class Noeud {
@@ -91,7 +90,7 @@ public class Noeud {
 	}
 	
 	/**
-	* Accesseur de l'Attribut Y représantant l'ordonnée du Noeud dans le plan
+	* Accesseur de l'Attribut Y representant l'ordonnee du Noeud dans le plan
 	 * @return int la valeur de l'Attribut Y
 	 *
 	 */
@@ -100,8 +99,8 @@ public class Noeud {
 	}
 	
 	/**
-	* Accesseur de l'Attribut visite du Noeud dans le plan, qui définit si le noeud a été visité dans la tournée ou pas.
-	 * @return bool true si le noeud a été visité false sinon
+	* Accesseur de l'Attribut visite du Noeud dans le plan, qui definit si le noeud a ete visite dans la tournee ou pas.
+	 * @return bool true si le noeud a ete visite false sinon
 	 *
 	 */
 	public int getEtat(){
@@ -109,8 +108,8 @@ public class Noeud {
 	}
 	
 	/**
-	* Mutateur de l'Attribut visite du Noeud dans le plan, qui définit si le noeud a été visité dans la tournée ou pas.
-	 * @param bool visite valeur du boolean à mettre dans l'Attribut visite de l'Objet Noeud
+	* Mutateur de l'Attribut visite du Noeud dans le plan, qui definit si le noeud a ete visite dans la tournee ou pas.
+	 * @param bool visite valeur du boolean a mettre dans l'Attribut visite de l'Objet Noeud
 	 *
 	 */
 	public void setEtat(int etat){

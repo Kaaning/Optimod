@@ -10,6 +10,9 @@ import modele.Noeud;
 import modele.ZoneGeographique;
 import controleur.Controleur;
 
+/**
+ * @author H4303 - 2014
+ */
 public class VueZoneGeo extends JPanel{
 	
 	private Controleur ctrl;
@@ -20,12 +23,22 @@ public class VueZoneGeo extends JPanel{
 	private VuePlan plan;
 	private VueTournee vueTournee;
 	
+	/**Constructeur de VueZoneGeo
+	 * @param largeur
+	 * @param hauteur
+	 */
 	public VueZoneGeo(int largeur, int hauteur){
 		this.largeur = largeur;
         this.hauteur = hauteur;
         setSize(largeur,hauteur);
 	}
 	
+	/**Constructeur de VueZoneGeo
+	 * @param largeur
+	 * @param hauteur
+	 * @param zoneGeo : lien vers le modele
+	 * @param ctrl : lien vers le controleur
+	 */
 	public VueZoneGeo (int largeur, int hauteur, ZoneGeographique zoneGeo, Controleur ctrl) {
     	// Creation d'un panneau pour dessiner les boules
         this.largeur = largeur;
@@ -38,7 +51,9 @@ public class VueZoneGeo extends JPanel{
         add(plan);
 
 	}
-
+	/**Cree la VueTournee associee
+	 * 
+	 */
 	public void creerVueTournee() {
 		this.vueTournee = new VueTournee(this.zoneGeo.getTournee() , this.ctrl);
 		this.add(vueTournee);
@@ -48,16 +63,25 @@ public class VueZoneGeo extends JPanel{
 		
 	}
 	
+	/**Met a jour la VueZoneGeographique
+	 * @return : int
+	 */
 	public int MAJVueZoneGeographique () {
 		creerVueTournee();
 		changerCouleur(zoneGeo.getTournee().getEntrepot());
 		return 0;
      }
 	
+	/**Met a jour la VueEtape
+	 * @param n : id du noeud clique
+	 */
 	public void MAJVueEtape(Noeud n){
 		this.vueTournee.MAJVueEtape(n);
 	}
 	
+	/**Modifie les couleurs des noeuds et troncon
+	 * @param n : id de l'entrepot
+	 */
 	public void changerCouleur(int n){
 		plan.changerCouleur(n);
 	}

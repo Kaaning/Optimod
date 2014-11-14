@@ -26,13 +26,16 @@ import bibliothequesTiers.ExampleFileFilter;
 
 
 
+/**
+ * @author H4303 - 2014
+ */
 public class Accueil{
 	private Controleur ctrl;
 	private VueZoneGeo vueZoneGeo;
 	private JFrame cadre;
-	private JButton chargerLivraison = new JButton("Charger une demande de livraison");
-	private JButton chargerPlan = new JButton("Charger un plan");
-	private JButton calculerItineraire = new JButton("Calculer l'itinéraire");
+	private JButton chargerLivraison;
+	private JButton chargerPlan;
+	private JButton calculerItineraire;
 	private JPanel south = new JPanel();
 	private JPanel center = new JPanel();
 	private JPanel west = new JPanel();
@@ -44,10 +47,9 @@ public class Accueil{
 	private JLabel message = new JLabel();
 	private JPanel pPlan = new JPanel();
 	
-	public void message(String mess){
-		message.setText(mess);
-	}
-	
+	/**Constructeur de la fenetre principale
+	 * @param controleur : lien vers le controleur
+	 */
 	public Accueil(Controleur controleur){
 		ctrl = controleur;
 		cadre = new JFrame();
@@ -66,44 +68,12 @@ public class Accueil{
 		vueZoneGeo = new VueZoneGeo(1100,500);
 		pPlan.setLayout(null);
 		
-		// Impossible d'appuyer sur ces boutons au départ
+		// Initialisation des boutons
+		chargerPlan = creerBouton("Charger un plan");
+		chargerLivraison = creerBouton("Charger des livraisons");
 		chargerLivraison.setEnabled(false);
+		calculerItineraire = creerBouton("Calculer itinéraire");
 		calculerItineraire.setEnabled(false);
-		
-		/*chargerLivraison.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				String chemin="";
-				JFileChooser fc = new JFileChooser();
-				fc.setDialogTitle("Charger une livraison");
-				fc.addChoosableFileFilter(new FileNameExtensionFilter("Fichier .xml", "xml", "XML"));
-				int retval = fc.showOpenDialog(null);
-				if (retval == JFileChooser.APPROVE_OPTION) {
-					ExampleFileFilter filtre = new ExampleFileFilter("xml");
-					if (filtre.accept(fc.getSelectedFile())) {
-						chemin = fc.getSelectedFile().getAbsolutePath();
-						chemin = chemin.replace("\\", "/");
-						
-						ctrl.chargerLivraison(chemin);
-						MAJModele();
-						
-						Vector<String> livraisons = new Vector<String>();
-						ddl = zoneGeo.getTournee();
-						for(int i = 0 ; i<ddl.getPlages().size();i++){
-							PlageHoraire ph = ddl.getPlages().get(i); 
-							for(int j = 0 ; j<ph.getLivraisons().size() ; j++){
-								Livraison l = ph.getLivraisons().get(j);
-								(listModel).addElement("Livraison n°"+l.getId()+" chez "+l.getClient() + " à l'adresse "+l.getNoeud());
-							}
-						}
-						//						geo.changerCouleur(ddl.getEntrepot());
-						//						geo.repaint();
-					} else {
-						JOptionPane.showMessageDialog(cadre, "Format non pris en compte !", "Erreur !", JOptionPane.ERROR_MESSAGE);
-					}
-				}
-				calculerItineraire.setEnabled(true);
-			}
-		});*/
 		
 		chargerPlan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -144,6 +114,7 @@ public class Accueil{
 		
 
 		//SOUTH ----------------------------
+		chargerPlan.setPreferredSize(new Dimension(200,10));
 		south.setLayout(new BoxLayout(south, BoxLayout.LINE_AXIS));
 		south.add(Box.createHorizontalGlue());
 		south.add(chargerPlan);
@@ -167,8 +138,23 @@ public class Accueil{
 		cadre.setVisible(true);
 		
 	}
+	
+	/**Cree un JButton correctement formate
+	 * @param nom : texte affiche sur le bouton
+	 * @return JButton
+	 */
+	public JButton creerBouton(String nom){
+		JButton bouton = new JButton("Charger des livraisons");
+		bouton.setPreferredSize(new Dimension(150,30));
+		return bouton;
+	}
 
 	
+	/**Cree une VueZoneGeographique
+	 * @param largeur
+	 * @param hauteur
+	 * @param zoneGeographique : lien vers le modele
+	 */
 	public void creerVueZoneGeographique(int largeur, int hauteur, ZoneGeographique zoneGeographique) {
 		center.remove(vueZoneGeo);
 		this.vueZoneGeo = new VueZoneGeo(1100, 500, zoneGeographique, ctrl);
@@ -178,23 +164,38 @@ public class Accueil{
 		System.out.println(zoneGeographique.getNoeuds().size());
 	}
 	
+	/**Cree une VueTournee
+	 * @param tournee : lien vers le modele
+	 */
 	public void creerVueTournee (Tournee tournee) {
 		this.vueZoneGeo.creerVueTournee();
 	}
 	
+	/**Ouvre une pop-up contenant un message d'erreur
+	 * @param erreur : message a afficher
+	 */
 	public void afficherMessageErreur(String erreur){
 		JOptionPane.showMessageDialog(cadre, erreur, "", JOptionPane.ERROR_MESSAGE);
 	}
 	
+	/**Modifie le texte du haut de la fenetre
+	 * @param message : message a afficher
+	 */
 	public void afficherMessage(String message){
 		this.message.setText(message);
 		this.message.setFont(new Font("Serif", Font.PLAIN, 16));
 	}
 
+	/**Met a jour la VueZoneGeographique
+	 * 
+	 */
 	public void MAJVueZoneGeographique() {
 		vueZoneGeo.MAJVueZoneGeographique();
 	}
 	
+	/**Met a jour la VueEtape
+	 * @param n : noeud clique
+	 */
 	public void MAJVueEtape(Noeud n){
 		vueZoneGeo.MAJVueEtape(n);
 	}

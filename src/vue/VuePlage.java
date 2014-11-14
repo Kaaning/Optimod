@@ -19,6 +19,9 @@ import modele.Tournee;
 import modele.ZoneGeographique;
 import controleur.Controleur;
 
+/**
+ * @author H4303 - 2014
+ */
 public class VuePlage extends JPanel{
 	private Controleur ctrl;
 	private ZoneGeographique zoneGeo;
@@ -27,6 +30,10 @@ public class VuePlage extends JPanel{
 	private List<VueLivraison> vueLs = new ArrayList<VueLivraison>();
 	private JLabel plageDisplay = new JLabel();
 
+	/**Constructeur de VuePlage
+	 * @param controleur : lien vers le controleur
+	 * @param plage : lien vers le modele
+	 */
 	public VuePlage(Controleur controleur, PlageHoraire plage){
 		ctrl = controleur;
 		Box box = Box.createVerticalBox();
@@ -45,6 +52,10 @@ public class VuePlage extends JPanel{
 		
 	}
 	
+	/**Renvoie une description de la plageHoraire
+	 * @param d : Date
+	 * @return String
+	 */
 	private String DisplayH(Date d){
 		String heure = String.valueOf(d.getHours());
 		String minute = String.valueOf(d.getMinutes());
