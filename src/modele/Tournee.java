@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.jdom2.*;
@@ -18,9 +17,6 @@ import org.xml.sax.SAXException;
 import bibliothequesTiers.XMLValidateur;
 
 
-/**
- * @author H4303 - 2014
- */
 public class Tournee {
 	
 	private int entrepot;
@@ -28,69 +24,75 @@ public class Tournee {
 	private ZoneGeographique zg;
 	private int erreur;
 	
-	/**Constructeur de Tournee
-	 * @param nomFic : nom du fichier contenant les livraisons a charger
-	 * @param unZg : ZoneGeographique contenant les noeuds et troncons correspondants
-	 * @throws ParseException
-	 */
-	public Tournee(String nomFic, ZoneGeographique unZg) throws ParseException{
-		this.zg = unZg;
-		plages = new ArrayList<PlageHoraire>();
-		
-		//try{
-		Element JourneeType = getRacine(nomFic);
-		
-		//récupération de l'adresse de l'entrepot
-		entrepot = Integer.parseInt(JourneeType.getChild("Entrepot").getAttributeValue("adresse"));
-		
-		//récupération de la liste des plages horaire
-		List<Element> listPlage = JourneeType.getChildren("PlagesHoraires").get(0).getChildren("Plage");
-		
-		
-	    Iterator<Element> i = listPlage.iterator();
-	    //On parcours la liste grâce à un iterator
-	     while(i.hasNext())
-	     {
-	        Element currentPlage = (Element)i.next();
-	        String heureD = currentPlage.getAttributeValue("heureDebut");
-	        String heureF = currentPlage.getAttributeValue("heureFin");
-	        
-	        SimpleDateFormat formatter = new SimpleDateFormat("hh:mm:ss");
-	        Date hd = formatter.parse(heureD);
-	        Date hf = formatter.parse(heureF);			        
-	        
-	        PlageHoraire plageHoraire = new PlageHoraire(hd, hf); 
-	        plages.add(plageHoraire);
-	        
-	        List<Element> listeLivraisons = currentPlage.getChildren("Livraisons").get(0).getChildren("Livraison");
-	        Iterator<Element> j = listeLivraisons.iterator();
-	        
-	        while(j.hasNext())
-	        {
-	        	Element currentLivraison = (Element)j.next();
-	        	int id = Integer.parseInt(currentLivraison.getAttributeValue("id"));
-	        	int client = Integer.parseInt(currentLivraison.getAttributeValue("client"));
-	        	int adresse = Integer.parseInt(currentLivraison.getAttributeValue("adresse"));
-	        	Noeud noeud = zg.getNoeudById(adresse);
-	        	if(noeud!=null){
-	        		plageHoraire.ajouterLivraison(id, client, noeud);
-	        	}
-	        	
-	        }
-	        
-	      }
-		//}
-		//catch(Exception e){
-		//}
-		
-	}
-
-	/**Supprime une livraison de la tournee
-	 * @param adresse : Noeud correspondant
-	 */
-
+	private int lireFichierXML(String nomFic, ZoneGeographique unZg) {
+		int erreur = 0;
+		try {
+			if (XMLValidateur.validerXML(nomFic, "res\\livraison.xsd")) {
+				plages = new ArrayList<PlageHoraire>();
+				
+				Element JourneeType = getRacine(nomFic);
+				
+				//récupération de l'adresse de l'entrepot
+				entrepot = Integer.parseInt(JourneeType.getChild("Entrepot").getAttributeValue("adresse"));
+				
+				//récupération de la liste des plages horaire
+				List<Element> listPlage = JourneeType.getChildren("PlagesHoraires").get(0).getChildren("Plage");
+				
+			    Iterator<Element> i = listPlage.iterator();
 	
-
+			    //On parcours la liste grâce à un iterator
+			     while(i.hasNext())
+			     {
+			        Element currentPlage = (Element)i.next();
+			        String heureD = currentPlage.getAttributeValue("heureDebut");
+			        String heureF = currentPlage.getAttributeValue("heureFin");
+			        
+			        SimpleDateFormat formatter = new SimpleDateFormat("hh:mm:ss");
+			        Date hd;
+					
+					hd = formatter.parse(heureD);
+					Date hf = formatter.parse(heureF);
+			        PlageHoraire plageHoraire = new PlageHoraire(hd, hf); 
+			        plages.add(plageHoraire);
+			        
+			        List<Element> listeLivraisons = currentPlage.getChildren("Livraisons").get(0).getChildren("Livraison");
+			        Iterator<Element> j = listeLivraisons.iterator();
+			        
+			        while(j.hasNext())
+			        {
+			        	Element currentLivraison = (Element)j.next();
+			        	if (Integer.parseInt(currentLivraison.getAttributeValue("id")) < 0 || Integer.parseInt(currentLivraison.getAttributeValue("adresse")) < 0) {
+			        		erreur = 1;
+			        	} else {
+				        	int id = Integer.parseInt(currentLivraison.getAttributeValue("id"));
+				        	int client = Integer.parseInt(currentLivraison.getAttributeValue("client"));
+				        	int adresse = Integer.parseInt(currentLivraison.getAttributeValue("adresse"));
+				        	Noeud noeud = new Noeud();
+				        	noeud = unZg.getNoeudById(adresse);
+				        	if(noeud!=null){
+					        	plageHoraire.ajouterLivraison(id, client, noeud);
+				        	}
+			        	}
+			        }
+			        
+			      }
+				} else {
+					erreur = -1;
+				}
+			} catch (NullPointerException | ParseException | NumberFormatException | SAXException | IOException | ParserConfigurationException e) {
+				System.out.println(e.getMessage());
+				erreur = 2;
+			}
+	     return erreur;
+	}
+	
+	public Tournee(String nomFic, ZoneGeographique unZg) {
+		this.erreur = lireFichierXML(nomFic, unZg);
+	}
+	
+	public int getErreur() {
+		return this.erreur;
+	}
 	public void supprimerLivraison(Noeud adresse){
 		Iterator<PlageHoraire> i = plages.iterator();
 		
@@ -108,10 +110,6 @@ public class Tournee {
 		}
 	}
 	
-	/**
-	 * @param nomFic
-	 * @return
-	 */
 	private static Element getRacine(String nomFic){
 		
 		org.jdom2.Document document = new Document();
