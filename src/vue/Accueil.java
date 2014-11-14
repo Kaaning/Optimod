@@ -7,6 +7,11 @@ import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -18,6 +23,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import sun.org.mozilla.javascript.internal.regexp.SubString;
 import modele.Noeud;
 import modele.Tournee;
 import modele.ZoneGeographique;
@@ -36,6 +42,9 @@ public class Accueil{
 	private JButton chargerLivraison;
 	private JButton chargerPlan;
 	private JButton calculerItineraire;
+	private JButton annuler;
+	private JButton refaire;
+	private JButton exporter;
 	private JPanel south = new JPanel();
 	private JPanel center = new JPanel();
 	private JPanel west = new JPanel();
@@ -57,7 +66,6 @@ public class Accueil{
 		cadre.setSize(largeur, hauteur);
 		cadre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		cadre.setLocationRelativeTo(null);
-		
 		cadre.setLayout(new BorderLayout());
 		cadre.getContentPane().add(south, BorderLayout.SOUTH);
 		cadre.getContentPane().add(north, BorderLayout.NORTH);
@@ -69,11 +77,48 @@ public class Accueil{
 		pPlan.setLayout(null);
 		
 		// Initialisation des boutons
-		chargerPlan = creerBouton("Charger un plan");
-		chargerLivraison = creerBouton("Charger des livraisons");
+		chargerPlan = creerBouton("Charger un plan", 180);
+		chargerLivraison = creerBouton("Charger des livraisons", 180);
 		chargerLivraison.setEnabled(false);
-		calculerItineraire = creerBouton("Calculer itinéraire");
+		calculerItineraire = creerBouton("Calculer itinéraire", 180);
 		calculerItineraire.setEnabled(false);
+		annuler = creerBouton("Annuler", 100);
+		annuler.setEnabled(false);
+		refaire = creerBouton("Refaire", 100);
+		refaire.setEnabled(false);
+		exporter = creerBouton("Exporter", 100);
+//		exporter.setEnabled(false);
+		
+		//SOUTH ----------------------------
+		south.setLayout(new BoxLayout(south, BoxLayout.LINE_AXIS));
+		south.add(Box.createRigidArea(new Dimension(30,0)));
+		south.add(chargerPlan);
+		south.add(Box.createRigidArea(new Dimension(30,0)));
+		south.add(chargerLivraison);
+		south.add(Box.createRigidArea(new Dimension(30,0)));
+		south.add(calculerItineraire);
+		south.add(Box.createHorizontalGlue());
+		south.add(annuler);
+		south.add(Box.createRigidArea(new Dimension(30,0)));
+		south.add(refaire);
+		south.add(Box.createRigidArea(new Dimension(30,0)));
+		south.add(exporter);
+		south.add(Box.createRigidArea(new Dimension(30,0)));
+
+		//NORTH ----------------------------
+		north.setLayout(new BoxLayout(north, BoxLayout.LINE_AXIS));
+		north.add(Box.createHorizontalGlue());
+		north.add(message);
+		north.add(Box.createHorizontalGlue());
+
+		//CENTER ----------------------------
+		center.setLayout(null);
+		center.add(vueZoneGeo);
+
+		cadre.setVisible(true);
+		
+		//Ecouteurs -------------------------
+
 		
 		chargerPlan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -111,41 +156,64 @@ public class Accueil{
 		                ctrl.chargerLivraison(chemin);
 			  }
 		});
-		
 
-		//SOUTH ----------------------------
-		chargerPlan.setPreferredSize(new Dimension(200,10));
-		south.setLayout(new BoxLayout(south, BoxLayout.LINE_AXIS));
-		south.add(Box.createHorizontalGlue());
-		south.add(chargerPlan);
-		south.add(Box.createRigidArea(new Dimension(30,0)));
-		south.add(chargerLivraison);
-		south.add(Box.createRigidArea(new Dimension(30,0)));
-		south.add(calculerItineraire);
-		south.add(Box.createHorizontalGlue());
-		
-		//NORTH ----------------------------
-		north.setLayout(new BoxLayout(north, BoxLayout.LINE_AXIS));
-		north.add(Box.createHorizontalGlue());
-		north.add(message);
-		north.add(Box.createHorizontalGlue());
-		
-		//CENTER ----------------------------
-		center.setLayout(null);
-		center.add(vueZoneGeo);
+		annuler.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
 				
-
-		cadre.setVisible(true);
+				
+			}
+		});
 		
+		refaire.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				
+				
+			}
+		});
+		
+		exporter.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				String texte = ctrl.exporterTournee();
+				JFileChooser fc = new JFileChooser();
+				fc.setDialogTitle("Enregistrer la feuille de route");
+				FileNameExtensionFilter ff = new FileNameExtensionFilter("Fichier texte (.txt)", "txt", "TXT");
+				fc.addChoosableFileFilter(ff);
+				fc.setFileFilter(ff);
+				if (fc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+					ExampleFileFilter filtre = new ExampleFileFilter("txt");
+					File file = fc.getSelectedFile();
+					if(filtre.accept(file)){}
+					else if(file.getName().contains(".")){
+						String newName = file.getName().replace(file.getName().substring(file.getName().indexOf(".")+1), "txt");
+						file = new File(file.getParent()+"\\"+newName);
+						JOptionPane.showMessageDialog(cadre, "L'extension a été remplacée par \".txt\"", "Attention", JOptionPane.WARNING_MESSAGE);
+					}
+					else{
+						String newName = file.getName()+".txt";
+						file = new File(file.getParent()+"\\"+newName);
+					}
+					try{
+						PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(file)));
+						pw.print(texte);
+						pw.close();
+					}catch(IOException e){
+						JOptionPane.showMessageDialog(null,"Erreur lors de l'écriture : "+e.getMessage());
+					}
+					
+				}
+			}
+		});
+		
+	
 	}
 	
 	/**Cree un JButton correctement formate
 	 * @param nom : texte affiche sur le bouton
 	 * @return JButton
 	 */
-	public JButton creerBouton(String nom){
-		JButton bouton = new JButton("Charger des livraisons");
-		bouton.setPreferredSize(new Dimension(150,30));
+	public JButton creerBouton(String nom, int taille){
+		JButton bouton = new JButton(nom);
+		bouton.setPreferredSize(new Dimension(taille,30));
 		return bouton;
 	}
 

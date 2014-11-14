@@ -121,6 +121,15 @@ public class Controleur {
 		return this.modelZoneGeographique;
 	}
 	
+	public String exporterTournee(){
+		String texte = "Bonjour William\n";
+		for(int i=2; i<101; i++){
+			texte+="Ceci est la "+i+"eme ligne.\n";
+		}
+		texte+="Au revoir !";
+		return texte;
+	}
+	
 	public static void main(String[] args) throws ParseException{
 		 	
 		 Controleur controler = new Controleur();
