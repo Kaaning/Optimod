@@ -6,10 +6,6 @@ import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
-
-
 import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,6 +18,9 @@ import modele.Tournee;
 import modele.ZoneGeographique;
 import controleur.Controleur;
 
+/**
+ * @author H4303 - 2014
+ */
 public class VueTournee extends JPanel{
 
 	private Controleur ctrl;
@@ -32,6 +31,10 @@ public class VueTournee extends JPanel{
 	private VueEtape pEtape;
 	
 	
+	/**Constructeur de VueTournee
+	 * @param tournee : lien vers le modele
+	 * @param ctrl : lien vers le controleur
+	 */
 	public VueTournee (Tournee tournee, Controleur ctrl) {
     	// Creation d'un panneau pour dessiner les boules
 		this.ctrl = ctrl;
@@ -77,10 +80,16 @@ public class VueTournee extends JPanel{
 	}
 
 
+	/**Appelle la methode d'affichage d'une livraison
+	 * @param l : livraison a afficher
+	 */
 	public void DisplayLivraison(Livraison l){
 		pEtape.DisplayLivraison(l);
 	}
 	
+	/**Met a jour la VueEtape
+	 * @param n : Noeud clique
+	 */
 	public void MAJVueEtape(Noeud n) {
 		pEtape.DisplayNoeud(n);
 		for (Livraison l : tournee.getLivraison()){

@@ -7,6 +7,9 @@ import modele.ZoneGeographique;
 import vue.Accueil;
 
 
+/**
+ * @author H4303 - 2014
+ */
 public class Controleur {
 	
 
@@ -15,7 +18,10 @@ public class Controleur {
 	 private Accueil viewAccueil;
 	 private ZoneGeographique modelZoneGeographique;
 	  
-	 public Controleur() {
+	 /**
+	 * Constructeur de Controleur
+	 */
+	public Controleur() {
 		
 		this.invoker = new Invoker();
 		this.viewAccueil = new Accueil(this);
@@ -23,6 +29,10 @@ public class Controleur {
 		 
 	}
 	 
+	/**Charge un fichier contenant des livraisons
+	 * @param chemin : chemin vers le fichier
+	 * @return int
+	 */
 	public int chargerLivraison (String chemin ) {
 				try {
 					this.modelZoneGeographique.chargerLivraison(chemin);
@@ -34,6 +44,9 @@ public class Controleur {
 					return 1;
 				}	
 	}
+	/**Charger un fichier contenant les noeuds et troncons
+	 * @param nomFic : nom du fichier
+	 */
 	public void ChargerZoneGeo (String nomFic) {
 		this.modelZoneGeographique = new ZoneGeographique();
 		int res = modelZoneGeographique.lirePlanXML(nomFic);
@@ -53,6 +66,9 @@ public class Controleur {
 		}
 	}
 	
+	/**Ajoute une livraison
+	 * @return int : eventuel code d'erreur
+	 */
 	public int AjouterLivraison () {
 		ConcreteCommandAjouterLivraison command = new ConcreteCommandAjouterLivraison();
 		command.execute();
@@ -60,6 +76,9 @@ public class Controleur {
 		this.viewAccueil.MAJVueZoneGeographique();
 		return 0;
 	}
+	/**Supprime une livraison
+	 * @return int : eventuel code d'erreur
+	 */
 	public int SupprimerLivraison() {
 		ConcreteCommandSupprimerLivraison command = new ConcreteCommandSupprimerLivraison(modelZoneGeographique , 0);
 		command.execute();
@@ -67,22 +86,37 @@ public class Controleur {
 		this.viewAccueil.MAJVueZoneGeographique();
 		return 0;
 	}
+	/**Annule la dernière commande
+	 * @return
+	 */
 	public int undo(){
 		int retour = invoker.undo();
 		this.viewAccueil.MAJVueZoneGeographique();
 		return retour;
 	}
+	/**Refais la dernière commande annule
+	 * @return
+	 */
 	public int redo(){
 		return this.invoker.redo();
 	}
+	/**Calcule l'itineraire
+	 * @return int : eventuel code d'erreur
+	 */
 	public int CalculerItineraire () {
 		return this.modelZoneGeographique.calculerItineraire();
 	}
 	
+	/**Affiche les infos de la livraison cliquee
+	 * @param n : Noeud clique
+	 */
 	public void infoLivraison(Noeud n){
 		viewAccueil.MAJVueEtape(n);
 	}
 	
+	/**Renvoie le modele ZoneGeoGraphique
+	 * @return ZoneGeographique
+	 */
 	public ZoneGeographique getModelZoneGeographique() {
 		return this.modelZoneGeographique;
 	}

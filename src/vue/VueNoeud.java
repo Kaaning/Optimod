@@ -15,6 +15,10 @@ import javax.swing.JComponent;
 import controleur.Controleur;
 import modele.Noeud;
 
+/**
+ * @author H4303 - 2014
+ *
+ */
 public class VueNoeud extends JComponent implements MouseListener{
 	
 	private Color couleur;
@@ -28,6 +32,11 @@ public class VueNoeud extends JComponent implements MouseListener{
 	private Color surbrillance = new Color(93,93,93);
 	private Controleur ctrl;
 	
+	/**Constructeur de VueNoeud
+	 * @param noeud
+	 * @param echelle
+	 * @param ctrl
+	 */
 	public VueNoeud(Noeud noeud, double echelle, Controleur ctrl){
 		super();
 		this.ctrl = ctrl; 
@@ -43,14 +52,19 @@ public class VueNoeud extends JComponent implements MouseListener{
         setFocusable(true);
 	}
 	
+	/**Renvoie la coordonnee x convertie pour l'affichage
+	 * @return int
+	 */
 	public int getXVue(){
 		//Convertit le x plan en x vue
 		int xPlan = noeud.getX();
 		int xVue = (int)((xPlan-centrage)*echelle);
-//		System.out.print(xPlan+" -> "+xVue+" a "+rayonAjuste);
 		return xVue;
 	}
 	
+	/**Renvoie la coordonnee y convertie pour l'affichage
+	 * @return int
+	 */
 	public int getYVue(){
 		int yPlan = noeud.getY();
 		int yVue = (int)((yPlan-centrage)*echelle);
@@ -58,18 +72,30 @@ public class VueNoeud extends JComponent implements MouseListener{
 		return yVue;
 	}
 	
+	/**Renvoie la coordonnee x originale
+	 * @return int
+	 */
 	public int getXPlan(){
 		return noeud.getX();
 	}
 	
+	/**Renvoie la coordonnee y originale
+	 * @return int
+	 */
 	public int getYPlan(){
 		return noeud.getY();
 	}
 	
+	/**Renvoie la couleur d'affichage du noeud
+	 * @return Color
+	 */
 	public Color getCouleur(){
 		return couleur;
 	}
 	
+	/**Modifie la couleur d'affichage du noeud
+	 * @param couleur
+	 */
 	public void setCouleur(Color couleur){
 		this.couleur = couleur;
 	}
@@ -138,6 +164,9 @@ public class VueNoeud extends JComponent implements MouseListener{
         return getPreferredSize();
     }
 	
+	/**Modifie l'echelle en fonction du zoom actuel
+	 * @param echelle
+	 */
 	public void changerEchelle(double echelle){
 		this.echelle=echelle;
         rayonAjuste = (int)(rayon*echelle);
@@ -145,6 +174,9 @@ public class VueNoeud extends JComponent implements MouseListener{
         setSize(size.width, size.height);
 	}
 	
+	/**Modifie la couleur en fonction de l'etat du noeud
+	 * @param entrepot : numero d'identification de l'entrepot
+	 */
 	public void changerCouleur(int entrepot){
 		if(noeud.getId()==entrepot){
 			fond = new Color(0,91,183);

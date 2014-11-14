@@ -11,6 +11,9 @@ import modele.Tournee;
 import modele.ZoneGeographique;
 import controleur.Controleur;
 
+/**
+ * @author H4303 - 2014
+ */
 public class VueLivraison extends JPanel{
 	private Controleur ctrl;
 	private ZoneGeographique zoneGeo;
@@ -18,6 +21,10 @@ public class VueLivraison extends JPanel{
 	
 	private JLabel livraisonDisplay = new JLabel();
 	
+	/**Constructeur de VueLivraison
+	 * @param controleur : lien vers le controleur
+	 * @param l : lien vers le modele
+	 */
 	public VueLivraison(Controleur controleur, Livraison l){
 		ctrl = controleur;
 		livraisonDisplay.setText("Livraison n°"+ l.getId() +" : Noeud "+l.getNoeud().getId() + " - idClient " + l.getClient() );

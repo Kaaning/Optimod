@@ -12,12 +12,20 @@ import org.jdom2.*;
 import org.jdom2.input.SAXBuilder;
 
 
+/**
+ * @author H4303 - 2014
+ */
 public class Tournee {
 	
 	private int entrepot;
 	private List<PlageHoraire> plages; 
 	private ZoneGeographique zg;
 	
+	/**Constructeur de Tournee
+	 * @param nomFic : nom du fichier contenant les livraisons a charger
+	 * @param unZg : ZoneGeographique contenant les noeuds et troncons correspondants
+	 * @throws ParseException
+	 */
 	public Tournee(String nomFic, ZoneGeographique unZg) throws ParseException{
 		this.zg = unZg;
 		plages = new ArrayList<PlageHoraire>();
@@ -70,6 +78,9 @@ public class Tournee {
 		
 	}
 
+	/**Supprime une livraison de la tournee
+	 * @param adresse : Noeud correspondant
+	 */
 	public void supprimerLivraison(Noeud adresse){
 		Iterator<PlageHoraire> i = plages.iterator();
 		
@@ -87,6 +98,10 @@ public class Tournee {
 		}
 	}
 	
+	/**
+	 * @param nomFic
+	 * @return
+	 */
 	private static Element getRacine(String nomFic){
 		
 		org.jdom2.Document document = new Document();

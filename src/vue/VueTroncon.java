@@ -9,6 +9,9 @@ import java.awt.RenderingHints;
 import controleur.Controleur;
 import modele.Troncon;
 
+/**
+ * @author H4303 - 2014
+ */
 public class VueTroncon {
 
 	private Color couleur = new Color(123,123,123);
@@ -17,6 +20,11 @@ public class VueTroncon {
 	private Controleur ctrl;
 
 	
+	/**Constructeur de VueTroncon
+	 * @param troncon : lien vers le modele
+	 * @param echelle : echelle d'affichage en fonction du zoom actuel
+	 * @param ctrl : lien vers le controleur
+	 */
 	public VueTroncon(Troncon troncon, double echelle, Controleur ctrl){
 		super();
 		this.troncon = troncon;
@@ -24,6 +32,14 @@ public class VueTroncon {
 		this.ctrl=ctrl;
 	}
 	
+	/**Renvoie la coordonnee x convertie pour l'affichage
+	 * @param noeud : "source" ou "cible"
+	 * @return int
+	 */
+	/**
+	 * @param noeud
+	 * @return
+	 */
 	public int getXVue(String noeud){
 		int xPlan=0;
 		int xVue=0;
@@ -38,7 +54,10 @@ public class VueTroncon {
 		}
 		return xVue;
 	}
-	
+	/**Renvoie la coordonnee y convertie pour l'affichage
+	 * @param noeud : "source" ou "cible"
+	 * @return int
+	 */
 	public int getYVue(String noeud){
 		int yPlan=0;
 		int yVue=0;
@@ -52,23 +71,26 @@ public class VueTroncon {
 		}
 		return yVue;
 	}
-//	
-//	public int getXPlan(){
-//		return troncon.getX();
-//	}
-//	
-//	public int getYPlan(){
-//		return troncon.getY();
-//	}
 	
+	/**Renvoie la couleur d'affichage du troncon
+	 * @return Color
+	 */
 	public Color getCouleur(){
 		return couleur;
 	}
 	
+	/**Modifie la couleur d'affichage du troncon
+	 * @param couleur
+	 */
 	public void setCouleur(Color couleur){
 		this.couleur = couleur;
 	}
 	
+	/**Methode pour dessiner un tronçon
+	 * @param g
+	 * @param origine
+	 * @param deplacement
+	 */
 	public void dessiner(Graphics g, int[] origine, int[] deplacement){
 		// turn on anti-alias mode
         Graphics2D antiAlias = (Graphics2D)g;
@@ -80,10 +102,16 @@ public class VueTroncon {
 //		System.out.println("Troncon situé en "+getXVue("source")+","+getYVue("source"));
 	}
 	
+	/**Modifie l'echelle en fonction du zoom actuel
+	 * @param echelle
+	 */
 	public void changerEchelle(double echelle){
 		this.echelle=echelle;
 	}
 	
+	/**Modifie la couleur du tronçon en fonction du nombre de passage (0, 1 , 2 ou 3+)
+	 * 
+	 */
 	public void changerCouleur(){
 		if(troncon.getNbPassage()==1){
 			couleur = new Color(0,173,0);
