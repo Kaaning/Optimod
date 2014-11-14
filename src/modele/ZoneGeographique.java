@@ -18,8 +18,9 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.xml.sax.SAXException;
 
-import vue.Accueil;
-import bibliothequesTiers.*;
+import bibliothequesTiers.XMLValidateur;
+
+
 
 
 /**
@@ -29,29 +30,32 @@ import bibliothequesTiers.*;
  */
 
 public class ZoneGeographique {
+	
 	private List<Noeud> noeuds = new ArrayList<Noeud>(); 
 	private List<Troncon> troncons = new ArrayList<Troncon>();
+	private Tournee tournee;
+	
 	private int Xmin;
 	private int Xmax;
 	private int Ymin;
 	private int Ymax;
-	private boolean reussi = true;
 	
-	private Tournee demandes;
+	
+	
 	
 	/**
 	 * Constructeur avec parametres de l'Objet ZoneGeographique
 	 * @param nomFic String chemin relatif du fichier xml du plan a charger
-	 * @throws remonte des Exceptions reliees a  l'ouverture d'un fichier et l'utlisiation de JDOM pour parser le fichier XML
+	 * @throws remonte des Exceptions reliees a l'ouverture d'un fichier et l'utlisiation de JDOM pour parser le fichier XML
 	 */
-	public ZoneGeographique(String nomFic) throws JDOMException, IOException, ParserConfigurationException, NumberFormatException, SAXException {
-		lirePlanXML(nomFic);
-		this.Xmax = findXMax();
-	    this.Ymax = findYMax();
-		this.Xmin = findXMin();
-	    this.Ymin = findYMin();
+	public ZoneGeographique() {
+	
 	}
 	
+	public int chargerLivraison(String nomFic) {
+		this.tournee = new Tournee(nomFic,this);
+		return tournee.getErreur();
+	}
 	
 	/**
 	 * Accesseur de l'Attribut noeuds
@@ -64,7 +68,7 @@ public class ZoneGeographique {
 	
 	/**
 	 * Accesseur de l'Attribut troncons
-	 * @return List<Troncon> Liste des Objets Troncon contenus dans le plan a  charger
+	 * @return List<Troncon> Liste des Objets Troncon contenus dans le plan a charger
 	 *
 	 */
 	public List<Troncon> getTroncons() {
@@ -73,7 +77,7 @@ public class ZoneGeographique {
 	
 	/**
 	 * Accesseur de l'Attribut Xmin
-	 * @return int la valeur de l'absisse du noeud la plus petite du plan a  charger
+	 * @return int la valeur de l'absisse du noeud la plus petite du plan a charger
 	 *
 	 */
 	public int getXMin() {
@@ -82,7 +86,7 @@ public class ZoneGeographique {
 	
 	/**
 	 * Accesseur de l'Attribut Xmax
-	 * @return int la valeur de l'absisse du noeud la plus grande du plan a  charger
+	 * @return int la valeur de l'absisse du noeud la plus grande du plan a charger
 	 *
 	 */
 	public int getXMax() {
@@ -91,7 +95,7 @@ public class ZoneGeographique {
 	
 	/**
 	 * Accesseur de l'Attribut Ymin
-	 * @return int la valeur de l'ordonna©e du noeud la plus petite du plan a  charger
+	 * @return int la valeur de l'ordonnee du noeud la plus petite du plan a charger
 	 *
 	 */
 	public int getYMin() {
@@ -100,24 +104,15 @@ public class ZoneGeographique {
 	
 	/**
 	 * Accesseur de l'Attribut Ymax
-	 * @return int la valeur de l'ordonna©e du noeud la plus grande du plan a  charger
+	 * @return int la valeur de l'ordonnee du noeud la plus grande du plan a charger
 	 *
 	 */
 	public int getYMax() {
 		return Ymax;
 	}
 	
-	/**
-	 * Accesseur de l'Attribut reussi
-	 * @return boolean true si la lecture du fichier XML qui contient le plan a charger a reussi false sinon
-	 *
-	 */
-	public boolean getReussi() {
-		return reussi;
-	}
-	
-	public Tournee getDemandes() {
-		return demandes;
+	public Tournee getTournee() {
+		return tournee;
 	}
 	
 	/**
@@ -130,8 +125,8 @@ public class ZoneGeographique {
 	}
 	
 	/**
-	 * Ajoute un Objet Troncon a  l'Attribut troncons (qui repra©sente la liste des troncons du plan a  charger)
-	 * @param troncon Objet Troncon a  rajouer a  la liste 
+	 * Ajoute un Objet Troncon a l'Attribut troncons (qui represente la liste des troncons du plan a charger)
+	 * @param troncon Objet Troncon a rajouer a la liste 
 	 *
 	 */
 	public void ajouterTroncon(Troncon Troncon) {
@@ -139,78 +134,109 @@ public class ZoneGeographique {
 	}
 	
 	/**
-	 * Recherche et retourne un Objet Noeud dans la liste des noeuds du plan a  charger selon son Identifiant (Attribut Id de l'Objet Noeud)
-	 * @param id int la valeur de l'Identifiant de l'Objet Noeud a  rechercher
-	 * @return Noeud dont l'Identifiant est a©gal au parama¨tre id passa© en parama¨tre 
+	 * Recherche et retourne un Objet Noeud dans la liste des noeuds du plan a charger selon son Identifiant (Attribut Id de l'Objet Noeud)
+	 * Modifie l'etat du Noeud trouve: il le met a 0 pour indiquer que le noeud a ete pris en compte lors du calcul de la tournee
+	 * @param id int la valeur de l'Identifiant de l'Objet Noeud a rechercher
+	 * @return Noeud dont l'Identifiant est egal au parametre id passe en parametre 
 	 *
 	 */
-	public Noeud findNoeudById(int id) {
-		for (int i=0; i<this.noeuds.size(); i++) {
-			if (this.noeuds.get(i).getId() == id) {
-				return this.noeuds.get(i);
+	public Noeud getNoeudById(int id) {
+		for (Noeud n : noeuds) {
+			if (n.getId()==id) {
+				n.setEtat(0);
+				return n;
 			}
 		}
 		return null;
 	}
 	
 	/**
-	 * Methode privee appelee dans le constructeur
-	 * lit le fichier XML dans le chemin est passe en parametre, utilise la librairie JDOM pour parser le fichier XML
-	 * remplit les listes noeuds et troncons
-	 * @param nomFic String chemin relatif du fichier xml du plan a charger
+	 * Recherche et retourne un Objet Noeud dans la liste des noeuds du plan a charger selon son Identifiant (Attribut Id de l'Objet Noeud)
+	 * @param id int la valeur de l'Identifiant de l'Objet Noeud a rechercher
+	 * @return Noeud dont l'Identifiant est egal au parametre id passe en parametre 
 	 *
 	 */
-	private void lirePlanXML(String nomFic) throws JDOMException, IOException, ParserConfigurationException, SAXException {
-		
-		try {
-			XMLValidateur.validerXML(nomFic, "res\\plan.xsd");
-		} catch (SAXException | IOException | ParserConfigurationException e1) {
-			System.out.println(e1.getMessage());
-			this.reussi = false;
+	public Noeud findNoeudById(int id) {
+		for (Noeud n : noeuds) {
+			if (n.getId()==id) {
+				return n;
+			}
 		}
-		
-		SAXBuilder sxb = new SAXBuilder();
-		Document document = null;
-		Element racine;			
-		
+		return null;
+	}
+	
+	/**
+	 * Methode publique appelee dans le constructeur
+	 * lit le fichier XML dans le chemin est passe en parametre, utilise la librairie JDOM pour parser le fichier XML apres verification par le validateur de fichier XML de la methode XMLValidateur.validerXML(fichierXML, fichierXSD)
+	 * remplit les listes noeuds et troncons
+	 * @param nomFic String chemin relatif du fichier xml du plan a charger
+	 * @return int la valeur de l'erreur retournee par la methode lirePlanXML de la classe ZoneGeographique du modele
+	 * @return 0 si le chargement du fichier XML se deroule bien
+	 * @return 1 s'il y une erreur de conversion d'un des attributs d'un troncon (vitesse<0, longueur<0 ou id<0)
+	 * @return -1 si le fichier n'est pas valide
+	 * @return 2 si une autre erreur lors de chargement du fichier XML se produit (pas de droit etc)
+	 *
+	 */
+	public int lirePlanXML(String nomFic) {
+		int erreur = 0;
 		try {
-			document = sxb.build(new File(nomFic));
-		} catch (JDOMException | IOException e) {
+			if (XMLValidateur.validerXML(nomFic, "res\\plan.xsd")) {
+				SAXBuilder sxb = new SAXBuilder();
+				Document document = null;
+				Element racine;
+
+				document = sxb.build(new File(nomFic));
+
+				racine = document.getRootElement();
+				List<Element> listeNoeuds= new ArrayList<Element>();
+				listeNoeuds = racine.getChildren("Noeud");
+
+				Iterator<Element> i = listeNoeuds.iterator();
+
+				while(i.hasNext())
+				{
+					Element courant = (Element)i.next();
+					Noeud noeud = new Noeud(Integer.parseInt(courant.getAttributeValue("id")), Integer.parseInt(courant.getAttributeValue("x")) ,Integer.parseInt(courant.getAttributeValue("y")));
+					ajouterNoeud(noeud);
+				}
+
+				for (int cpt=0; cpt<listeNoeuds.size(); cpt++) {
+					List<Element> listeTroncons = new ArrayList<Element>();
+					listeTroncons = listeNoeuds.get(cpt).getChildren("LeTronconSortant");
+					Iterator<Element> it = listeTroncons.iterator();
+					while(it.hasNext())
+					{
+						Element tronconCourant = (Element)it.next();
+						if (Double.parseDouble(tronconCourant.getAttributeValue("vitesse").replace(',', '.')) < 0 || Double.parseDouble(tronconCourant.getAttributeValue("longueur").replace(',', '.')) < 0 || Integer.parseInt(listeNoeuds.get(cpt).getAttributeValue("x")) < 0 || Integer.parseInt(listeNoeuds.get(cpt).getAttributeValue("y")) < 0) {
+							erreur = 1;
+						} else {
+							Troncon troncon = new Troncon(tronconCourant.getAttributeValue("nomRue"), Double.parseDouble(tronconCourant.getAttributeValue("longueur").replace(',', '.'))/Double.parseDouble(tronconCourant.getAttributeValue("vitesse").replace(',', '.')), Double.parseDouble(tronconCourant.getAttributeValue("longueur").replace(',', '.')));
+							troncon.setCible(this.findNoeudById(Integer.parseInt(tronconCourant.getAttributeValue("idNoeudDestination"))));
+							troncon.setSource(this.findNoeudById(Integer.parseInt(listeNoeuds.get(cpt).getAttributeValue("id"))));
+							this.findNoeudById(Integer.parseInt(listeNoeuds.get(cpt).getAttributeValue("id"))).ajouterTronconSortant(troncon);
+							this.findNoeudById(Integer.parseInt(tronconCourant.getAttributeValue("idNoeudDestination"))).ajouterTronconEntrant(troncon);
+							ajouterTroncon(troncon);
+						}
+					}
+				}
+				this.Xmax = findXMax();
+				this.Ymax = findYMax();
+				this.Xmin = findXMin();
+				this.Ymin = findYMin();
+			} else {
+				erreur = -1;
+			}
+		} catch (NullPointerException | NumberFormatException | SAXException | IOException| ParserConfigurationException | JDOMException e) {
 			System.out.println(e.getMessage());
-			this.reussi = false;
+			if (erreur == 1) {
+				erreur = 1;
+			} else {
+				erreur = 2;
+			}
+
 		}
-	   
-		racine = document.getRootElement();
-	    List<Element> listeNoeuds= new ArrayList<Element>();
-	    listeNoeuds = racine.getChildren("Noeud");
-	    
-	    Iterator<Element> i = listeNoeuds.iterator();
-	    
-	    while(i.hasNext())
-	    {
-	       Element courant = (Element)i.next();
-	       Noeud noeud = new Noeud(Integer.parseInt(courant.getAttributeValue("id")), Integer.parseInt(courant.getAttributeValue("x")) ,Integer.parseInt(courant.getAttributeValue("y")));  
-	       ajouterNoeud(noeud);
-	    }
-	    
-	    for (int cpt=0; cpt<listeNoeuds.size(); cpt++) {
-	    	List<Element> listeTroncons = new ArrayList<Element>();
-	    	listeTroncons = listeNoeuds.get(cpt).getChildren("LeTronconSortant");
-	    	Iterator<Element> it = listeTroncons.iterator();
-		    while(it.hasNext())
-			{
-		       Element tronconCourant = (Element)it.next();
-		       if (Double.parseDouble(tronconCourant.getAttributeValue("vitesse").replace(',', '.')) < 0 || Double.parseDouble(tronconCourant.getAttributeValue("longueur").replace(',', '.')) < 0 || Integer.parseInt(listeNoeuds.get(cpt).getAttributeValue("x")) < 0 || Integer.parseInt(listeNoeuds.get(cpt).getAttributeValue("y")) < 0) {
-		    	   this.reussi = false;
-		       }
-	    	   Troncon troncon = new Troncon(tronconCourant.getAttributeValue("nomRue"), Double.parseDouble(tronconCourant.getAttributeValue("longueur").replace(',', '.'))/Double.parseDouble(tronconCourant.getAttributeValue("vitesse").replace(',', '.')), Double.parseDouble(tronconCourant.getAttributeValue("longueur").replace(',', '.')));
-	    	   troncon.setCible(this.findNoeudById(Integer.parseInt(tronconCourant.getAttributeValue("idNoeudDestination"))));
-	    	   troncon.setSource(this.findNoeudById(Integer.parseInt(listeNoeuds.get(cpt).getAttributeValue("id"))));
-	    	   this.findNoeudById(Integer.parseInt(listeNoeuds.get(cpt).getAttributeValue("id"))).ajouterTronconSortant(troncon);
-	    	   this.findNoeudById(Integer.parseInt(tronconCourant.getAttributeValue("idNoeudDestination"))).ajouterTronconEntrant(troncon);
-	    	   ajouterTroncon(troncon);
-		    }	
-	    }
+		System.out.println("erreur :" + erreur);
+		return erreur;
 	}
 	
 	/**
@@ -263,8 +289,8 @@ public class ZoneGeographique {
 	
 	/**
 	 * Methode privee appelee dans le constructeur
-	 * recherche la plus petite ordonna©e des noeuds du plan a charger
-	 * @return int la valeur de la plus petite ordonna©e des noeuds a charger 
+	 * recherche la plus petite ordonnee des noeuds du plan a charger
+	 * @return int la valeur de la plus petite ordonnee des noeuds a charger 
 	 *
 	 */
 	private int findYMin() {
@@ -278,34 +304,33 @@ public class ZoneGeographique {
 	}
 	
 	/**
-	 * Methode qui verifie si le noeud dont l'Id est passe en parametre a ete visitae dans la tournee ou pas
-	 * @param id int Id du noeud a verifier
+	 * Methode qui verifie si le noeud dont l'Id est passe en parametre a ete visitee dans la tournee ou pas
+	 * @param id int Id du noeud à verifier
 	 * @return boolean true si le noeud passe en parametre a ete visite false sinon 
 	 *
 	 */
 	public boolean verifierNoeud(int id) {
 		for (Noeud n : noeuds) {
 			if (n.getId()==id) {
-				n.setEtat(0);
 				return true;
 			}
 		}
 		return false;
 	}
 	
-	/**
-	 * Construit une tournee et l'affecte à l'Attribut demandes de l'Objet ZoneGeographique
-	 * @param nomFic String nom du fichier XML qui contient la liste des livraisons a charger 
-	 *
-	 */
-	public void chargerLivraison(String nomFic) throws ParseException{
-		demandes = new Tournee(nomFic,this);
+	
+	public int calculerItineraire() {
+		return 0;
+	}
+
+	public int supprimerLivraison(Livraison supprime) {
+		return 0;
+		// TODO Auto-generated method stub
 	}
 	
-	//Cree un objet de type Acceuil du package vue qui represente la vue principale de l'application
-	public static void main(String[] args) throws ParseException, JDOMException, IOException {
-		//j.creerZoneGeographique("fic/plan10x10.xml");
-		//j.chargerLivraison("fic/livraison20x20-2.xml");
-		Accueil a = new Accueil();	
+	public int ajouterLivraison (Livraison aAjouter , Livraison precedente) {
+		// mettre le bon appel et la bonne signature
+		return 0;
 	}
+	
 }

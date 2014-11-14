@@ -8,8 +8,7 @@ import java.util.List;
 
 /**
  * Classe de Gestion des Noeuds
- * @author MohamedRiadh
- *
+ * @author H4303-2014
  */
 public class Noeud {
 	private int id;
@@ -20,16 +19,16 @@ public class Noeud {
 	private int etat=-1;
 	
 	/**
-	 * Constructeur sans paramÃ¨tres de l'Objet Noeud
+	 * Constructeur sans parametres de l'Objet Noeud
 	 */
 	public Noeud() {
 	}
 	
 	/**
-	 * Constructeur avec paramÃ¨tres de l'Objet Noeud
-	 * @param unId l'ID du Noeud Ã  construire et ses coordonnÃ©es X et Y dans le plan
-	 * @param unX l'absisse X du Noeud dans le plan
-	 * @param unY l'oordonnÃ©e Y du Noeud dans le plan
+	 * Constructeur avec parametres de l'Objet Noeud
+	 * @param unId : l'ID du Noeud a construire et ses coordonnees X et Y dans le plan
+	 * @param unX : l'absisse X du Noeud dans le plan
+	 * @param unY : l'oordonnee Y du Noeud dans le plan
 	 */
 	public Noeud(int unId, int unX, int unY) {
 		id = unId;
@@ -38,17 +37,16 @@ public class Noeud {
 	}
 	
 	/**
-	 * Ajoute un objet troncon Ã  la liste des troncons sortants du Noeud 
-	 * @param troncon L'Objet Troncon Ã  rajouter 
-	 *
+	 * Ajoute un objet troncon a la liste des troncons sortants du Noeud 
+	 * @param troncon : L'Objet Troncon a rajouter 
 	 */
 	public void ajouterTronconSortant(Troncon troncon) {
 		this.tronconsSortants.add(troncon);
 	}
 	
 	/**
-	 * Ajoute un objet troncon Ã  la liste des troncons entrants du Noeud
-	 * @param troncon L'Objet Troncon Ã  rajouter
+	 * Ajoute un objet troncon a la liste des troncons entrants du Noeud
+	 * @param troncon L'Objet Troncon a rajouter
 	 *
 	 */
 	public void ajouterTronconEntrant(Troncon troncon) {
@@ -75,7 +73,7 @@ public class Noeud {
 	
 	
 	/**
-	 * Accesseur de l'Attribut Id reprÃ©santant l'Identifiant du Noeud
+	 * Accesseur de l'Attribut Id represantant l'Identifiant du Noeud
 	 * @return int la valeur de l'Attribut Id
 	 *
 	 */
@@ -84,7 +82,7 @@ public class Noeud {
 	}
 	
 	/**
-	 * Accesseur de l'Attribut X reprÃ©santant l'absisse du Noeud dans le plan
+	 * Accesseur de l'Attribut X represantant l'absisse du Noeud dans le plan
 	 * @return int la valeur de l'Attribut X
 	 *
 	 */

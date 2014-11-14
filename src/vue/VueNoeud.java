@@ -12,10 +12,11 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JComponent;
 
+import controleur.Controleur;
 import modele.Noeud;
 
 public class VueNoeud extends JComponent implements MouseListener{
-
+	
 	private Color couleur;
 	public Noeud noeud;
 	private int rayon = 12;
@@ -23,11 +24,13 @@ public class VueNoeud extends JComponent implements MouseListener{
 	private int rayonAjuste;
 	private int centrage;
 	private Dimension size;
-	private Color fond = new Color(53,53,53);
+	private Color fond = new Color(73,73,73);
 	private Color surbrillance = new Color(93,93,93);
+	private Controleur ctrl;
 	
-	public VueNoeud(Noeud noeud, double echelle){
+	public VueNoeud(Noeud noeud, double echelle, Controleur ctrl){
 		super();
+		this.ctrl = ctrl; 
 		this.noeud = noeud;
 		this.couleur = fond;
 		this.echelle=echelle;
@@ -87,6 +90,7 @@ public class VueNoeud extends JComponent implements MouseListener{
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		System.out.println("A cliqué en "+getXPlan()+","+getYPlan());
+		ctrl.infoLivraison(noeud);
 	}
 
 	@Override
@@ -143,15 +147,23 @@ public class VueNoeud extends JComponent implements MouseListener{
 	
 	public void changerCouleur(int entrepot){
 		if(noeud.getId()==entrepot){
-			fond = new Color(72,72,255);
-			surbrillance = new Color(119,119,255);
+			fond = new Color(0,91,183);
+			surbrillance = new Color(0,116,232);
 		}
-		else if(noeud.getEtat()==0){
+		else if(noeud.getEtat()==0){ // Noeud ayant une livraison, tournée pas encore chargée
 			fond = new Color(202,202,0);
 			surbrillance = new Color(255,255,23);
 		}
+		else if(noeud.getEtat()==1){ // Noeud intégré dans la tournée
+			fond = new Color(0,138,0);
+			surbrillance = new Color(0,173,0);
+		}
+		else if(noeud.getEtat()==2){ // Noeud non intégré dans la tournée
+			fond = new Color(193,0,0);
+			surbrillance = new Color(233,0,0);
+		}
 		else{
-			fond = new Color(53,53,53);
+			fond = new Color(73,73,73);
 			surbrillance = new Color(93,93,93);
 		}
 		couleur = fond;

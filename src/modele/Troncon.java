@@ -13,6 +13,7 @@ public class Troncon {
 	private String nomRue;
 	private double cout;
 	private double longueur;
+	private int nbPassage=0;
 	private Noeud cible = new Noeud();
 	private Noeud source = new Noeud();
 	
@@ -89,5 +90,13 @@ public class Troncon {
 	 */
 	public void setSource(Noeud uneSource) {
 		source = uneSource;
+	}
+	
+	public void setNbPassage(int nb){
+		nbPassage=nb;
+	}
+	
+	public int getNbPassage(){
+		return nbPassage;
 	}
 }

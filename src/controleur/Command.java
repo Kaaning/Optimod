@@ -1,14 +1,11 @@
 package controleur;
 
-public class Command {
 
-	public int execute(){
-		return 0;
-	}
+public interface Command {
 	
-	public int unexecute(){
-		return 0;
-	}
+	public int execute();
 	
-	
+	public int unexecute();
 }
+
+
