@@ -163,4 +163,16 @@ public class Tournee {
 		return 0;
 	}
 	
+
+
+	public void setEntrepot(int entrepot) {
+		this.entrepot = entrepot;
+	}
+
+	
+
+	public ZoneGeographique getZg() {
+		return zg;
+	}
+
 }
