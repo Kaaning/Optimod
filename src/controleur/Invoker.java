@@ -43,10 +43,6 @@ public class Invoker {
 		}
 	}
 	
-	/**
-	 * Refait la dernière commande defaite .
-	 * @return 0 si l'oppration réussi ou 1 s'il n'y a pas de command à desexecuter
-	 */
 	
 	public int addCommand(Command command) {
 		if (this.currentCommandIndex != this.commands.size() -1 ) {

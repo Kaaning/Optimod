@@ -11,8 +11,8 @@ public class ConcreteCommandSupprimerLivraison implements Command {
 	
 	
 	
-	public ConcreteCommandSupprimerLivraison(ZoneGeographique zoneGeo , int idASupprimer) {
-	
+public ConcreteCommandSupprimerLivraison(ZoneGeographique zoneGeo , Livraison l) {
+		supprime = l;
 		this.zoneGeo = zoneGeo;
 	}
 

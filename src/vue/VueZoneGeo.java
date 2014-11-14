@@ -2,6 +2,9 @@ package vue;
 
 import java.awt.Color;
 
+import java.awt.GridLayout;
+
+
 import javax.swing.JPanel;
 
 
@@ -56,6 +59,8 @@ public class VueZoneGeo extends JPanel{
 	 */
 	public void creerVueTournee() {
 		this.vueTournee = new VueTournee(this.zoneGeo.getTournee() , this.ctrl);
+		changerCouleur(zoneGeo.getTournee().getEntrepot());
+
 		this.add(vueTournee);
 		vueTournee.setLocation(500,0);
 		this.repaint();
@@ -75,6 +80,17 @@ public class VueZoneGeo extends JPanel{
 	/**Met a jour la VueEtape
 	 * @param n : id du noeud clique
 	 */
+
+	public int MAJVueTournee () {
+		vueTournee.MAJvueTournee();
+		vueTournee.setLocation(500,0);
+		changerCouleur(zoneGeo.getTournee().getEntrepot());
+		this.repaint();
+		this.revalidate();
+		return 0;
+     }
+	
+
 	public void MAJVueEtape(Noeud n){
 		this.vueTournee.MAJVueEtape(n);
 	}

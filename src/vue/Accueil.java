@@ -87,7 +87,7 @@ public class Accueil{
 		refaire = creerBouton("Refaire", 100);
 		refaire.setEnabled(false);
 		exporter = creerBouton("Exporter", 100);
-//		exporter.setEnabled(false);
+		exporter.setEnabled(false);
 		
 		//SOUTH ----------------------------
 		south.setLayout(new BoxLayout(south, BoxLayout.LINE_AXIS));
@@ -260,6 +260,26 @@ public class Accueil{
 	public void MAJVueZoneGeographique() {
 		vueZoneGeo.MAJVueZoneGeographique();
 	}
+
+
+	
+
+	public void CreerVueTournee() {
+		vueZoneGeo.creerVueTournee();
+		cadre.repaint();
+	}
+	
+	public void MAJVueZoneGeographique() {
+		vueZoneGeo.MAJVueTournee();
+		cadre.repaint();
+	}
+	
+	
+	public void MAJVueEtape(Noeud n){
+		vueZoneGeo.MAJVueEtape(n);
+	}
+	
+
 	
 	/**Met a jour la VueEtape
 	 * @param n : noeud clique

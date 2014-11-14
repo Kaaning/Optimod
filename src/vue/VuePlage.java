@@ -26,6 +26,7 @@ public class VuePlage extends JPanel{
 	private Controleur ctrl;
 	private ZoneGeographique zoneGeo;
 	private Tournee tournee;
+	private Box box;
 	
 	private List<VueLivraison> vueLs = new ArrayList<VueLivraison>();
 	private JLabel plageDisplay = new JLabel();
@@ -36,7 +37,8 @@ public class VuePlage extends JPanel{
 	 */
 	public VuePlage(Controleur controleur, PlageHoraire plage){
 		ctrl = controleur;
-		Box box = Box.createVerticalBox();
+		
+		box = Box.createVerticalBox();
 		this.add(box);
 		
 		plageDisplay.setText(DisplayH(plage.getHeureDebut())+" - "+DisplayH(plage.getHeureFin()));

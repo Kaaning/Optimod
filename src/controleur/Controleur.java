@@ -2,6 +2,9 @@ package controleur;
 
 import java.text.ParseException;
 
+
+import modele.Livraison;
+
 import modele.Noeud;
 import modele.ZoneGeographique;
 import vue.Accueil;
@@ -10,6 +13,25 @@ import vue.Accueil;
 /**
  * @author H4303 - 2014
  */
+
+	
+
+
+	
+
+	  
+	 
+
+	 
+
+	
+
+	
+	
+
+	
+
+
 public class Controleur {
 	
 
@@ -17,37 +39,21 @@ public class Controleur {
 	
 	 private Accueil viewAccueil;
 	 private ZoneGeographique modelZoneGeographique;
-	  
-	 /**
+	 private Noeud noeudClicked;
+	 
+     /**
 	 * Constructeur de Controleur
-	 */
-	public Controleur() {
+	 */ 
+	 public Controleur() {
 		
 		this.invoker = new Invoker();
-		this.viewAccueil = new Accueil(this);
-		
-		 
+		this.viewAccueil = new Accueil(this); 
 	}
-	 
+
 	/**Charge un fichier contenant des livraisons
 	 * @param chemin : chemin vers le fichier
 	 * @return int
-	 */
-	public int chargerLivraison (String chemin ) {
-				try {
-					this.modelZoneGeographique.chargerLivraison(chemin);
-					this.viewAccueil.MAJVueZoneGeographique();
-					return 0;
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					return 1;
-				}	
-	}
-	/**Charger un fichier contenant les noeuds et troncons
-	 * @param nomFic : nom du fichier
-	 */
-
+	 */ 
 	public void chargerLivraison (String nomFic) {
 		int res = this.modelZoneGeographique.chargerLivraison(nomFic);
 		System.out.println("Livraison erreur: " + res);
@@ -65,8 +71,9 @@ public class Controleur {
 			viewAccueil.afficherMessageErreur(messageErreur);
 		}	
 	}
-	
-
+    /**Charger un fichier contenant les noeuds et troncons
+	 * @param nomFic : nom du fichier
+	 */
 	public void ChargerZoneGeo (String nomFic) {
 		this.modelZoneGeographique = new ZoneGeographique();
 		int res = modelZoneGeographique.lirePlanXML(nomFic);
@@ -84,6 +91,47 @@ public class Controleur {
 			String messageErreur = "Erreur dans le fichier XML !";
 			viewAccueil.afficherMessageErreur(messageErreur);
 		}
+    }
+	public int AjouterLivraison (int client, int id) {
+		if(noeudClicked==null){
+			return -1;
+		}
+		ConcreteCommandAjouterLivraison command = new ConcreteCommandAjouterLivraison(client, id, noeudClicked);
+		command.execute();
+		this.invoker.addCommand(command);
+		this.viewAccueil.MAJVueZoneGeographique();
+		return 0;
+	}
+	public int SupprimerLivraison(Livraison l) {
+		ConcreteCommandSupprimerLivraison command = new ConcreteCommandSupprimerLivraison(modelZoneGeographique , l);
+		command.execute();
+		//this.invoker.addCommand(command);
+		this.viewAccueil.MAJVueZoneGeographique();
+		return 0;
+	}
+	public int undo(){
+		int retour = invoker.undo();
+		this.viewAccueil.MAJVueZoneGeographique();
+		return retour;
+	}
+	public int redo(){
+		return this.invoker.redo();
+	}
+	public int CalculerItineraire () {
+		return this.modelZoneGeographique.calculerItineraire();
+	}
+	
+	public void infoLivraison(Noeud n){
+		viewAccueil.MAJVueEtape(n);
+		noeudClicked = n;
+	}
+	
+	public ZoneGeographique getModelZoneGeographique() {
+		return this.modelZoneGeographique;
+	}
+	
+	public void afficherMessageErreur(String mess){
+		viewAccueil.afficherMessageErreur(mess);
 	}
 	
 	/**Ajoute une livraison

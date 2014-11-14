@@ -17,6 +17,9 @@ import org.xml.sax.SAXException;
 import bibliothequesTiers.XMLValidateur;
 
 
+/**
+ * @author H4303 - 2014
+ */
 public class Tournee {
 	
 	private int entrepot;
@@ -40,6 +43,7 @@ public class Tournee {
 				
 			    Iterator<Element> i = listPlage.iterator();
 	
+
 			    //On parcours la liste grâce à un iterator
 			     while(i.hasNext())
 			     {
@@ -93,7 +97,14 @@ public class Tournee {
 	public int getErreur() {
 		return this.erreur;
 	}
-	public void supprimerLivraison(Noeud adresse){
+
+	
+
+	/**Supprime une livraison de la tournee
+	 * @param adresse : Noeud correspondant
+	 */
+	public void supprimerLivraison(Livraison supprime){
+
 		Iterator<PlageHoraire> i = plages.iterator();
 		
 		while(i.hasNext()){
@@ -102,7 +113,8 @@ public class Tournee {
 			
 			while (j.hasNext()){
 				Livraison currentLivraison = j.next();
-				if (currentLivraison.getNoeud()==adresse){
+				if (currentLivraison==supprime){
+					currentLivraison.getNoeud().setEtat(-1);
 					j.remove();
 				}
 			}
@@ -110,6 +122,10 @@ public class Tournee {
 		}
 	}
 	
+	/**
+	 * @param nomFic
+	 * @return
+	 */
 	private static Element getRacine(String nomFic){
 		
 		org.jdom2.Document document = new Document();

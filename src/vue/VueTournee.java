@@ -29,8 +29,9 @@ public class VueTournee extends JPanel{
 	
 	private JPanel pList;
 	private VueEtape pEtape;
-	
-	
+	private Box box;
+	private JPanel pList;
+	private VueEtape pEtape;
 	/**Constructeur de VueTournee
 	 * @param tournee : lien vers le modele
 	 * @param ctrl : lien vers le controleur
@@ -51,7 +52,10 @@ public class VueTournee extends JPanel{
 	        
 	        pList = new JPanel();
 			pList.setSize(300, 500);
-	        Box box = Box.createVerticalBox();
+
+
+	        box = Box.createVerticalBox();
+
 	        pList.add(box);
 			
 	        pEtape = new VueEtape(ctrl);
@@ -95,8 +99,28 @@ public class VueTournee extends JPanel{
 		for (Livraison l : tournee.getLivraison()){
 			if (l.getNoeud()==n){
 				DisplayLivraison(l);
+	
+				l=null;
+				break;
 			}
 		}
+		this.repaint();
 		
+	}
+
+
+	public void MAJvueTournee() {
+
+		box.removeAll();
+		if(tournee.getPlages()!=null){
+	        for (PlageHoraire pl : tournee.getPlages()){
+	        	VuePlage vuePl = new VuePlage(ctrl, pl);
+	        	vuePlages.add(vuePl);
+	        	box.add(vuePl);
+	        } 
+		}
+		this.repaint();
+		this.revalidate();
+
 	}
 }

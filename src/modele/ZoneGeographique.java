@@ -354,6 +354,9 @@ public class ZoneGeographique {
 	 * @return int : eventuel code d'erreur
 	 */
 	public int supprimerLivraison(Livraison supprime) {
+		tournee.supprimerLivraison(supprime);
+		return 0;
+	}
 		return 0;
 		// TODO Auto-generated method stub
 	}
