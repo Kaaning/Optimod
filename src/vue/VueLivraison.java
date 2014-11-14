@@ -1,5 +1,6 @@
 package vue;
 
+import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.JLabel;
@@ -19,8 +20,7 @@ public class VueLivraison extends JPanel{
 	
 	public VueLivraison(Controleur controleur, Livraison l){
 		ctrl = controleur;
-		
-		livraisonDisplay.setText("Livraison - Noeud : "+l.getNoeud() + ", idClient : " + l.getClient() );
+		livraisonDisplay.setText("Livraison n°"+ l.getId() +" : Noeud "+l.getNoeud().getId() + " - idClient " + l.getClient() );
 		livraisonDisplay.setFont(new Font("Serif", Font.PLAIN, 12));
 		
 		this.add(livraisonDisplay);

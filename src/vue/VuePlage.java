@@ -1,5 +1,6 @@
 package vue;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -22,13 +23,15 @@ public class VuePlage extends JPanel{
 	private Controleur ctrl;
 	private ZoneGeographique zoneGeo;
 	private Tournee tournee;
+	private Box box;
 	
 	private List<VueLivraison> vueLs = new ArrayList<VueLivraison>();
 	private JLabel plageDisplay = new JLabel();
 
 	public VuePlage(Controleur controleur, PlageHoraire plage){
 		ctrl = controleur;
-		Box box = Box.createVerticalBox();
+		
+		box = Box.createVerticalBox();
 		this.add(box);
 		
 		plageDisplay.setText(DisplayH(plage.getHeureDebut())+" - "+DisplayH(plage.getHeureFin()));
@@ -42,10 +45,22 @@ public class VuePlage extends JPanel{
         	box.add(vueL);
 		}
 		
+		
 	}
 	
+	
 	private String DisplayH(Date d){
-		return d.getHours()+"h"+d.getMinutes();
+		String heure = String.valueOf(d.getHours());
+		String minute = String.valueOf(d.getMinutes());
+		if( d.getHours()==0)
+		{
+			heure="00";
+		}
+		if( d.getMinutes()==0)
+		{
+			minute="00";
+		}
+		return heure+"h"+minute;
 	}
 	
 }

@@ -18,10 +18,6 @@ public class Tournee {
 	private List<PlageHoraire> plages; 
 	private ZoneGeographique zg;
 	
-	public Tournee(ZoneGeographique unZg){
-		this.zg = unZg;
-	}
-	
 	public Tournee(String nomFic, ZoneGeographique unZg) throws ParseException{
 		this.zg = unZg;
 		plages = new ArrayList<PlageHoraire>();
@@ -60,10 +56,10 @@ public class Tournee {
 	        	int id = Integer.parseInt(currentLivraison.getAttributeValue("id"));
 	        	int client = Integer.parseInt(currentLivraison.getAttributeValue("client"));
 	        	int adresse = Integer.parseInt(currentLivraison.getAttributeValue("adresse"));
-	        	if( zg.verifierNoeud(adresse)){
-	        		plageHoraire.ajouterLivraison(id, client, adresse); 
+	        	Noeud noeud = zg.getNoeudById(adresse);
+	        	if(noeud!=null){
+	        		plageHoraire.ajouterLivraison(id, client, noeud);
 	        	}
-	        	else { System.out.println("adresse "+adresse+" inexistante"); }
 	        	
 	        }
 	        
@@ -74,7 +70,7 @@ public class Tournee {
 		
 	}
 
-	public void supprimerLivraison(int adresse){
+	public void supprimerLivraison(Livraison supprime){
 		Iterator<PlageHoraire> i = plages.iterator();
 		
 		while(i.hasNext()){
@@ -83,7 +79,8 @@ public class Tournee {
 			
 			while (j.hasNext()){
 				Livraison currentLivraison = j.next();
-				if (currentLivraison.getNoeud()==adresse){
+				if (currentLivraison==supprime){
+					currentLivraison.getNoeud().setEtat(-1);
 					j.remove();
 				}
 			}
@@ -119,10 +116,6 @@ public class Tournee {
 		return entrepot;
 	}
 	
-	public ZoneGeographique getPlan(){
-		return zg;
-	}
-	
 	public void display(){
 		for(int i =0; i < plages.size() ; i++){
 			System.out.println("Plage : " + plages.get(i).getHeureDebut() + "  "+ plages.get(i).getHeureFin());
@@ -141,5 +134,10 @@ public class Tournee {
 		}
 		return livraisons;
 	}
-
+	
+	public int calculerItineraire() {
+		// mettre la vrai fonction
+		return 0;
+	}
+	
 }

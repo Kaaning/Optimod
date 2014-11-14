@@ -15,7 +15,7 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
-import vue.Accueil;
+
 
 
 /**
@@ -25,14 +25,17 @@ import vue.Accueil;
  */
 
 public class ZoneGeographique {
+	
 	private List<Noeud> noeuds = new ArrayList<Noeud>(); 
 	private List<Troncon> troncons = new ArrayList<Troncon>();
+	private Tournee tournee;
+	
 	private int Xmin;
 	private int Xmax;
 	private int Ymin;
 	private int Ymax;
 	
-	private Tournee tournee =new Tournee(this);
+	
 	
 	
 	/**
@@ -40,16 +43,12 @@ public class ZoneGeographique {
 	 * @param nomFic String chemin relatif du fichier xml du plan à charger
 	 * @throws remonte des Exceptions reliées à l'ouverture d'un fichier et l'utlisiation de JDOM pour parser le fichier XML
 	 */
-	public ZoneGeographique(String nomFic) throws JDOMException, IOException {
-		lirePlanXML(nomFic);
-		this.Xmax = findXMax();
-	    	this.Ymax = findYMax();
-		this.Xmin = findXMin();
-	    	this.Ymin = findYMin();
+	public ZoneGeographique() {
+	
 	}
 	
 	public void chargerLivraison(String nomFic) throws ParseException{
-		tournee = new Tournee(nomFic,this);
+		this.tournee = new Tournee(nomFic,this);
 	}
 	
 	/**
@@ -150,7 +149,7 @@ public class ZoneGeographique {
 	 * @param nomFic String chemin relatif du fichier xml du plan à charger 
 	 *
 	 */
-	private void lirePlanXML(String nomFic){
+	public int lirePlanXML(String nomFic){
 		SAXBuilder sxb = new SAXBuilder();
 		Document document = null;
 		Element racine;
@@ -191,6 +190,11 @@ public class ZoneGeographique {
 	    	   ajouterTroncon(troncon);
 		    }	
 	    }
+	    this.Xmax = findXMax();
+    	this.Ymax = findYMax();
+    	this.Xmin = findXMin();
+    	this.Ymin = findYMin();
+    	return 0;
 	}
 	
 	/**
@@ -263,14 +267,29 @@ public class ZoneGeographique {
 	 * @return boolean true si le noeud passe en parametre a ete visite false sinon 
 	 *
 	 */
-	public boolean verifierNoeud(int id) {
+	public Noeud getNoeudById(int id) {
 		for (Noeud n : noeuds) {
 			if (n.getId()==id) {
 				n.setEtat(0);
-				return true;
+				return n;
 			}
 		}
-		return false;
+		return null;
+	}
+	
+	
+	public int calculerItineraire() {
+		return 0;
+	}
+
+	public int supprimerLivraison(Livraison supprime) {
+		tournee.supprimerLivraison(supprime);
+		return 0;
+	}
+	
+	public int ajouterLivraison (Livraison aAjouter , Livraison precedente) {
+		// mettre le bon appel et la bonne signature
+		return 0;
 	}
 	
 }

@@ -1,19 +1,14 @@
 package vue;
 
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.GridLayout;
 
-import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
+
+
+
 import modele.Noeud;
-import modele.Tournee;
-import modele.Troncon;
 import modele.ZoneGeographique;
 import controleur.Controleur;
 
@@ -43,14 +38,30 @@ public class VueZoneGeo extends JPanel{
         setSize(largeur,hauteur);
         plan = new VuePlan(zoneGeo, ctrl);
         add(plan);
-     }
-	
-	public void creerVueTournee(Tournee tournee){
-		this.vueTournee = new VueTournee(tournee, ctrl);
+
+	}
+
+	public void creerVueTournee() {
+		this.vueTournee = new VueTournee(this.zoneGeo.getTournee() , this.ctrl);
+		changerCouleur(zoneGeo.getTournee().getEntrepot());
 		this.add(vueTournee);
 		vueTournee.setLocation(500,0);
 		this.repaint();
 		this.revalidate();
+		
+	}
+	
+	public int MAJVueTournee () {
+		vueTournee.MAJvueTournee();
+		vueTournee.setLocation(500,0);
+		changerCouleur(zoneGeo.getTournee().getEntrepot());
+		this.repaint();
+		this.revalidate();
+		return 0;
+     }
+	
+	public void MAJVueEtape(Noeud n){
+		this.vueTournee.MAJVueEtape(n);
 	}
 	
 	public void changerCouleur(int n){

@@ -1,43 +1,100 @@
 package controleur;
 
-import java.io.IOException;
 import java.text.ParseException;
-import java.util.List;
 
 import modele.Livraison;
+import modele.Noeud;
 import modele.ZoneGeographique;
-
-import org.jdom2.JDOMException;
-
 import vue.Accueil;
 
-public class Controleur {
 
-	private static ZoneGeographique plan;
-	private static Accueil accueil;
+public class Controleur {
 	
-	Controleur(){}
+
+	private Invoker invoker;
 	
-	public static ZoneGeographique creerZoneGeo(String nomFic) throws JDOMException, IOException{
-		plan = new ZoneGeographique(nomFic);
-		return plan;
-	}
-	
-	public void infoLivraison(int id){
-		List<Livraison> livraisons = plan.getTournee().getLivraison();
-		for(Livraison l : livraisons){
-			if(l.getNoeud()==id){
-				accueil.message(l.display());
-			}
-		}
-	}
-	
-	
-	public static void main(String[] args) throws ParseException, JDOMException, IOException{
-		Controleur ctrl = new Controleur();
-		//j.creerZoneGeographique("fic/plan10x10.xml");
-		//j.chargerLivraison("fic/livraison20x20-2.xml");
-		accueil = new Accueil(ctrl);
+	 private Accueil viewAccueil;
+	 private ZoneGeographique modelZoneGeographique;
+	 private Noeud noeudClicked;
+	  
+	 public Controleur() {
 		
+		this.invoker = new Invoker();
+		this.viewAccueil = new Accueil(this);
+		
+		 
 	}
+	 
+	public int chargerLivraison (String chemin ) {
+				try {
+					this.modelZoneGeographique.chargerLivraison(chemin);
+					this.viewAccueil.CreerVueTournee();
+					return 0;
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return 1;
+				}	
+	}
+	public int ChargerZoneGeo (String chemin) {
+			this.modelZoneGeographique = new ZoneGeographique();
+			modelZoneGeographique.lirePlanXML(chemin);
+			viewAccueil.creerVueZoneGeographique(1100,500, this.modelZoneGeographique);
+			return 0;
+	}
+	public int AjouterLivraison (int client, int id) {
+		if(noeudClicked==null){
+			return -1;
+		}
+		ConcreteCommandAjouterLivraison command = new ConcreteCommandAjouterLivraison(client, id, noeudClicked);
+		command.execute();
+		this.invoker.addCommand(command);
+		this.viewAccueil.MAJVueZoneGeographique();
+		return 0;
+	}
+	public int SupprimerLivraison(Livraison l) {
+		ConcreteCommandSupprimerLivraison command = new ConcreteCommandSupprimerLivraison(modelZoneGeographique , l);
+		command.execute();
+		//this.invoker.addCommand(command);
+		this.viewAccueil.MAJVueZoneGeographique();
+		return 0;
+	}
+	public int undo(){
+		int retour = invoker.undo();
+		this.viewAccueil.MAJVueZoneGeographique();
+		return retour;
+	}
+	public int redo(){
+		return this.invoker.redo();
+	}
+	public int CalculerItineraire () {
+		return this.modelZoneGeographique.calculerItineraire();
+	}
+	
+	public void infoLivraison(Noeud n){
+		viewAccueil.MAJVueEtape(n);
+		noeudClicked = n;
+	}
+	
+	public ZoneGeographique getModelZoneGeographique() {
+		return this.modelZoneGeographique;
+	}
+	
+	public void afficherMessageErreur(String mess){
+		viewAccueil.afficherMessageErreur(mess);
+	}
+	
+	
+	public static void main(String[] args) throws ParseException{
+		 	
+		 Controleur controler = new Controleur();
+		
+		 
+			
+		}
+
+	
+	 
+
+
 }
