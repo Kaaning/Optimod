@@ -8,8 +8,14 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.jdom2.*;
 import org.jdom2.input.SAXBuilder;
+import org.xml.sax.SAXException;
+
+import bibliothequesTiers.XMLValidateur;
 
 
 /**
@@ -20,6 +26,7 @@ public class Tournee {
 	private int entrepot;
 	private List<PlageHoraire> plages; 
 	private ZoneGeographique zg;
+	private int erreur;
 	
 	/**Constructeur de Tournee
 	 * @param nomFic : nom du fichier contenant les livraisons a charger
@@ -81,6 +88,9 @@ public class Tournee {
 	/**Supprime une livraison de la tournee
 	 * @param adresse : Noeud correspondant
 	 */
+
+	
+
 	public void supprimerLivraison(Noeud adresse){
 		Iterator<PlageHoraire> i = plages.iterator();
 		

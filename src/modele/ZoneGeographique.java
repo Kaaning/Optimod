@@ -43,8 +43,9 @@ public class ZoneGeographique {
 	
 	/**
 	 * Constructeur avec parametres de l'Objet ZoneGeographique
-	 * @param nomFic String chemin relatif du fichier xml du plan à charger
-	 * @throws remonte des Exceptions reliees à l'ouverture d'un fichier et l'utlisiation de JDOM pour parser le fichier XML
+
+	 * @param nomFic String chemin relatif du fichier xml du plan a charger
+	 * @throws remonte des Exceptions reliees a l'ouverture d'un fichier et l'utlisiation de JDOM pour parser le fichier XML
 	 */
 	public ZoneGeographique() {
 	
@@ -54,8 +55,9 @@ public class ZoneGeographique {
 	 * @param nomFic : fichier a charger
 	 * @throws ParseException
 	 */
-	public void chargerLivraison(String nomFic) throws ParseException{
+	public int chargerLivraison(String nomFic) {
 		this.tournee = new Tournee(nomFic,this);
+		return tournee.getErreur();
 	}
 	
 	/**
@@ -69,7 +71,8 @@ public class ZoneGeographique {
 	
 	/**
 	 * Accesseur de l'Attribut troncons
-	 * @return List<Troncon> Liste des Objets Troncon contenus dans le plan à charger
+	 * @return List<Troncon> Liste des Objets Troncon contenus dans le plan a charger
+
 	 *
 	 */
 	public List<Troncon> getTroncons() {
@@ -78,7 +81,8 @@ public class ZoneGeographique {
 	
 	/**
 	 * Accesseur de l'Attribut Xmin
-	 * @return int la valeur de l'absisse du noeud la plus petite du plan à charger
+	 * @return int la valeur de l'absisse du noeud la plus petite du plan a charger
+
 	 *
 	 */
 	public int getXMin() {
@@ -87,7 +91,8 @@ public class ZoneGeographique {
 	
 	/**
 	 * Accesseur de l'Attribut Xmax
-	 * @return int la valeur de l'absisse du noeud la plus grande du plan à charger
+	 * @return int la valeur de l'absisse du noeud la plus grande du plan a charger
+
 	 *
 	 */
 	public int getXMax() {
@@ -96,7 +101,8 @@ public class ZoneGeographique {
 	
 	/**
 	 * Accesseur de l'Attribut Ymin
-	 * @return int la valeur de l'ordonnee du noeud la plus petite du plan à charger
+	 * @return int la valeur de l'ordonnee du noeud la plus petite du plan a charger
+
 	 *
 	 */
 	public int getYMin() {
@@ -105,7 +111,8 @@ public class ZoneGeographique {
 	
 	/**
 	 * Accesseur de l'Attribut Ymax
-	 * @return int la valeur de l'ordonnee du noeud la plus grande du plan à charger
+	 * @return int la valeur de l'ordonnee du noeud la plus grande du plan a charger
+
 	 *
 	 */
 	public int getYMax() {
@@ -129,8 +136,9 @@ public class ZoneGeographique {
 	}
 	
 	/**
-	 * Ajoute un Objet Troncon à l'Attribut troncons (qui represente la liste des troncons du plan à charger)
-	 * @param troncon Objet Troncon à rajouer à la liste 
+	 * Ajoute un Objet Troncon a l'Attribut troncons (qui represente la liste des troncons du plan a charger)
+     * @param troncon Objet Troncon a rajouer a la liste 
+
 	 *
 	 */
 	public void ajouterTroncon(Troncon Troncon) {
@@ -138,22 +146,40 @@ public class ZoneGeographique {
 	}
 	
 	/**
-	 * Recherche et retourne un Objet Noeud dans la liste des noeuds du plan à charger selon son Identifiant (Attribut Id de l'Objet Noeud)
-	 * @param id int la valeur de l'Identifiant de l'Objet Noeud à rechercher
+	 * Recherche et retourne un Objet Noeud dans la liste des noeuds du plan a charger selon son Identifiant (Attribut Id de l'Objet Noeud)
+     * Modifie l'etat du Noeud trouve: il le met a 0 pour indiquer que le noeud a ete pris en compte lors du calcul de la tournee
+	 * @param id int la valeur de l'Identifiant de l'Objet Noeud a rechercher
 	 * @return Noeud dont l'Identifiant est egal au parametre id passe en parametre 
 	 *
 	 */
-	public Noeud findNoeudById(int id) {
-		for (int i=0; i<this.noeuds.size(); i++) {
-			if (this.noeuds.get(i).getId() == id) {
-				return this.noeuds.get(i);
+	public Noeud getNoeudById(int id) {
+		for (Noeud n : noeuds) {
+			if (n.getId()==id) {
+				n.setEtat(0);
+				return n;
 			}
 		}
 		return null;
 	}
 	
 	/**
-	 * Methode privee appelee dans le constructeur
+	 * Recherche et retourne un Objet Noeud dans la liste des noeuds du plan a charger selon son Identifiant (Attribut Id de l'Objet Noeud)
+	 * @param id int la valeur de l'Identifiant de l'Objet Noeud a rechercher
+	 * @return Noeud dont l'Identifiant est egal au parametre id passe en parametre 
+	 *
+	 */
+	public Noeud findNoeudById(int id) {
+		for (Noeud n : noeuds) {
+			if (n.getId()==id) {
+				return n;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Methode publique appelee dans le constructeur
+
 	 * lit le fichier XML dans le chemin est passe en parametre, utilise la librairie JDOM pour parser le fichier XML apres verification par le validateur de fichier XML de la methode XMLValidateur.validerXML(fichierXML, fichierXSD)
 	 * remplit les listes noeuds et troncons
 	 * @param nomFic String chemin relatif du fichier xml du plan a charger
@@ -203,6 +229,14 @@ public class ZoneGeographique {
 						this.findNoeudById(Integer.parseInt(listeNoeuds.get(cpt).getAttributeValue("id"))).ajouterTronconSortant(troncon);
 						this.findNoeudById(Integer.parseInt(tronconCourant.getAttributeValue("idNoeudDestination"))).ajouterTronconEntrant(troncon);
 						ajouterTroncon(troncon);
+						} else {
+							Troncon troncon = new Troncon(tronconCourant.getAttributeValue("nomRue"), Double.parseDouble(tronconCourant.getAttributeValue("longueur").replace(',', '.'))/Double.parseDouble(tronconCourant.getAttributeValue("vitesse").replace(',', '.')), Double.parseDouble(tronconCourant.getAttributeValue("longueur").replace(',', '.')));
+							troncon.setCible(this.findNoeudById(Integer.parseInt(tronconCourant.getAttributeValue("idNoeudDestination"))));
+							troncon.setSource(this.findNoeudById(Integer.parseInt(listeNoeuds.get(cpt).getAttributeValue("id"))));
+							this.findNoeudById(Integer.parseInt(listeNoeuds.get(cpt).getAttributeValue("id"))).ajouterTronconSortant(troncon);
+							this.findNoeudById(Integer.parseInt(tronconCourant.getAttributeValue("idNoeudDestination"))).ajouterTronconEntrant(troncon);
+							ajouterTroncon(troncon);
+						}
 					}
 				}
 				this.Xmax = findXMax();
@@ -214,6 +248,7 @@ public class ZoneGeographique {
 			}
 		} catch (NullPointerException | NumberFormatException | SAXException | IOException| ParserConfigurationException | JDOMException e) {
 			System.out.println("bpu");
+			System.out.println(e.getMessage());
 			if (erreur == 1) {
 				erreur = 1;
 			} else {
@@ -275,8 +310,8 @@ public class ZoneGeographique {
 	
 	/**
 	 * Methode privee appelee dans le constructeur
-	 * recherche la plus petite ordonnee des noeuds du plan à charger
-	 * @return int la valeur de la plus petite ordonnee des noeuds à charger 
+	 * recherche la plus petite ordonnee des noeuds du plan a charger
+     * @return int la valeur de la plus petite ordonnee des noeuds a charger 
 	 *
 	 */
 	private int findYMin() {
@@ -290,8 +325,8 @@ public class ZoneGeographique {
 	}
 	
 	/**
-	 * Methode qui verifie si le noeud dont l'Id est passe en parametre a ete visit�e dans la tourn�ee ou pas
-	 * @param id int Id du noeud à verifier
+	 * Methode qui verifie si le noeud dont l'Id est passe en parametre a ete visitee dans la tournee ou pas
+     * @param id int Id du noeud � verifier
 	 * @return boolean true si le noeud passe en parametre a ete visite false sinon 
 	 *
 	 */
@@ -300,6 +335,7 @@ public class ZoneGeographique {
 			if (n.getId()==id) {
 				n.setEtat(0);
 				return n;
+				return true;
 			}
 		}
 		return null;

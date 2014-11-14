@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+   <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+         <!-- XML Schema Generated from XML Document on Thu Nov 13 2014 23:50:43 GMT+0100 (Europe de l’Ouest) -->
+         <!-- with XmlGrid.net Free Online Service http://xmlgrid.net -->
+         <xs:element name="JourneeType">
+               <xs:complexType>
+                     <xs:sequence>
+                           <xs:element name="Entrepot">
+                                 <xs:complexType>
+                                       <xs:attribute name="adresse" type="xs:int" use="required"/>
+                                 </xs:complexType>
+                           </xs:element>
+                           <xs:element name="PlagesHoraires">
+                                 <xs:complexType>
+                                       <xs:sequence>
+                                             <xs:element name="Plage">
+                                                   <xs:complexType>
+                                                         <xs:sequence>
+                                                               <xs:element name="Livraisons">
+                                                                     <xs:complexType>
+                                                                           <xs:sequence>
+                                                                                 <xs:element name="Livraison" maxOccurs="unbounded">
+                                                                                       <xs:complexType>
+                                                                                             <xs:attribute name="id" type="xs:int" use="required"/>
+                                                                                             <xs:attribute name="client" type="xs:int" use="required"/>
+                                                                                             <xs:attribute name="adresse" type="xs:int" use="required"/>
+                                                                                       </xs:complexType>
+                                                                                 </xs:element>
+                                                                           </xs:sequence>
+                                                                     </xs:complexType>
+                                                               </xs:element>
+                                                         </xs:sequence>
+                                                         <xs:attribute name="heureDebut" type="xs:string" use="required"/>
+                                                         <xs:attribute name="heureFin" type="xs:string" use="required"/>
+                                                   </xs:complexType>
+                                             </xs:element>
+                                       </xs:sequence>
+                                 </xs:complexType>
+                           </xs:element>
+                     </xs:sequence>
+               </xs:complexType>
+         </xs:element>
+   </xs:schema>
