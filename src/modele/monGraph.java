@@ -167,15 +167,5 @@ public class monGraph implements Graph{
 		return getSucc(i).length;
 	}
 	
-	public static void main(String[] args) throws JDOMException, IOException, ParseException {
-		ZoneGeographique zoneGeographique = new ZoneGeographique("fic\\plan20x20.xml");
-		Tournee tournee = new Tournee("fic\\livraison20x20-2.xml", zoneGeographique);
-		zoneGeographique.setTournee(tournee);
-		
-		monGraph graph = new monGraph(zoneGeographique);
-		graph.calculerItineraire();
-		
-	}
-	
 
 }
